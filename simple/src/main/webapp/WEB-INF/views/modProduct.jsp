@@ -288,11 +288,11 @@
                                </div>
                                <div style="padding-left: 109px;"> 
                                    <label>상품옵션1</label>
-                                        <input type="text" name="option1" value="">
+                                        <input type="text" name="option1" value="${productNum.option1}">
                                </div>
                                <div style="padding-left: 109px;"> 
                                    <label>상품옵션2</label>
-                                        <input type="text" name="option2" value="">
+                                        <input type="text" name="option2" value="${productNum.option2}">
                                </div>
 					
 						</div>
