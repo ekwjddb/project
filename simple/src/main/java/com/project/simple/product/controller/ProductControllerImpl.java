@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.project.simple.member.vo.MemberVO;
+
 import com.project.simple.product.service.ProductService;
 import com.project.simple.product.vo.ProductVO;
 
@@ -45,6 +45,10 @@ public class ProductControllerImpl implements ProductController {
 	@Autowired
 	private ProductVO productVO;
 	private static final Logger logger = LoggerFactory.getLogger(ProductControllerImpl.class);
+	
+	
+	
+	
 
 	@Override //상품등록하기
 	@RequestMapping(value="product/addProduct.do", method=RequestMethod.POST)
@@ -57,10 +61,6 @@ public class ProductControllerImpl implements ProductController {
 			String name = (String) enu.nextElement();
 			String value = multipartRequest.getParameter(name);
 			productMap.put(name, value);
-
-
-
-
 
 
 		}
@@ -98,6 +98,7 @@ public class ProductControllerImpl implements ProductController {
 				}
 
 			productService.addProduct(productMap);	
+			
 			
 			
 
@@ -254,7 +255,7 @@ public class ProductControllerImpl implements ProductController {
 		return mav;
 	}
 
-	/*
+	
 	@RequestMapping(value = "/product/modNewProduct.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public ResponseEntity modProduct(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
@@ -269,8 +270,8 @@ public class ProductControllerImpl implements ProductController {
 
 		}
 		
-		String productImage = upload(multipartRequest);
-		productMap.put("productImage", productImage);
+		List<String> productImage1 = upload(multipartRequest);
+		
 
 		String productNum = (String) productMap.get("productNum");
 		productMap.put("productNum", productNum);
@@ -281,17 +282,28 @@ public class ProductControllerImpl implements ProductController {
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
 
-			productService.modProduct(productMap);
+			
 
-			if (productImage != null && productImage.length() != 0) {
+			if (productImage1 != null && productImage1.size() != 0) {
+				productService.modProduct(productMap);
+				String productImage = productImage1.get(0).toString();
+				String productContentImage = productImage1.get(1).toString();
+				productMap.put("productImage", productImage);
+				productMap.put("productContentImage", productContentImage);
+
 				String OrignProductImage = (String) productMap.get("OrignProductImage");
-
+				String OrignProductImage1 = (String) productMap.get("OrignProductImage1");
+				
 				File oldFile = new File(ARTICLE_IMAGE_REPO + "\\" + productNum + "\\" + OrignProductImage);
 				oldFile.delete();
-
+				File oldFile1 = new File(ARTICLE_IMAGE_REPO + "\\" + productNum + "\\" + OrignProductImage1);
+				oldFile1.delete();
+				
 				File srcFile = new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + productImage);
+				File srcFile1 = new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + productContentImage);
 				File destDir = new File(ARTICLE_IMAGE_REPO + "\\" + productNum);
 				FileUtils.moveFileToDirectory(srcFile, destDir, true);
+				FileUtils.moveFileToDirectory(srcFile1, destDir, true);
 
 			}
 			message = "<script>";
@@ -301,8 +313,14 @@ public class ProductControllerImpl implements ProductController {
 			message += "</script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		} catch (Exception e) {
+			String productImage = productImage1.get(0).toString();
+			String productContentImage = productImage1.get(1).toString();
+			productMap.put("productImage", productImage);
+			productMap.put("productContentImage", productContentImage);
 			File srcFile = new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + productImage);
+			File srcFile1 = new File(ARTICLE_IMAGE_REPO + "\\" + "temp" + "\\" + productContentImage);
 			srcFile.delete();
+			srcFile1.delete();
 			message = "<script>";
 			message += "alert('오류가 발생했습니다. 다시 수정해주세요');";
 			message += "location.href='" + multipartRequest.getContextPath()
@@ -312,7 +330,7 @@ public class ProductControllerImpl implements ProductController {
 		}
 		return resEnt;
 	}
-	*/
+	
 
 	@Override
 	@RequestMapping(value = "/product/removeProduct.do", method = RequestMethod.POST)

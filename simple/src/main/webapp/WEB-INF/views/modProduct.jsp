@@ -282,7 +282,9 @@
                                </div>
                                <div style="padding-left: 58px;"> 
                                    <label><a style="color: red; padding-right: 5px; write-space: nowrap;">*</a>상품상세이미지</label>
-                                        <input type="file" name="productContentImage" value="">
+                                        <input type="hidden" name="OrignProductImage1" value="${productNum.productContentImage}" />
+                                        <input type="file" name="productContentImage" value="${productNum.productContentImage}">
+                                   <label style="font-size: 10px;">기존파일: ${productNum.productContentImage}</label>
                                </div>
                                <div style="padding-left: 109px;"> 
                                    <label>상품옵션1</label>

@@ -240,6 +240,11 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/deletemember.jsp" />
 	</definition>
+	
+	<definition name="admin_login" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin_login.jsp" />
+	</definition>
 
 
 
