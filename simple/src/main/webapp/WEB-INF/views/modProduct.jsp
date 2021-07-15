@@ -267,7 +267,7 @@
                                <div style="padding-left: 90px;"> 
                                    <label><a style="color: red; padding-right: 5px; write-space: nowrap;">*</a>상품이미지</label>
                                    <input type="hidden" name="OrignProductImage" value="${productNum.productImage}" />
-                                   <input type="file" name="productImage" value="${productNum.productImage}" >
+                                   <input type="file" name="productImage"  >
                                    <div style="padding-left: 90px;"> 
                                    <label style="font-size: 10px;">기존파일: ${productNum.productImage}</label>
                                </div>
@@ -282,17 +282,16 @@
                                </div>
                                <div style="padding-left: 58px;"> 
                                    <label><a style="color: red; padding-right: 5px; write-space: nowrap;">*</a>상품상세이미지</label>
-                                        <input type="hidden" name="OrignProductImage1" value="${productNum.productContentImage}" />
-                                        <input type="file" name="productContentImage" value="${productNum.productContentImage}">
-                                   <label style="font-size: 10px;">기존파일: ${productNum.productContentImage}</label>
+                                   <input type="hidden" name="OrignProductContentImage" value="${productNum.productContentImage}" />
+                                        <input type="file" name="productContentImage" >
                                </div>
                                <div style="padding-left: 109px;"> 
                                    <label>상품옵션1</label>
-                                        <input type="text" name="option1" value="${productNum.option1}">
+                                        <input type="text" name="option1" value="">
                                </div>
                                <div style="padding-left: 109px;"> 
                                    <label>상품옵션2</label>
-                                        <input type="text" name="option2" value="${productNum.option2}">
+                                        <input type="text" name="option2" value="">
                                </div>
 					
 						</div>

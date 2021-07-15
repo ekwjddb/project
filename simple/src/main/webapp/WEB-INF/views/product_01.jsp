@@ -5,6 +5,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,6 +93,8 @@
 			<!-- 최근 본 상품 -->
 			<div id="recentlyProduct"
 				style="position: absolute; left:80px;width: 120px; height: 310px; margin-left: 1650px; border: 1px solid #d2d2d2; margin-top: -130px;">
+				
+
 				<ul
 					style="list-style: none; margin-top: 10px; padding-left: 20px; margin-bottom: 10px;">
 					<li><a href="#"
@@ -99,20 +102,41 @@
 				</ul>
 				<hr style="margin-top: 0px; margin-bottom: 0px; color: #d2d2d2;">
 				<ul style="list-style: none; padding-top: 5px;">
-					<li><a href="#"><img
-							src="${contextPath}/resources/images/image_1.jpg"
-							style="width: 100px; height: 100px; padding-top: 10px; margin-left: -30px;"></a></li>
-					<li><a href="#"><img
-							src="${contextPath}/resources/images/image_2.jpg"
-							style="width: 100px; height: 100px; padding-top: 10px; padding-top: 10px; margin-left: -30px;"></a></li>
+				<c:choose>
+				<c:when test="${empty quickList }">
+				<ul
+					style="list-style: none;padding-top: 80px;padding-right: 0px;padding-left: 0px;">
+					<li><a
+						style="color: black; text-align: center; margin-top: 8px; padding-top: 30px;">상품</a></li>
+						<li><a
+						style="color: black; text-align: center; margin-top: 8px; padding-top: 30px;">없음</a></li>
 				</ul>
+				</c:when>
+				<c:otherwise>
+				<c:forEach var="item" items="${quickList}" varStatus="itemNum">
+				<li>
+					<img src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}" style="width: 100px; height: 100px; padding-top: 10px; margin-left: -30px;">
+				</li>
+		
+			
+				</c:forEach>
+				</c:otherwise>
+				</c:choose>
+				</ul>
+				<c:choose>
+				<c:when test="${!empty quickList }">
 				<hr style="margin-top: 0px; margin-bottom: 0px; color: #d2d2d2;">
 				<ul
 					style="list-style: none; padding-left: 30px; margin-bottom: 10px; margin-top: 8px;">
-					<li><a href="#"
+					<li><a href="${contextPath}/mypage_09.do"
 						style="color: black; text-align: center; margin-top: 8px; padding-top: 30px;">더보기▼</a></li>
 				</ul>
+				</c:when>
+				</c:choose>
+				
 			</div>
+			
+			<!-- 최근 본 상품 끝 -->
 
 
 			<div class="btn-group btn-group-justified" role="group"

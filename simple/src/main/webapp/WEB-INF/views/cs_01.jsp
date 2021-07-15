@@ -109,7 +109,7 @@
 				<hr style="margin-top: 0px; margin-bottom: 0px; color: #d2d2d2;">
 				<ul style="list-style: none; padding-top: 5px;">
 					<li><a href="#"><img
-							src="${contextPath}/resources/images/image_1.jpg"
+							src="${contextPath}/download_product.do?productNum=${productNum}&productImage=${productImage}"
 							style="width: 100px; height: 100px; padding-top: 10px; margin-left: -30px;"></a></li>
 					<li><a href="#"><img
 							src="${contextPath}/resources/images/image_2.jpg"
@@ -154,7 +154,7 @@
 							style="color: black; padding-left: 30px;">${notice.noticeTitle}</a></td>
 						<td scope="col" width="150">${notice.noticeWriter }</td>
 						<td scope="col" width="150"><fmt:formatDate value="${notice.noticeDate}" /></td>
-						<td scope="col" width="80">0</td>
+						<td scope="col" width="80">${notice.noticeHit}</td>
 					</tr>
 					</c:forEach>
 					</c:when>
@@ -167,27 +167,33 @@
 		
 		<!-- 페이징 글번호 -->
 		<div class="page_wrap" style="margin-left: 80px; margin-top: 60px;">
-	<div class="page_nation" >
-			
-    <c:if test="${pageMaker.prev}">
+			<div class="page_nation">
 
-        <a class="arrow prev" href='<c:url value="/board/listNotice.do?page=${pageMaker.startPage-1 }"/>'><i class="fa fa-chevron-left"></i></a>
-  
-    </c:if>
-    <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="pageNum">
-   
-        <a href='<c:url value="/board/listNotice.do?page=${pageNum }"/>'><i class="fa">${pageNum }</i></a>
-    
-    </c:forEach>
-    <c:if test="${pageMaker.next && pageMaker.endPage >0 }">
- 
-        <a class="arrow next" href='<c:url value="/board/listNotice.do?page=${pageMaker.endPage+1 }"/>'><i class="fa fa-chevron-right"></i></a>
- 
-    </c:if>
- 
-    </div>
-    </div>
-	
+				<c:if test="${pageMaker.prev}">
+
+					<a class="arrow prev"
+						href='<c:url value="/board/listNotice.do?page=${pageMaker.startPage-1 }"/>'><i
+						class="fa fa-chevron-left"></i></a>
+
+				</c:if>
+				<c:forEach begin="${pageMaker.startPage }"
+					end="${pageMaker.endPage }" var="pageNum">
+
+					<a href='<c:url value="/board/listNotice.do?page=${pageNum }"/>'><i
+						class="fa">${pageNum }</i></a>
+
+				</c:forEach>
+				<c:if test="${pageMaker.next && pageMaker.endPage >0 }">
+
+					<a class="arrow next"
+						href='<c:url value="/board/listNotice.do?page=${pageMaker.endPage+1 }"/>'><i
+						class="fa fa-chevron-right"></i></a>
+
+				</c:if>
+
+			</div>
+		</div>
+
 	</section>
 </body>
 </html>

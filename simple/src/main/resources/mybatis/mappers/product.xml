@@ -18,6 +18,14 @@
         <result property="option1" column="option1" />
         <result property="option2" column="option2" />
 	</resultMap>
+	<resultMap id="productReviewResult" type="productVO">
+		<result property="reviewNum" column="reviewNum" />
+        <result property="productReviewTitle" column="productReviewTitle" />
+        <result property="reviewDate" column="reviewDate" />
+        <result property="productContent" column="productContent" />
+        <result property="reviewFile" column="reviewFile" />
+        <result property="memId" column="memId" />
+	</resultMap>
 
 
 	<!-- 상품 조회 -->
@@ -53,13 +61,6 @@
 		
 		]]>	
 	</insert>
-	<insert id="insertProductOption"  parameterType="java.util.Map">
-		<![CDATA[ 
-			insert into simple.productoption(productNum, option1, option2) 
-			values(#{productNum},#{option1},#{option2})
-		
-		]]>	
-	</insert>
 	
 	
 	
@@ -78,12 +79,13 @@
 			subcategory = #{subcategory},
 			productManufacturer = #{productManufacturer},
 			productOrigin =#{productOrigin}
-			 <if test="productImage!='' and productImage!=null">
-			  , productImage=#{productImage}
+			 <if test="productImage1!='' and productImage1!=null ">
+			  , productImage=#{productImage1}
 			</if>
-			<if test="productContentImage!='' and productContentImage!=null">
-			 ,productContentImage=#{productContentImage}
+			<if test="productContentImage1!='' and productContentImage1!=null ">
+			  , productContentImage=#{productContentImage1}
 			</if>
+
 			where productNum=#{productNum}
 	</update>
 	<!-- 상품삭제 -->
@@ -118,5 +120,24 @@
         order by category;
 		]]>
 	</select> <!-- 검색창에 입력한 키워드를 가져와 그 키워드가 포함된 상품 제목 조회 -->
+	
+	<!-- 상품리뷰 -->
+		<select id="selectAllProductReviewList" resultMap="productReviewResult">
+	<![CDATA[
+			
+			select reviewNum, productNum, memOrderNum , productReviewTitle, reviewDate, productContent, m.memName from member as m right join productReview as a on m.memId=a.memId 
+			where productNum = #{productNum} order by reviewNum desc
+			limit #{pageStart}, #{perPageNum};
+			
+	]]>
+	</select>
+	<select id="selectProductReviewCount" resultType="int"
+		parameterType="int">
+	<![CDATA[
+			
+			select count(*)  from productReview;
+			
+	]]>
+	</select>
 
 </mapper>

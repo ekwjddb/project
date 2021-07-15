@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.simple.product.vo.ProductVO;
 import com.project.simple.board.vo.ArticleVO;
+import com.project.simple.page.Criteria;
 import com.project.simple.product.dao.ProductDAO;
 
 
@@ -71,5 +72,18 @@ public class ProductServiceImpl implements ProductService{
 		return productVO;
 		
 	}
+	
+	public Map<String, Object> listProductReview(Map<String, Object> productMap) throws Exception{
+		List<ProductVO> productReviewList = productDAO.selectAllProductReviewList(productMap);
+		productMap.put("productReviewList", productReviewList);
+
+		return productMap;
+	}
+	
+	public int productReviewCount() throws Exception{
+		int productReviewCount = productDAO.selectProductReviewCount();
+		return productReviewCount;
+	}
+	
 	
 }

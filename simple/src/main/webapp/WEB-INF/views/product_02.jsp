@@ -112,50 +112,91 @@
     }
    
 </style>
-<!-- 수량체크 자바스크립트 -->
-<script language="JavaScript">
-<!--
-var amount;
-function init () {
-	amount = document.form.amount.value;
-	change();
-}
-function add () {
-	hm = document.form.amount;
-	hm.value ++ ;
-}
-function del () {
-	hm = document.form.amount;
-		if (hm.value > 1) {
-			hm.value -- ;
-		}
-}
-function change () {
-	hm = document.form.amount;
-		if (hm.value < 0) {
-			hm.value = 0;
-		}
-}  
-//-->
-</script>
 <script type="text/javascript">
-	function addCartBtn(){
-		var form = document.Chec;
-		if (confirm("장바구니에 담으시겠습니까?")){ //확인
-			
-		} else { //취소
-			return;
+	function add_favorite(productNum) {
+		if(confirm("관심상품에 등록하시겠습니까?"))
+		{
+		$.ajax({
+			type : "post",
+			async : false, //false인 경우 동기식으로 처리한다.
+			url : "${contextPath}/addProductInFavorite.do",
+			data : {
+				productNum:productNum
+				
+			},
+			success : function(data, textStatus) {
+				//alert(data);
+			//	$('#message').append(data);
+				if(data.trim()=='add_success'){
+					alert("관심상품에 등록되었습니다.");	
+				}else if(data.trim()=='already_existed'){
+					alert("이미 관심상품에 등록된 상품입니다.");	
+				}
+				
+			},
+			error : function(data, textStatus) {
+				alert("에러가 발생했습니다."+data);
+			},
+			complete : function(data, textStatus) {
+				//alert("작업을완료 했습니다");
+			}
+		}); //end ajax	
+		}else{
+			return false;
 		}
-		form.submit();
+	}
+	
+	function add_cart(productNum) {
+		if(confirm("장바구니에 등록하시겠습니까?"))
+		{
+		$.ajax({
+			type : "post",
+			async : false, //false인 경우 동기식으로 처리한다.
+			url : "${contextPath}/addProductInCart.do",
+			data : {
+				productNum:productNum
+				
+			},
+			success : function(data, textStatus) {
+				//alert(data);
+			//	$('#message').append(data);
+				if(data.trim()=='add_success'){
+					alert("장바구니에 담았습니다.");	
+				}else if(data.trim()=='already_existed'){
+					alert("이미 장바구니에 등록된 상품입니다.");	
+				}
+				
+			},
+			error : function(data, textStatus) {
+				alert("에러가 발생했습니다."+data);
+			},
+			complete : function(data, textStatus) {
+				//alert("작업을완료 했습니다");
+			}
+		}); //end ajax	
+		}else{
+			return false;
+		}
 	}
 </script>
+<script type="text/javascript"> 
+ function up() { 
+	 var count = document.getElementById("quantity").value; 
+	 document.getElementById("quantity").value = parseInt(count) + 1; 
+	 } 
+ function down() { 
+	 var count = document.getElementById("quantity").value; 
+	 if (count != 1)  {
+		 document.getElementById("quantity").value = parseInt(count) - 1; 
+		 } 
+	 } 
+ </script>
 </head>
-<body onload="init();">
+<body>
 
 	
 	<section class="ftco-section" style="padding-top: 20px; ">
 		<div class="container">
-		<form method="post" id="addCartForm" action="${contextPath}/product/viewProduct.do?productNum=${product.productNum}">
 			<div class="row justify-content-center mb-5 pb-3"
 				style="background-color: #f5f5f5; border: 1px solid #e7e7e7;">
 				<div class="col-md-20 heading-section ftco-animate"
@@ -195,9 +236,13 @@ function change () {
 	
 				<div class="col-md-4 ftco-animate">
 					<div class="blog-entry">
-						<a><img src="${contextPath}/resources/images/image_1.jpg"
-							style="width: 600px; padding-top: 10px; padding-top: 10px; margin-left: -15px; float: left;">
+					<c:choose>	
+						<c:when test="${not empty product.productImage && product.productImage != 'null'}">
+					<input type="hidden" name="OrignProductFile" value="${product.productImage}"class="block-20" />	
+						<a><img style="width: 600px; height:410px; padding-top: 10px; padding-top: 10px; margin-left: -15px; float: left;" src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /><br>
 						</a>
+						</c:when>
+			       </c:choose>
 						<h3 class="heading">
 							<a
 								style="position: absolute; white-space: nowrap; margin-top: 5px; margin-left: 50px; float: left;">판매가ㅤㅤ
@@ -255,36 +300,37 @@ function change () {
 
 					</div>
 				
-                   <form name="form" method="get">
+                   
 					<div>
 						<h3 class="heading">
 							<a
 								style="position: absolute; white-space: nowrap; margin-top: 115px; margin-left: -430px; float: left; font-size: 18px; font-size: 14px;">수량</a>
 						</h3>
 
-						<input type="button" onclick="add();" value=" + " size="3" 
+						<input type="button"  id="up" onclick="up()" value=" + "   size="3"
 							style="width: 25px; position: absolute; white-space: nowrap; margin-top: 109px; margin-left: -380px; float: left; font-size: 18px; font-size: 14px; border: 1px solid grey;">
-						<input type="text" name="amount" value="1" readonly="readonly" onchange="change();"
+						<input type="text"  name="quantity" id="quantity"  value="1" readonly="readonly" 
 							style="position: absolute; white-space: nowrap; margin-top: 108px; margin-left: -350px; float: left; font-size: 18px; font-size: 14px; width: 50px; text-align: center;" />
-						<input type="button" onclick="del();" value=" - " size="3"
+						<input type="button"id="down" onclick="down()" value=" - " size="3"
 							style="width: 25px; position: absolute; white-space: nowrap; margin-top: 109px; margin-left: -295px; float: left; font-size: 18px; font-size: 14px; border: 1px solid grey;">
 						<h3 class="heading" style="padding-left: 950px;padding-top: 100px;text-align: center;width: 400px;">
 							<a><fmt:formatNumber pattern="###,###,###" value="${product.productPrice}"/>원</a>
 						</h3>
 					</div>
-				</form>
-				    <button type="submit" class="btn btn-default"
-						style="background-color: #dcdcdc; float: left; margin-left: 630px; margin-top: 20px; width: 50px; height: 50px; border-radius: 2px;"></button>
+			
+				<input type="hidden" name="productNum" value="${product.productNum}"><a href="javascript:add_favorite('${product.productNum }')">
+				    <button  class="btn btn-default "
+						style="background-color: #dcdcdc; float: left; margin-left: 630px; margin-top: 20px; width: 50px; height: 50px; border-radius: 2px;"></button></a>
+				
 					<button type="submit" class="btn btn-default"
 						style="background-color: #dcdcdc; float: left; margin-left: 700px; margin-top: 20px; width: 280px; height: 50px; border-radius: 2px;">바로구매</button>
-					<button type="submit" class="btn btn-default" onclick="addCartBtn()"
-						style="background-color: #dcdcdc; float: left; margin-left: 1000px; margin-top: -50px; width: 280px; height: 50px; border-radius: 2px;">장바구니</button>
-               
+					<a href="javascript:add_cart('${product.productNum }')">
+					<button type="submit" class="btn btn-default"
+						style="background-color: #dcdcdc; float: left; margin-left: 1000px; margin-top: -50px; width: 280px; height: 50px; border-radius: 2px;">장바구니</button></a>
+     	
+
                 
 				</div>
-
-              </form>
-
 			</div>
 
 
@@ -331,10 +377,8 @@ function change () {
 					<div id="tab1" class="tab_content"
 						style="margin-left: 170px; margin-right: 170px;">
 						<!--Content-->
-						<img
-							src="${contextPath}/resources/images/product/sopiaDetiles.jpg"
-							style="width: 1200px; margin-left: -180px;"> <img
-							src="${contextPath}/resources/images/product/sopiaDetiles2.jpg">
+					<img style="width: 1200px; margin-left: -180px;"
+							src="${contextPath}/download_product1.do?productNum=${product.productNum}&productContentImage=${product.productContentImage}">
 					</div>
 					<div id="tab2" class="tab_content"
 						style="margin-left: 150px; width: 1000px;">
@@ -352,30 +396,10 @@ function change () {
 								<td
 									style="width: 200px; background-color: #212529; color: white;">작성일자</td>
 							</tr>
-							<tr style="border-bottom: 1px solid grey;">
-								<td style="width: 100px;">1</td>
-								<td style="width: 200px;">홍두깨</td>
-								<td style="width: 500px;"><a class="trigger" style="color: black; cursor:pointer;">
-										좋아요좋아요좋아요</a>
-   								<!-- 팝업 될 레이어 --> 
-    								<div class="review" style="text-align: left;">
-      									<div class="review-content">
-           								<span class="close-button" style="margin-bottom:5px;">&times;</span>
-           								<table style="width:800px;">
-           								<tr style="background-color:#212529; ">
-       							   	 	<td> <h3 class="title" style="font-size:17px; text-align:center; 
-       							   	 		height:10px; color:white;">좋아요좋아요좋아요</h3></td>
-       							   	  </tr>
-       							   	  <tr >
-											<td><p >너무 맘에 들어요 좋네요 ~! 만족합니당. 번창하세요~~!!</p>
-											<img src="${contextPath}/resources/images/product/sopia.jpg" style="width:400px;  height:300px; "/>
-											</td>
-										</tr>	
-										 </table>	
-        								</div>
-  							 		 </div>
-  							 		
-						<!-- 상품평 오버랩 스크립트 위로 올리면안됨 -->
+												<c:set var="num" value="${pageMaker.totalCount - ((pageNum-1) * 10) }"/>
+						<c:forEach var="productReview" items="${productMap.productReviewList}"
+						>
+												<!-- 상품평 오버랩 스크립트 위로 올리면안됨 -->
    						 			<script type="text/javascript">
 										var modal = document.querySelector(".review");
 	    								var trigger = document.querySelector(".trigger");
@@ -395,22 +419,66 @@ function change () {
 	 									 		  cancel.addEventListener("click", toggleModal);
 	   											 window.addEventListener("click", windowOnClick);
 											</script>
-						<!-- 상품평 오버랩 스크립트 위로 올리면안됨 끝끝 -->				
+						<!-- 상품평 오버랩 스크립트 위로 올리면안됨 끝끝 -->		
+							<tr style="border-bottom: 1px solid grey;">
+								<td style="width: 100px;">1</td>
+								<td style="width: 200px;">홍두깨</td>
+								<td style="width: 500px;"><a class="trigger" style="color: black; cursor:pointer;">
+										${productReview.productReviewTitle}</a>
+   								<!-- 팝업 될 레이어 --> 
+    								<div class="review" style="text-align: left;">
+      									<div class="review-content">
+           								<span class="close-button" style="margin-bottom:5px;">&times;</span>
+           								<table style="width:800px;">
+           								<tr style="background-color:#212529; ">
+       							   	 	<td> <h3 class="title" style="font-size:17px; text-align:center; 
+       							   	 		height:10px; color:white;">${productReview.productReviewTitle}</h3></td>
+       							   	  </tr>
+       							   	  <tr >
+											<td><p >${productReview.productContent}</p>
+											<img src="${contextPath}/resources/images/product/sopia.jpg" style="width:400px;  height:300px; "/>
+											</td>
+										</tr>	
+										 </table>	
+        								</div>
+  							 		 </div>
+  							 		
+		
 									</td>
 										
 									
 									<td style="width: 200px;">2021-06-12</td>
 							</tr>
-							<tr style="border-bottom: 1px solid grey;">
-								<td style="width: 100px;">2</td>
-								<td style="width: 200px;">나애리</td>
-								<td style="width: 500px;"><a href="#" style="color: black;">
-										별로별로별로 그냥그럼</a></td>
-								<td style="width: 200px;">2021-06-12</td>
-							</tr>
+							</c:forEach>
+							<c:set var="num" value="${num-1}"></c:set>
 						</table>
 
+		<div class="page_wrap" style="margin-left: 80px; margin-top: 60px;">
+			<div class="page_nation">
 
+				<c:if test="${pageMaker.prev}">
+
+					<a class="arrow prev"
+						href='<c:url value="/product/viewProduct.do?productNum=${productVO.productNum}&page=${pageMaker.startPage-1 }"/>'><i
+						class="fa fa-chevron-left"></i></a>
+
+				</c:if>
+				<c:forEach begin="${pageMaker.startPage }"
+					end="${pageMaker.endPage }" var="pageNum">
+
+					<a href='<c:url value="/product/viewProduct.do?productNum=${product.productNum}&page=${pageNum }"/>'><i
+						class="fa">${pageNum }</i></a>
+
+				</c:forEach>
+				<c:if test="${pageMaker.next && pageMaker.endPage >0 }">
+
+					<a class="arrow next"
+						href='<c:url value="/product/viewProduct.do?productNum=${product.productNum}&page=${pageMaker.endPage+1 }"/>'><i
+						class="fa fa-chevron-right"></i></a>
+
+				</c:if> 
+			</div>
+		</div>
 						<table class="table"
 							style="margin-top: 20px; text-align: center; width: 1000px; margin-left: -80px; margin-bottom: 1px;">
 							<tr>
