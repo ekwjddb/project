@@ -154,7 +154,8 @@
 							<br>
 							<input type="checkbox" name="RowCheck" style="zoom: 2.0;"  value="${item.productNum}"></td>
 							<td scope="col">
-							<img  class="block-20" style="width: 130px; height:130px;"src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}" id="preview" /></td>
+							<a href="${contextPath}/product/viewProduct.do?productNum=${item.productNum}">
+							<img  class="block-20" style="width: 130px; height:130px;"src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}" id="preview" /></a></td>
 							<td scope="col"><br>
 								<br> <br><a href="${contextPath}/product/viewProduct.do?productNum=${item.productNum}">${item.productName}</a></td>
 							<td scope="col" align=center><br>

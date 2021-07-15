@@ -469,8 +469,8 @@ public class ProductControllerImpl implements ProductController {
 		List<ProductVO> quickList; //최근 본 상품 저장 ArrayList
 		List<ProductVO> quickListAll;
 		
-		MemberVO memberVO=(MemberVO)session.getAttribute("member");
-		String memId=memberVO.getmemId();
+		//MemberVO memberVO=(MemberVO)session.getAttribute("member");
+		//String memId=memberVO.getmemId();
 		
 		quickList=(ArrayList<ProductVO>)session.getAttribute("quickList");//세션에 저장된 최근 본 상품 목록을 가져옴
 		quickListAll=(ArrayList<ProductVO>)session.getAttribute("quickListAll");

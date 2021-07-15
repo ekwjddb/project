@@ -160,7 +160,8 @@ $('document').ready(function() {
 					<c:choose>		
 				<c:when test="${not empty product.productImage && product.productImage != 'null'}">
 					<input type="hidden" name="OrignProductFile" value="${product.productImage}"class="block-20" />
-				   <img  class="block-20" style=" width: 346px;"src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /><br>
+					<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}">
+				   <img  class="block-20" style=" width: 346px;"src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /></a><br>
 						</c:when>
 			</c:choose>
 						<div class="text d-flex py-1">

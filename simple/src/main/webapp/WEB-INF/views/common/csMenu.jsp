@@ -13,6 +13,7 @@
         } else {
         	location.href='${contextPath}/board/listInquiry.do'
         }
+        
     }
 </script>
 </head>

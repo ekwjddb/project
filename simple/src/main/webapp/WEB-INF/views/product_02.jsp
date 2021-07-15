@@ -116,64 +116,73 @@
 	function add_favorite(productNum) {
 		if(confirm("관심상품에 등록하시겠습니까?"))
 		{
-		$.ajax({
-			type : "post",
-			async : false, //false인 경우 동기식으로 처리한다.
-			url : "${contextPath}/addProductInFavorite.do",
-			data : {
-				productNum:productNum
+			if(${isLogOn != true}){
+			      alert("로그인이 필요합니다.");
+			}else{
+	    	    $.ajax({
+		        	type : "post",
+		        	async : false, //false인 경우 동기식으로 처리한다.
+		        	url : "${contextPath}/addProductInFavorite.do",
+		        	data : {
+		        		productNum:productNum
 				
-			},
-			success : function(data, textStatus) {
-				//alert(data);
-			//	$('#message').append(data);
-				if(data.trim()=='add_success'){
-					alert("관심상품에 등록되었습니다.");	
-				}else if(data.trim()=='already_existed'){
-					alert("이미 관심상품에 등록된 상품입니다.");	
-				}
-				
-			},
-			error : function(data, textStatus) {
-				alert("에러가 발생했습니다."+data);
-			},
-			complete : function(data, textStatus) {
-				//alert("작업을완료 했습니다");
+	    	    	},
+	    	    	success : function(data, textStatus) {
+		        		//alert(data);
+		            	//	$('#message').append(data);
+		        		if(data.trim()=='add_success'){
+		        			alert("관심상품에 등록되었습니다.");	
+		        		}else if(data.trim()=='already_existed'){
+			    	    	alert("이미 관심상품에 등록된 상품입니다.");	
+			        	}
+		     		
+		        	},
+		        	error : function(data, textStatus) {
+		        		alert("에러가 발생했습니다."+data);
+	    	    	},
+	    	    	complete : function(data, textStatus) {
+	    	     		//alert("작업을완료 했습니다");
+	    	    	}
+	        	}); //end ajax	
 			}
-		}); //end ajax	
 		}else{
 			return false;
 		}
+		
 	}
 	
 	function add_cart(productNum) {
 		if(confirm("장바구니에 등록하시겠습니까?"))
 		{
-		$.ajax({
-			type : "post",
-			async : false, //false인 경우 동기식으로 처리한다.
-			url : "${contextPath}/addProductInCart.do",
-			data : {
-				productNum:productNum
+			if(${isLogOn != true }){
+			      alert("로그인이 필요합니다.");
+			}else{
+		        $.ajax({
+		        	type : "post",
+		        	async : false, //false인 경우 동기식으로 처리한다.
+		        	url : "${contextPath}/addProductInCart.do",
+		        	data : {
+		        		productNum:productNum
 				
-			},
-			success : function(data, textStatus) {
-				//alert(data);
-			//	$('#message').append(data);
-				if(data.trim()=='add_success'){
-					alert("장바구니에 담았습니다.");	
-				}else if(data.trim()=='already_existed'){
-					alert("이미 장바구니에 등록된 상품입니다.");	
-				}
-				
-			},
-			error : function(data, textStatus) {
-				alert("에러가 발생했습니다."+data);
-			},
-			complete : function(data, textStatus) {
-				//alert("작업을완료 했습니다");
+			        },
+			        success : function(data, textStatus) {
+			        	//alert(data);
+		            	//	$('#message').append(data);
+			        	if(data.trim()=='add_success'){
+			        		alert("장바구니에 담았습니다.");	
+		        		}else if(data.trim()=='already_existed'){
+		        			alert("이미 장바구니에 등록된 상품입니다.");	
+		    	    	}
+		  		
+		        	},
+		        	error : function(data, textStatus) {
+			        	alert("에러가 발생했습니다."+data);
+		        	},
+		        	complete : function(data, textStatus) {
+			        	//alert("작업을완료 했습니다");
+			        }
+		        }); //end ajax	
 			}
-		}); //end ajax	
 		}else{
 			return false;
 		}

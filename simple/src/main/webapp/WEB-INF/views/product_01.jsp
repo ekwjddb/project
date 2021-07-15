@@ -114,8 +114,8 @@
 				</c:when>
 				<c:otherwise>
 				<c:forEach var="item" items="${quickList}" varStatus="itemNum">
-				<li>
-					<img src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}" style="width: 100px; height: 100px; padding-top: 10px; margin-left: -30px;">
+				<li><a href="${contextPath}/product/viewProduct.do?productNum=${item.productNum}">
+					<img src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}" style="width: 100px; height: 100px; padding-top: 10px; margin-left: -30px;"></a>
 				</li>
 		
 			
@@ -192,7 +192,8 @@
 					<c:choose>		
 				<c:when test="${not empty product.productImage && product.productImage != 'null'}">
 					<input type="hidden" name="OrignProductFile" value="${product.productImage}"class="block-20" />
-				   <img  class="block-20" style="width: 346px;"src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /><br>
+					<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}">
+				   <img  class="block-20" style="width: 346px;"src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /></a><br>
 						</c:when>
 			</c:choose>
 						<div class="text d-flex py-1">
