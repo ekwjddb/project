@@ -258,7 +258,9 @@
 
 	//비회원 주문조회
 	function Non_order_Inquiry() {
-
+		
+	
+		
 		var form = document.Non_order;
 		//주문번호 숫자만 입력
 		for (var i = 0; i < form.nonMemOrderNum.value.length; i++) {
@@ -292,7 +294,7 @@
 			alert("주문 비밀번호를 입력해주세요!");
 			form.nonMemPwd.focus();
 		} else {
-
+			
 			form.submit();
 
 		}
@@ -417,7 +419,7 @@
 										size="18" style="margin-left: 13px;">
 								</p>
 								<p>
-									주문비밀번호<input type="text" name="nonMemPwd" size="18">
+									주문비밀번호<input  type="text"name="nonMemPwd" size="18">
 								</p>
 							</div>
 						</div>

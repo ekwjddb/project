@@ -5,8 +5,9 @@ import org.springframework.stereotype.Component;
 @Component("nonmemberVO")
 public class NonmemberVO {
 	
+	private int nonMemOrderSeqNum;         //비회원 주문 상품 일련 번호
+	private String productNum;             //상품 번호
 	private int nonMemOrderNum;            //비회원 주문 번호
-	private int nonMemCartId;              //비회원 장바구니 번호
 	private String nonMemName;             //비회원 주문자
 	private String nonMemPwd;             //비회원 주문 비밀번호
 	private String nonEmail;             //비회원 이메일
@@ -18,24 +19,34 @@ public class NonmemberVO {
 	private String nonMemOrderMsg;             //주문 메시지
 	private String nonMemDepositorName;             //
 	private String nonMemPaymentMethod;             //지불 방법
-	private String nonMemCardSelect;             //카드선택
-	private int totalPrice;             //총 가격
+	private int totalPrice;                   //총 가격
 	private String nonMemOrderDate;             //주문 날짜
+	private int productCnt;
+	private String productPrice;
+	private String productImage;
+	private String currentStatus;
+	private String productName;
 	
 	public NonmemberVO() {
 
+	}
+	public int getnonMemOrderSeqNum() {
+		return nonMemOrderSeqNum;
+	}
+	public void setnonMemOrderSeqNum(int nonMemOrderSeqNum) {
+		this.nonMemOrderSeqNum = nonMemOrderSeqNum;
+	}
+	public String getproductNum() {
+		return productNum;
+	}
+	public void setproductNum(String productNum) {
+		this.productNum = productNum;
 	}
 	public int getnonMemOrderNum() {
 		return nonMemOrderNum;
 	}
 	public void setnonMemOrderNum(int nonMemOrderNum) {
 		this.nonMemOrderNum = nonMemOrderNum;
-	}
-	public int getnonMemCartId() {
-		return nonMemCartId;
-	}
-	public void setnonMemCartId(int nonMemCartId) {
-		this.nonMemCartId = nonMemCartId;
 	}
 	public String getnonMemName() {
 		return nonMemName;
@@ -103,12 +114,6 @@ public class NonmemberVO {
 	public void setnonMemPaymentMethod(String nonMemPaymentMethod) {
 		this.nonMemPaymentMethod = nonMemPaymentMethod;
 	}
-	public String getnonMemCardSelect() {
-		return nonMemCardSelect;
-	}
-	public void setnonMemCardSelect(String nonMemCardSelect) {
-		this.nonMemCardSelect = nonMemCardSelect;
-	}
 	public int gettotalPrice() {
 		return totalPrice;
 	}
@@ -121,6 +126,38 @@ public class NonmemberVO {
 	public void setnonMemOrderDate(String nonMemOrderDate) {
 		this.nonMemOrderDate = nonMemOrderDate;
 	}
+	public int getproductCnt() {
+		return productCnt;
+	}
+	public void setproductCnt(int productCnt) {
+		this.productCnt = productCnt;
+	}
+	public String getproductPrice() {
+		return productPrice;
+	}
+	public void setproductPrice(String productPrice) {
+		this.productPrice = productPrice;
+	}
+	public String getproductImage() {
+		return productImage;
+	}
+	public void setproductImage(String productImage) {
+		this.productImage = productImage;
+	}
+	public String getcurrentStatus() {
+		return currentStatus;
+	}
+	public void setcurrentStatus(String currentStatus) {
+		this.currentStatus = currentStatus;
+	}
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 	
 
 }

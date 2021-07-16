@@ -1,5 +1,7 @@
 package com.project.simple.nonmember.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -17,9 +19,11 @@ public class NonmemberDAOImpl implements NonmemberDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public NonmemberVO nonmemberorderById(NonmemberVO nonmemberVO) throws DataAccessException {
-		NonmemberVO vo = sqlSession.selectOne("mapper.nonmember.nonmemberorderById", nonmemberVO);
-		return vo;
+	public List<NonmemberVO> nonmemberorderById(NonmemberVO nonmemberVO) throws DataAccessException {
+		List nonOrderLookupList= sqlSession.selectList("mapper.nonmember.nonmemberorderById", nonmemberVO);
+		System.out.println(nonOrderLookupList);
+		return nonOrderLookupList;
 	}
+
 
 }

@@ -553,7 +553,6 @@ public class ProductControllerImpl implements ProductController {
 		mav.addObject("productReviewList", productReviewList);
 		mav.addObject("pageMaker", pageMaker);
 		mav.addObject("pageNum", pageNum);
-
 		
 		return mav;
 	}*/

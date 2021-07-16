@@ -1,5 +1,7 @@
 package com.project.simple.nonmember.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,10 @@ public class NonmemberServiceImpl implements NonmemberService{
 	private NonmemberDAO nonmemberDAO;
 
 	@Override
-	public NonmemberVO order_lookup(NonmemberVO nonmemberVO) throws Exception {
+	public List<NonmemberVO> order_lookup(NonmemberVO nonmemberVO) throws Exception {
 		return nonmemberDAO.nonmemberorderById(nonmemberVO);
 	}
+
+	
 
 }
