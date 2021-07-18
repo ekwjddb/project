@@ -165,7 +165,7 @@
 						<td scope="col">${member.logintype }</td>
 						<td scope="col">${member.memRegdate}</td>
 						<td scope="col"><button type="button"class="btn btn-dark">수정</button></td>
-						<td scope="col"><button type="button" onclick="location.href='${contextPath}/deletemember.do'" class="btn btn-dark">삭제</button></td>
+						<td scope="col"><button type="button" onclick="location.href='${contextPath}/admin_removeMember.do'" class="btn btn-dark">삭제</button></td>
 					</tr>
 					</c:forEach>
 					</c:when>

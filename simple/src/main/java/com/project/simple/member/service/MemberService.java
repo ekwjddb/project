@@ -28,6 +28,8 @@ public interface MemberService{
 	public Map<String, Object> memberSearch(Map<String, Object> memberSearchMap)throws Exception;
 
 	public int memberSearchCount(Map<String, Object> search) throws Exception;
+
+	public MemberVO admin_removeMember(String memId) throws DataAccessException;
 	
 	
 }

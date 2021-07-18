@@ -80,8 +80,8 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public int deleteMemberlist(String memId) throws DataAccessException {
-		int result = sqlSession.delete("mapper.member.deleteMemberlist",memId);
+	public MemberVO deleteMemberlist(String memId) throws DataAccessException {
+		MemberVO result = sqlSession.selectOne("mapper.member.deleteMemberlist",memId);
 		return result;
 	}
 }

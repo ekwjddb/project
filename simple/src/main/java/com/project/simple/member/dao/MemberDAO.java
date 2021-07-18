@@ -19,6 +19,6 @@ public interface MemberDAO{
 	public MemberVO loginBynaver(MemberVO memberVO) throws DataAccessException;
 	public List<MemberVO> memberSearchList(Map<String, Object> memberSearchMap)throws DataAccessException;
 	public int memberSearchCount(Map<String, Object> search) throws DataAccessException;
-	public int deleteMemberlist(String memId) throws DataAccessException;
+	public MemberVO deleteMemberlist(String memId) throws DataAccessException;
 	
 }

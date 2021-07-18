@@ -75,4 +75,9 @@ public class MemberServiceImpl implements MemberService{
 		int memberSearchCount = memberDAO.memberSearchCount(search);
 		return memberSearchCount;
 	}
+	@Override
+	public MemberVO admin_removeMember(String memId) throws DataAccessException {
+		return memberDAO.deleteMemberlist(memId);
+		
+	}
 }

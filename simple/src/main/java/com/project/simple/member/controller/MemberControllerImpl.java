@@ -280,8 +280,7 @@ public class MemberControllerImpl implements MemberController {
 		pageMaker.setTotalCount(memberCount);
 		mav.addObject("membersList", membersList);
 		mav.addObject("pageMaker", pageMaker);
-		System.out.println(membersList);
-		System.out.println(pageMaker);
+
 		return mav;
 	}
 
@@ -313,5 +312,18 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 
 	}
+	
+	@RequestMapping(value = "/admin_removeMember.do", method = RequestMethod.GET)
+	private ModelAndView admin_removeMember(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response)  throws Exception{
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		memberVO = memberService.admin_removeMember(memId);
+		mav.addObject("memId", memberVO);
+		System.out.println(memId);
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	
 
 }
