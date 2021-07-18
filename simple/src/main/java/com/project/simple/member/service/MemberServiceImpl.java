@@ -1,6 +1,7 @@
 package com.project.simple.member.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.member.dao.MemberDAO;
 import com.project.simple.member.vo.MemberVO;
+import com.project.simple.page.Criteria;
 
 @Service("memberService")
 @Transactional(propagation = Propagation.REQUIRED)
@@ -18,9 +21,8 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDAO memberDAO;
 	
 	@Override
-	public List listMembers() throws DataAccessException{
-		List membersList = null;
-		membersList = memberDAO.selectAllMemberList();
+	public List<MemberVO> listMembers(Criteria cri) throws DataAccessException{
+		List<MemberVO> membersList = memberDAO.selectAllMemberList(cri);
 		return membersList;
 	}
 	@Override
@@ -53,5 +55,24 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int modMember(MemberVO modmember) throws DataAccessException {
 		return memberDAO.updateMember(modmember);
+	}
+	@Override
+	public int memberCount() throws Exception {
+		int memberCount = memberDAO.selectMemberCount();
+		return memberCount;
+	}
+	@Override
+	public Map<String, Object> memberSearch(Map<String, Object> memberSearchMap) throws Exception {
+		List<MemberVO> memberSearchList=memberDAO.memberSearchList(memberSearchMap);
+
+		memberSearchMap.put("memberSearchList", memberSearchList);
+		
+
+		return memberSearchMap;
+	}
+	@Override
+	public int memberSearchCount(Map<String, Object> search) throws Exception {
+		int memberSearchCount = memberDAO.memberSearchCount(search);
+		return memberSearchCount;
 	}
 }

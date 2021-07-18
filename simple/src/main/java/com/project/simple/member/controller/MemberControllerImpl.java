@@ -2,7 +2,9 @@ package com.project.simple.member.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpSession;
 
 import com.project.simple.member.service.MemberService;
 import com.project.simple.member.vo.MemberVO;
+import com.project.simple.page.Criteria;
+import com.project.simple.page.PageMaker;
 
 /**
  * Handles requests for the application home page.
@@ -39,7 +43,7 @@ public class MemberControllerImpl implements MemberController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 
-		return "main";
+		return "admin_listmember";
 	}
 
 	// 멤버로그인작업 ppt226
@@ -265,9 +269,49 @@ public class MemberControllerImpl implements MemberController {
 	}
 
 	@Override
-	public ModelAndView listMembers(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping(value = "/admin_listmember.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView listMembers(Criteria cri, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		List<MemberVO> membersList = memberService.listMembers(cri);
+		int memberCount = memberService.memberCount();
+		ModelAndView mav = new ModelAndView(viewName);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(memberCount);
+		mav.addObject("membersList", membersList);
+		mav.addObject("pageMaker", pageMaker);
+		System.out.println(membersList);
+		System.out.println(pageMaker);
+		return mav;
+	}
+
+	@Override
+	@RequestMapping(value = "/admin_listmember/memberSearch.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView memberSearch(@RequestParam("search") String search, @RequestParam("searchType") String searchType,
+			Criteria cri, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView(viewName);
+
+		Map<String, Object> memberSearchMap = new HashMap<String, Object>();
+		int pageStart = cri.getPageStart();
+		int perPageNum = cri.getPerPageNum();
+		memberSearchMap.put("pageStart", pageStart);
+		memberSearchMap.put("perPageNum", perPageNum);
+		memberSearchMap.put("search", search);
+		memberSearchMap.put("searchType", searchType);
+		memberSearchMap = memberService.memberSearch(memberSearchMap);
+		int memberSearchCount = memberService.memberSearchCount(memberSearchMap);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		int pageNum = pageMaker.getCri().getPage();
+		memberSearchMap.put("pageNum", pageNum);
+		pageMaker.setTotalCount(memberSearchCount);
+		mav.addObject("memberSearchMap", memberSearchMap);
+		mav.addObject("pageMaker", pageMaker);
+		mav.addObject("pageNum", pageNum);
+
+		return mav;
+
 	}
 
 }
