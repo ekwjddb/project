@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.page.Criteria;
+import com.project.simple.product.page.Criteria1;
 import com.project.simple.product.vo.ProductVO;
 
 @Repository("productDAO")
@@ -26,7 +27,7 @@ public class ProductDAOImpl implements ProductDAO{
 		return productList;
 	}
 	@Override
-	public List<ProductVO> admin_selectAllProductList(Criteria cri) throws DataAccessException{
+	public List<ProductVO> admin_selectAllProductList(Criteria1 cri) throws DataAccessException{
 		List<ProductVO> productList = sqlSession.selectList("mapper.product.admin_selectAllProductList", cri);
 		return productList;
 	}

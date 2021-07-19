@@ -36,6 +36,8 @@ import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.member.vo.MemberVO;
 import com.project.simple.page.Criteria;
 import com.project.simple.page.PageMaker;
+import com.project.simple.product.page.Criteria1;
+import com.project.simple.product.page.PageMaker1;
 import com.project.simple.product.service.ProductService;
 import com.project.simple.product.vo.ProductVO;
 
@@ -237,20 +239,20 @@ public class ProductControllerImpl implements ProductController {
 
 	@Override // 관리자 상품목록 조회
 	@RequestMapping(value = "/product/admin_listProduct.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView admin_listProduct(Criteria cri, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView admin_listProduct(Criteria1 cri, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		List<ProductVO> admin_productList = productService.admin_listProduct(cri);
 		int productCount = productService.productCount();
 		ModelAndView mav = new ModelAndView(viewName);
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(productCount);
-		int pageNum = pageMaker.getCri().getPage();
+		PageMaker1 pageMaker1 = new PageMaker1();
+		pageMaker1.setCri(cri);
+		pageMaker1.setTotalCount(productCount);
+		int pageNum = pageMaker1.getCri().getPage();
 		
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("admin_productList", admin_productList);
-		mav.addObject("pageMaker", pageMaker);
-		System.out.println(pageMaker);
+		mav.addObject("pageMaker1", pageMaker1);
+		System.out.println(pageMaker1);
 		
 		return mav;
 	}

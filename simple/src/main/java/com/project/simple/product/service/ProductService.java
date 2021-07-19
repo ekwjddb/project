@@ -7,11 +7,12 @@ import org.springframework.dao.DataAccessException;
 
 import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.page.Criteria;
+import com.project.simple.product.page.Criteria1;
 import com.project.simple.product.vo.ProductVO;
 
 public interface ProductService {
 	public List<ProductVO> listProduct(Map<String, Object> ProductMap) throws Exception;
-	public List<ProductVO> admin_listProduct(Criteria cri) throws DataAccessException;
+	public List<ProductVO> admin_listProduct(Criteria1 cri) throws DataAccessException;
 	public int addProduct(Map productMap) throws DataAccessException;
 	public void removeProduct(String productNum) throws Exception;
 	public ProductVO viewProduct(String productNum) throws Exception;

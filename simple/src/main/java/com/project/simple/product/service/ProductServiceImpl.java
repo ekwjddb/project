@@ -13,6 +13,7 @@ import com.project.simple.product.vo.ProductVO;
 import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.page.Criteria;
 import com.project.simple.product.dao.ProductDAO;
+import com.project.simple.product.page.Criteria1;
 
 
 @Service("productService")
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService{
 		return productList;
 	}
 	@Override
-	public List<ProductVO> admin_listProduct(Criteria cri) throws DataAccessException {
+	public List<ProductVO> admin_listProduct(Criteria1 cri) throws DataAccessException {
 		List<ProductVO>  productList = productDAO.admin_selectAllProductList(cri);
 		return productList;
 	}

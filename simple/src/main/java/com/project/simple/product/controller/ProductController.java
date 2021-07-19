@@ -11,11 +11,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.simple.page.Criteria;
+import com.project.simple.product.page.Criteria1;
 import com.project.simple.product.vo.ProductVO;
 
 public interface ProductController {
 	public ModelAndView listProduct(@RequestParam("sort") String sort, @RequestParam("subsort") String subsort, HttpServletRequest request, HttpServletResponse response)throws Exception;
-	public ModelAndView admin_listProduct(Criteria cri,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView admin_listProduct(Criteria1 cri,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ResponseEntity removeProduct(@RequestParam("productNum") String productNum, HttpServletRequest request, HttpServletResponse response)
 			throws Exception;

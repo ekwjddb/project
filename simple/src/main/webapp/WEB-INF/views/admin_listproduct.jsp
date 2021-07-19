@@ -188,24 +188,24 @@ $('document').ready(function() {
 		<div class="page_wrap" style="margin-left: 80px; margin-top: 60px;">
 			<div class="page_nation" style="text-align: center;">
 
-				<c:if test="${pageMaker.prev}">
+				<c:if test="${pageMaker1.prev}">
 
 					<a class="arrow prev"
-						href='<c:url value="/product/admin_listProduct.do?page=${pageMaker.startPage-1 }"/>'><i
+						href='<c:url value="/product/admin_listProduct.do?page=${pageMaker1.startPage-1 }"/>'><i
 						class="fa fa-chevron-left"></i></a>
 
 				</c:if>
-				<c:forEach begin="${pageMaker.startPage }"
-					end="${pageMaker.endPage }" var="pageNum">
+				<c:forEach begin="${pageMaker1.startPage }"
+					end="${pageMaker1.endPage }" var="pageNum">
 
 					<a href='<c:url value="/product/admin_listProduct.do?page=${pageNum }"/>'><i
 						class="fa">${pageNum }</i></a>
 
 				</c:forEach>
-				<c:if test="${pageMaker.next && pageMaker.endPage >0 }">
+				<c:if test="${pageMaker1.next && pageMaker1.endPage >0 }">
 
 					<a class="arrow next"
-						href='<c:url value="/product/admin_listProduct.do?page=${pageMaker.endPage+1 }"/>'><i
+						href='<c:url value="/product/admin_listProduct.do?page=${pageMaker1.endPage+1 }"/>'><i
 						class="fa fa-chevron-right"></i></a>
 
 				</c:if>
