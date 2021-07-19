@@ -11,7 +11,7 @@ import com.project.simple.product.vo.ProductVO;
 
 public interface ProductDAO {
 	public List<ProductVO> selectAllProductList(Map<String, Object> ProductMap) throws DataAccessException;
-	public List<ProductVO> admin_selectAllProductList() throws DataAccessException;
+	public List<ProductVO> admin_selectAllProductList(Criteria cri) throws DataAccessException;
 	
 	public int insertProduct(Map productMap) throws DataAccessException;
 	public void deleteProduct(String productNum) throws DataAccessException;
@@ -22,5 +22,6 @@ public interface ProductDAO {
 	
 	public List<ProductVO> selectAllProductReviewList(Map<String, Object> productMap) throws DataAccessException;
 	public int selectProductReviewCount() throws DataAccessException;
+	public int selectProductCount() throws DataAccessException;
 	
 }

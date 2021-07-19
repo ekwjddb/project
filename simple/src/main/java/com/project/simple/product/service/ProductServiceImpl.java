@@ -27,8 +27,8 @@ public class ProductServiceImpl implements ProductService{
 		return productList;
 	}
 	@Override
-	public List<ProductVO> admin_listProduct() throws Exception {
-		List<ProductVO>  productList = productDAO.admin_selectAllProductList();
+	public List<ProductVO> admin_listProduct(Criteria cri) throws DataAccessException {
+		List<ProductVO>  productList = productDAO.admin_selectAllProductList(cri);
 		return productList;
 	}
 	@Override
@@ -84,6 +84,17 @@ public class ProductServiceImpl implements ProductService{
 		int productReviewCount = productDAO.selectProductReviewCount();
 		return productReviewCount;
 	}
-	
+
+	@Override
+	public int productCount() throws Exception {
+		int productCount = productDAO.selectProductCount();
+		return productCount;
+	}
+	@Override
+	public Map<String, Object> productSearch(Map<String, Object> productSearchMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

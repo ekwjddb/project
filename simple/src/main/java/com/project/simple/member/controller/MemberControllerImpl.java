@@ -267,6 +267,15 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName(viewName);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/login_03.do", method = RequestMethod.GET)
+	private ModelAndView login_03(HttpServletRequest request, HttpServletResponse response) {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		return mav;
+	}
+
 
 	@Override
 	@RequestMapping(value = "/admin_listmember.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -278,6 +287,9 @@ public class MemberControllerImpl implements MemberController {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(memberCount);
+		int pageNum = pageMaker.getCri().getPage();
+
+		mav.addObject("pageNum", pageNum);
 		mav.addObject("membersList", membersList);
 		mav.addObject("pageMaker", pageMaker);
 
@@ -297,8 +309,11 @@ public class MemberControllerImpl implements MemberController {
 		memberSearchMap.put("pageStart", pageStart);
 		memberSearchMap.put("perPageNum", perPageNum);
 		memberSearchMap.put("search", search);
+		System.out.println(search);
 		memberSearchMap.put("searchType", searchType);
+		System.out.println(searchType);
 		memberSearchMap = memberService.memberSearch(memberSearchMap);
+		System.out.println(memberSearchMap);
 		int memberSearchCount = memberService.memberSearchCount(memberSearchMap);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
@@ -308,7 +323,7 @@ public class MemberControllerImpl implements MemberController {
 		mav.addObject("memberSearchMap", memberSearchMap);
 		mav.addObject("pageMaker", pageMaker);
 		mav.addObject("pageNum", pageNum);
-
+		
 		return mav;
 
 	}
@@ -320,7 +335,7 @@ public class MemberControllerImpl implements MemberController {
 		memberVO = memberService.admin_removeMember(memId);
 		mav.addObject("memId", memberVO);
 		System.out.println(memId);
-		mav.setViewName(viewName);
+		mav.setViewName("redirect:/admin_listmember.do");
 		return mav;
 	}
 	

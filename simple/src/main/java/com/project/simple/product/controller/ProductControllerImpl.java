@@ -236,12 +236,22 @@ public class ProductControllerImpl implements ProductController {
 	}
 
 	@Override // 관리자 상품목록 조회
-	@RequestMapping(value = "product/admin_listProduct.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView admin_listProduct(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "/product/admin_listProduct.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView admin_listProduct(Criteria cri, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
-		List<ProductVO> admin_productList = productService.admin_listProduct();
+		List<ProductVO> admin_productList = productService.admin_listProduct(cri);
+		int productCount = productService.productCount();
 		ModelAndView mav = new ModelAndView(viewName);
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(productCount);
+		int pageNum = pageMaker.getCri().getPage();
+		
+		mav.addObject("pageNum", pageNum);
 		mav.addObject("admin_productList", admin_productList);
+		mav.addObject("pageMaker", pageMaker);
+		System.out.println(pageMaker);
+		
 		return mav;
 	}
 

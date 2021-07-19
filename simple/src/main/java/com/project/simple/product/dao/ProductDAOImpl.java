@@ -26,8 +26,8 @@ public class ProductDAOImpl implements ProductDAO{
 		return productList;
 	}
 	@Override
-	public List<ProductVO> admin_selectAllProductList() throws DataAccessException{
-		List<ProductVO> productList = sqlSession.selectList("mapper.product.admin_selectAllProductList");
+	public List<ProductVO> admin_selectAllProductList(Criteria cri) throws DataAccessException{
+		List<ProductVO> productList = sqlSession.selectList("mapper.product.admin_selectAllProductList", cri);
 		return productList;
 	}
 	
@@ -76,6 +76,12 @@ public class ProductDAOImpl implements ProductDAO{
 		int productReviewCount = sqlSession.selectOne("mapper.product.selectProductReviewCount");
 
 		return productReviewCount;
+	}
+	@Override
+	public int selectProductCount() throws DataAccessException {
+		int productCount = sqlSession.selectOne("mapper.product.selectProductCount");
+
+		return productCount;
 	}
 	
 

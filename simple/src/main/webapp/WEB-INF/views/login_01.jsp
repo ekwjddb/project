@@ -365,12 +365,13 @@
 										placeholder="비밀번호를 입력하세요">
 								</div>
 							</div>
+						</form>
 
 							<div class="id_save_find">
 								<input type="checkbox" name="save_id" id="chk_save_id"
 									value="on"> <label id="id_pwd_save" for="saveIdPwd"
 									class="on">아이디/비밀번호 저장</label> <span id="find_id_pwd">
-									<button onclick="location.href='Login-03.jsp'"
+									<button onclick="location.href='${contextPath}/login_03.do'"
 										style="border: 1px solid grey; color: black; margin-right: 1px;"
 										class="btn_member_id_pwd">아이디/비밀번호 찾기</button>
 								</span>
@@ -380,7 +381,7 @@
 								style="background-color: #212529; color: white; margin-left: -2px;">
 
 							</span>
-							</form>
+							
 							<section class="Easy-sgin-in-wrap3">
 								<ul class="sign-button-list3">
 									<li><button onclick="location.href='${url}'"

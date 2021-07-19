@@ -48,7 +48,18 @@
    <!-- 관리자 상품 조회 -->
 	<select id="admin_selectAllProductList" resultMap="proResult">
 	<![CDATA[
-		select * from product order by category;
+		select * from simple.product order by category
+		limit #{pageStart}, #{perPageNum};
+	]]>
+	</select>
+		<select id="selectProductCount" resultType="int"
+		parameterType="int">
+	<![CDATA[
+			
+			select count(*) 
+			from simple.product;
+			
+
 	]]>
 	</select>
 	

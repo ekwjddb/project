@@ -78,6 +78,6 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberVO admin_removeMember(String memId) throws DataAccessException {
 		return memberDAO.deleteMemberlist(memId);
-		
+
 	}
 }

@@ -15,7 +15,7 @@ import com.project.simple.product.vo.ProductVO;
 
 public interface ProductController {
 	public ModelAndView listProduct(@RequestParam("sort") String sort, @RequestParam("subsort") String subsort, HttpServletRequest request, HttpServletResponse response)throws Exception;
-	public ModelAndView admin_listProduct(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView admin_listProduct(Criteria cri,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ResponseEntity removeProduct(@RequestParam("productNum") String productNum, HttpServletRequest request, HttpServletResponse response)
 			throws Exception;
@@ -28,6 +28,6 @@ public interface ProductController {
 			throws Exception;
 
 	public ModelAndView productForm(@RequestParam("productNum") String productNum,MultipartHttpServletRequest multipartRequest, HttpServletResponse response)throws Exception;
-
+	
 
 }

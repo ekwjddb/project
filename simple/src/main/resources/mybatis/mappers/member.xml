@@ -100,9 +100,85 @@
 	<![CDATA[
 	   delete from  simple.member
 	   where
-	   memId=#{memId} and memPwd=#{memPwd};
+	   memId=#{memId};
 	]]>
 	</delete>
+	
+	
+	
+	<select id="memberSearchList" resultMap="memResult">
+			
+			select *
+			from member 
+			where
+			<if test="searchType=='memEmail' and search != null and search != '' ">
+
+				memEmail like CONCAT('%', #{search}, '%')
+			
+
+			</if>
+
+			<if test="searchType=='memPhoneNum' and search != null and search != '' ">
+
+				memPhoneNum like CONCAT('%', #{search}, '%')
+
+			</if>
+
+			<if test="searchType=='memAdr' and search != null and search != '' ">
+
+				memAdr like CONCAT('%', #{search}, '%')
+
+			</if>	
+			<if test="searchType=='logintype' and search != null and search != '' ">
+
+				logintype like CONCAT('%', #{search}, '%')
+
+			</if>	
+
+			limit #{pageStart}, #{perPageNum};
+			
+			
+	
+			
+			
+
+	
+	</select>
+	
+		<select id="memberSearchCount" resultType="int"
+		parameterType="java.util.Map">
+
+			
+			select count(*) 
+			from member 
+			where
+			<if test="searchType=='memEmail' and search != null and search != '' ">
+
+				memEmail like CONCAT('%', #{search}, '%')
+			
+
+			</if>
+
+			<if test="searchType=='memPhoneNum' and search != null and search != '' ">
+
+				memPhoneNum like CONCAT('%', #{search}, '%')
+
+			</if>
+
+			<if test="searchType=='memAdr' and search != null and search != '' ">
+
+				memAdr like CONCAT('%', #{search}, '%')
+
+			</if>	
+			<if test="searchType=='logintype' and search != null and search != '' ">
+
+				logintype like CONCAT('%', #{search}, '%')
+
+			</if>	
+			
+
+
+	</select>
 
 </mapper>
 		

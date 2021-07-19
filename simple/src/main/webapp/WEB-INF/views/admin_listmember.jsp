@@ -119,7 +119,6 @@
 						<option value="memPhoneNum">전화번호</option>
 						<option value="memAdr">주소</option>
 						<option value="logintype">회원유형</option>
-						<option value="memRegdate">가입일</option>
 					</select> <input type="text" class="form-control" id="inputbox"
 						style="margin-top: 10px; margin-left: 980px;" name="search">
 					<button type="submit" id="buttonmy" class="btn btn-dark"
@@ -139,20 +138,51 @@
 						<td scope="col">주소</td>
 						<td scope="col">회원유형</td>
 						<td scope="col">가입일</td>
-						<td scope="col">수정</td>
 						<td scope="col">삭제</td>
 					</tr>
 				<c:choose>
-					<c:when test="${empty membersList}">
+					<c:when test="${!empty memberSearchMap.search}">
+					<c:choose>
+						<c:when test="${empty memberSearchMap.memberSearchList}">
 						<tr height="200">
 							<td colspan="5" style="background-color:white; padding-top:100px;">
 								<p align="center">
 									<b><span style="color:black; ">등록된 회원이 없습니다.</span></b>
 								</p>
 							</td>
-						</tr>	
+						</tr>
+						</c:when>
+						<c:otherwise>
+					
+						<c:forEach var="memberSearch" items="${memberSearchList}" >
+						<tr
+						style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black;">
+						<td scope="col">${memberSearch.memId}</td>
+						<td scope="col">${memberSearch.memPwd}</td>
+						<td scope="col">${memberSearch.memName }</td>
+						<td scope="col">${memberSearch.memEmail}</td>
+						<td scope="col">${memberSearch.memPhoneNum}</td>
+						<td scope="col">${memberSearch.memAdr }</td>
+						<td scope="col">${memberSearch.logintype }</td>
+						<td scope="col">${memberSearch.memRegdate}</td>
+						<td scope="col"><button type="button" onclick="location.href='${contextPath}/admin_removeMember.do?memId=${memberSearch.memId }'" class="btn btn-dark">삭제</button></td>
+					</tr>
+					</c:forEach>
+					</c:otherwise>
+					</c:choose>
 					</c:when>
-					<c:when test="${!empty membersList}">
+					<c:when test="${empty memberSearchMap.search}">
+					<c:choose>
+					<c:when test="${empty membersList}">
+					    <tr height="200">
+							<td colspan="5" style="background-color:white; padding-top:100px;">
+								<p align="center">
+									<b><span style="color:black; ">등록된 회원이 없습니다.</span></b>
+								</p>
+							</td>
+						</tr>
+					</c:when>
+					<c:otherwise>
 					<c:forEach var="member" items="${membersList}" >
 						<tr
 						style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black;">
@@ -164,10 +194,11 @@
 						<td scope="col">${member.memAdr }</td>
 						<td scope="col">${member.logintype }</td>
 						<td scope="col">${member.memRegdate}</td>
-						<td scope="col"><button type="button"class="btn btn-dark">수정</button></td>
-						<td scope="col"><button type="button" onclick="location.href='${contextPath}/admin_removeMember.do'" class="btn btn-dark">삭제</button></td>
+						<td scope="col"><button type="button" onclick="location.href='${contextPath}/admin_removeMember.do?memId=${member.memId }'" class="btn btn-dark">삭제</button></td>
 					</tr>
 					</c:forEach>
+					</c:otherwise>
+					</c:choose>
 					</c:when>
 					</c:choose>
 				

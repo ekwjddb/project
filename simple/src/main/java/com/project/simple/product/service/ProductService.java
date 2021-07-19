@@ -11,7 +11,7 @@ import com.project.simple.product.vo.ProductVO;
 
 public interface ProductService {
 	public List<ProductVO> listProduct(Map<String, Object> ProductMap) throws Exception;
-	public List<ProductVO> admin_listProduct() throws Exception;
+	public List<ProductVO> admin_listProduct(Criteria cri) throws DataAccessException;
 	public int addProduct(Map productMap) throws DataAccessException;
 	public void removeProduct(String productNum) throws Exception;
 	public ProductVO viewProduct(String productNum) throws Exception;
@@ -23,6 +23,9 @@ public interface ProductService {
 	
 	public Map<String, Object> listProductReview(Map<String, Object> productMap) throws Exception;
 	public int productReviewCount() throws Exception;
+	public Map<String, Object> productSearch(Map<String, Object> productSearchMap);
+	public int productCount() throws Exception;
+	
 
 
 }
