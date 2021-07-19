@@ -169,5 +169,79 @@
 			
 	]]>
 	</select>
+	
+	<select id="productSearchList" resultMap="proResult">
+			
+			select *
+			from simple.product
+			where
+			<if test="searchType=='memEmail' and search != null and search != '' ">
+
+				memEmail like CONCAT('%', #{search}, '%')
+			
+
+			</if>
+
+			<if test="searchType=='memPhoneNum' and search != null and search != '' ">
+
+				memPhoneNum like CONCAT('%', #{search}, '%')
+
+			</if>
+
+			<if test="searchType=='memAdr' and search != null and search != '' ">
+
+				memAdr like CONCAT('%', #{search}, '%')
+
+			</if>	
+			<if test="searchType=='logintype' and search != null and search != '' ">
+
+				logintype like CONCAT('%', #{search}, '%')
+
+			</if>	
+
+			limit #{pageStart}, #{perPageNum};
+			
+			
+	
+			
+			
+
+	
+	</select>
+	
+		<select id="productSearchCount" resultType="int"
+		parameterType="java.util.Map">
+
+			
+			select count(*) 
+			from simple.product 
+			where
+			<if test="searchType=='memEmail' and search != null and search != '' ">
+
+				memEmail like CONCAT('%', #{search}, '%')
+			
+
+			</if>
+
+			<if test="searchType=='memPhoneNum' and search != null and search != '' ">
+
+				memPhoneNum like CONCAT('%', #{search}, '%')
+
+			</if>
+
+			<if test="searchType=='memAdr' and search != null and search != '' ">
+
+				memAdr like CONCAT('%', #{search}, '%')
+
+			</if>	
+			<if test="searchType=='logintype' and search != null and search != '' ">
+
+				logintype like CONCAT('%', #{search}, '%')
+
+			</if>	
+			
+
+
+	</select>
 
 </mapper>

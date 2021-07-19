@@ -257,6 +257,38 @@ public class ProductControllerImpl implements ProductController {
 		return mav;
 	}
 
+	@Override
+	@RequestMapping(value = "/product/admin_listProduct/productSearch.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView productSearch(@RequestParam("search") String search, @RequestParam("searchType") String searchType,
+			Criteria1 cri, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView(viewName);
+
+		Map<String, Object> productSearchMap = new HashMap<String, Object>();
+		int pageStart = cri.getPageStart();
+		int perPageNum = cri.getPerPageNum();
+		productSearchMap.put("pageStart", pageStart);
+		productSearchMap.put("perPageNum", perPageNum);
+		productSearchMap.put("search", search);
+		System.out.println(search);
+		productSearchMap.put("searchType", searchType);
+		System.out.println(searchType);
+		productSearchMap = productService.productSearch(productSearchMap);
+		System.out.println(productSearchMap);
+		int productSearchCount = productService.productSearchCount(productSearchMap);
+		PageMaker1 pageMaker1 = new PageMaker1();
+		pageMaker1.setCri(cri);
+		int pageNum = pageMaker1.getCri().getPage();
+		productSearchMap.put("pageNum", pageNum);
+		pageMaker1.setTotalCount(productSearchCount);
+		mav.addObject("productSearchMap", productSearchMap);
+		mav.addObject("pageMaker1", pageMaker1);
+		mav.addObject("pageNum", pageNum);
+		
+		return mav;
+
+	}
+
 	// 수정화면
 	@RequestMapping(value = "/product/modProduct.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView productForm(@RequestParam("productNum") String productNum,

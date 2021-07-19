@@ -29,6 +29,8 @@ public interface ProductController {
 			throws Exception;
 
 	public ModelAndView productForm(@RequestParam("productNum") String productNum,MultipartHttpServletRequest multipartRequest, HttpServletResponse response)throws Exception;
+	public ModelAndView productSearch(@RequestParam("search") String search,@RequestParam("searchType") String searchType, Criteria1 cri, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
 	
 
 }

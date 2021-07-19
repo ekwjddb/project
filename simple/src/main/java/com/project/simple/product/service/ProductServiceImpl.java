@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.simple.product.vo.ProductVO;
 import com.project.simple.board.vo.ArticleVO;
+import com.project.simple.member.vo.MemberVO;
 import com.project.simple.page.Criteria;
 import com.project.simple.product.dao.ProductDAO;
 import com.project.simple.product.page.Criteria1;
@@ -92,10 +93,19 @@ public class ProductServiceImpl implements ProductService{
 		return productCount;
 	}
 	@Override
-	public Map<String, Object> productSearch(Map<String, Object> productSearchMap) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> productSearch(Map<String, Object> productSearchMap) throws Exception {
+		List<ProductVO> productSearchList=productDAO.productSearchList(productSearchMap);
+
+		productSearchMap.put("productSearchList", productSearchList);
+		
+		return productSearchMap;
 	}
+	@Override
+	public int productSearchCount(Map<String, Object> search) throws Exception {
+		int productSearchCount = productDAO.productSearchCount(search);
+		return productSearchCount;
+	}
+
 
 	
 }

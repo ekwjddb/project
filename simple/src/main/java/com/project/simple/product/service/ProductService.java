@@ -24,8 +24,9 @@ public interface ProductService {
 	
 	public Map<String, Object> listProductReview(Map<String, Object> productMap) throws Exception;
 	public int productReviewCount() throws Exception;
-	public Map<String, Object> productSearch(Map<String, Object> productSearchMap);
+	public Map<String, Object> productSearch(Map<String, Object> productSearchMap)throws Exception;
 	public int productCount() throws Exception;
+	public int productSearchCount(Map<String, Object> search) throws Exception;
 	
 
 
