@@ -189,7 +189,7 @@
 					<div class="container"
 						style="padding-left: 1000px; paddig-right: 0px !important; float: left; width: 1180px; margin-left: 85px;">
 						<input type="button" class="btn-secondary btn-xs" onclick="deleteValue();" value="선택삭제">
-						<button type="button" onclick="" class="btn-secondary btn-xs">전체삭제</button>
+						
 
 					</div>
 				</div>

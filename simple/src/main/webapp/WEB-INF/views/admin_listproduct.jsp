@@ -68,14 +68,18 @@
 	color: #fff;
 	border: 1px solid #42454c;
 }
+#buttonmy {
+	width: 80px;
+	height: 30px;
+	float: left;
+	border-radius: 2px;
+	padding-top: 1.8px;
+}
 </style>
 
 </head>
 <body>
 
-	
-	<img src="${contextPath}/resources/images/product-01.jpg" width=100%
-		height=350px>
 
 	<section class="ftco-section" style="padding-top: 30px;">
 		<div class="container">
@@ -83,7 +87,7 @@
 				style="background-color: #f5f5f5; border: 1px solid #e7e7e7; margin-top: 20px;">
 				<div class="col-md-20 heading-section ftco-animate"
 					style="height: 60px;">
-					<h2 class="mb-4" style="font-size: 35px; margin-top: 15px;">상품 관리</h2>
+					<h2 class="mb-4" style="font-size: 35px; margin-top: 15px;">관리자 페이지</h2>
 				</div>
 			</div>
 
@@ -97,7 +101,15 @@
 				</div>
 				<div class="btn-group" role="group">
 					<button type="button" class="btn btn-default" onclick="location.href='${contextPath}/product/add_product.do'"
-						style="font-size: 25px; border: none; color: #5a5a5a; padding-Zright: 210px; background-color: white;">상품등록</button>
+						style="font-size: 25px; border: none; color: #5a5a5a; padding-right: 210px; background-color: white;">상품등록</button>
+				</div>
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default" onclick="location.href='${contextPath}/admin_listmember.do'"
+						style="font-size: 25px; border: none; color: #5a5a5a; padding-right: 210px; background-color: white;">회원조회</button>
+				</div>
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default" onclick="location.href='${contextPath}/board/listNotice.do'"
+						style="font-size: 25px; border: none; color: #5a5a5a; background-color: white;">게시판조회</button>
 				</div>
 			
 			</div>
@@ -116,7 +128,7 @@
 						<option value="subcategory">하위카테고리</option>
 					</select> <input type="text" class="form-control" id="inputbox"
 						style="margin-top: 10px; margin-left: 980px;" name="search">
-					<button type="submit" id="buttonmy" class="btn btn-primary"
+					<button type="submit" id="buttonmy" class="btn btn-dark"
 						style="margin-top: -33px; margin-left: 1190px; padding-top: 4px; height: 33px;">조회</button>
 				</div>
 			</form>

@@ -86,7 +86,9 @@ h4 {
 					<c:forEach var="item" items="${nonOrderLookupList }">
 						<tr>
 						    <th scope="col" style=" padding-top: 15px;">${item.nonMemOrderNum}</th>
-							<th scope="col"><img src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}"style="width: 40px;height: 40px;margin-right: 20px;" >${item.productName}</th>
+							<th scope="col"><img src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}"style="width: 40px;height: 40px;margin-right: 20px;" >${item.productName}
+							
+							</th>
 							<th scope="col" style=" padding-top: 15px;">${item.productCnt}</th>
 							<th scope="col" style=" padding-top: 15px;">${item.productPrice}</th>
 						</tr>
