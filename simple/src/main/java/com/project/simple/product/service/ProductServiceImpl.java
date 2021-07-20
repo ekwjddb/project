@@ -10,9 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.simple.product.vo.ProductVO;
-import com.project.simple.board.vo.ArticleVO;
-import com.project.simple.member.vo.MemberVO;
-import com.project.simple.page.Criteria;
+
 import com.project.simple.product.dao.ProductDAO;
 import com.project.simple.product.page.Criteria1;
 

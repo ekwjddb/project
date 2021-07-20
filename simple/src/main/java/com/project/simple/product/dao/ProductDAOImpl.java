@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-import com.project.simple.board.vo.ArticleVO;
-import com.project.simple.page.Criteria;
 import com.project.simple.product.page.Criteria1;
 import com.project.simple.product.vo.ProductVO;
 
@@ -23,7 +21,6 @@ public class ProductDAOImpl implements ProductDAO{
 	public List<ProductVO> selectAllProductList(Map<String, Object>ProductMap) throws DataAccessException{
 		
 		List<ProductVO> productList = sqlSession.selectList("mapper.product.selectAllProductList", ProductMap);
-		System.out.println(productList);
 		return productList;
 	}
 	@Override

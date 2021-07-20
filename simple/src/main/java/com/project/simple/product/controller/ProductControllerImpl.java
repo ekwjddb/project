@@ -76,7 +76,7 @@ public class ProductControllerImpl implements ProductController {
 		String productContentImage = productImage1.get(1).toString();
 		productMap.put("productImage", productImage);
 		productMap.put("productContentImage", productContentImage);
-		System.out.println(productMap);
+
 		//HttpSession session = multipartRequest.getSession();
 		//MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		//String memId = memberVO.getmemId();
@@ -238,7 +238,7 @@ public class ProductControllerImpl implements ProductController {
 	}
 
 	@Override // 관리자 상품목록 조회
-	@RequestMapping(value = "/product/admin_listProduct.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "product/admin_listProduct.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView admin_listProduct(Criteria1 cri, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		List<ProductVO> admin_productList = productService.admin_listProduct(cri);
@@ -252,7 +252,6 @@ public class ProductControllerImpl implements ProductController {
 		mav.addObject("pageNum", pageNum);
 		mav.addObject("admin_productList", admin_productList);
 		mav.addObject("pageMaker1", pageMaker1);
-		System.out.println(pageMaker1);
 		
 		return mav;
 	}
@@ -284,6 +283,7 @@ public class ProductControllerImpl implements ProductController {
 		mav.addObject("productSearchMap", productSearchMap);
 		mav.addObject("pageMaker1", pageMaker1);
 		mav.addObject("pageNum", pageNum);
+		System.out.println(productSearchMap);
 		
 		return mav;
 
@@ -319,7 +319,7 @@ public class ProductControllerImpl implements ProductController {
 		}
 		
 		List<String> productImage = upload(multipartRequest);
-		System.out.println(productImage);
+
 				
 
 		String productImage1 = productImage.get(0).toString();
@@ -340,16 +340,13 @@ public class ProductControllerImpl implements ProductController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
-			
-			System.out.println(productMap);
+	
 			productService.modProduct(productMap);
-			System.out.println(productMap);
+
 			if (productImage != null && productImage.size() != 0) {
 
 				String OrignProductImage = (String) productMap.get("OrignProductImage");
 				String OrignProductContentImage = (String) productMap.get("OrignProductContentImage");
-				System.out.println(OrignProductImage);
-				System.out.println(OrignProductContentImage);
 				
 				if(OrignProductImage !=null) {
 					File oldFile = new File(ARTICLE_IMAGE_REPO + "\\" + productNum + "\\" + OrignProductImage);
@@ -435,7 +432,6 @@ public class ProductControllerImpl implements ProductController {
 		productMap.put("perPageNum", perPageNum);
 		productMap.put("productNum", productNum);
 		productMap = productService.listProductReview(productMap);
-		System.out.println(productMap);
 		int productReviewCount = productService.productReviewCount();
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);

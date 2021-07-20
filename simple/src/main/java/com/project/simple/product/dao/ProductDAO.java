@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
-import com.project.simple.board.vo.ArticleVO;
-import com.project.simple.page.Criteria;
 import com.project.simple.product.page.Criteria1;
 import com.project.simple.product.vo.ProductVO;
 
