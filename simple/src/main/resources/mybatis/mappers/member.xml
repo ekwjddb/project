@@ -89,7 +89,7 @@
 	<!-- 회원탈퇴 -->
 	<delete id="deleteMember" parameterType="MemberVO">
 	<![CDATA[
-	   delete from  member
+	   delete from  simple.member
 	   where
 	   memId=#{memId} and memPwd=#{memPwd}
 	]]>
