@@ -3,6 +3,8 @@ package com.project.simple.member.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.dao.DataAccessException;
 
 import com.project.simple.member.vo.MemberVO;
@@ -30,6 +32,11 @@ public interface MemberService{
 	public int memberSearchCount(Map<String, Object> search) throws Exception;
 
 	public MemberVO admin_removeMember(String memId) throws DataAccessException;
+
+	public void findPw(HttpServletResponse response, MemberVO member)throws Exception;
+	
+	//이메일발송
+	public void sendEmail(MemberVO member, String div) throws Exception;
 	
 	
 }

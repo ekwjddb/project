@@ -339,6 +339,15 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 	
+	/* 비밀번호 찾기 */
+	@RequestMapping(value = "/findpw", method = RequestMethod.GET)
+	public void findPwGET() throws Exception{
+	}
+
+	@RequestMapping(value = "/findpw", method = RequestMethod.POST)
+	public void findPwPOST(@ModelAttribute MemberVO member, HttpServletResponse response) throws Exception{
+		memberService.findPw(response, member);
+	}
 	
 
 }
