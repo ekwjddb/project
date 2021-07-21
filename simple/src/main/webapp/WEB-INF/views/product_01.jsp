@@ -217,17 +217,7 @@
 			
 			</div>
 		</div>
-		<!-- ㅜ페이징 글번호 -->
-		<div class="page_wrap" style="margin-left: 5px; margin-top: 50px;">
-			<div class="page_nation">
-				<a class="arrow pprev" href="#"></a> <a class="arrow prev" href="#"></a>
-				<a href="#" class="active">1</a> <a href="#">2</a> <a href="#">3</a>
-				<a href="#">4</a> <a href="#">5</a> <a href="#">6</a> <a href="#">7</a>
-				<a href="#">8</a> <a href="#">9</a> <a href="#">10</a> <a
-					class="arrow next" href="#"></a> <a class="arrow nnext" href="#"></a>
-			</div>
-		</div>
-
+		
 
 	</section>
 
