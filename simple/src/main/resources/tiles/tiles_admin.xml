@@ -11,15 +11,38 @@
 	</definition>
     <definition name="admin_login" extends="baseLayout">
 	    <put-attribute name="title" value="관리자로그인창" />
-        <put-attribute name="body" value="/WEB-INF/views/admin_login.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/admin/admin_login.jsp"/>
     </definition>
     <definition name="admin_listmember" extends="baseLayout">
 	    <put-attribute name="title" value="관리자 회원관리창" />
-        <put-attribute name="body" value="/WEB-INF/views/admin_listmember.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/admin/admin_listmember.jsp"/>
     </definition>
         <definition name="admin_listmember/memberSearch" extends="baseLayout">
 	    <put-attribute name="title" value="관리자 회원조회창" />
-        <put-attribute name="body" value="/WEB-INF/views/admin_listmember.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/admin/admin_listmember.jsp"/>
+    </definition>
+    
+    <definition name="product/add_product" extends="baseLayout">
+	    <put-attribute name="title" value="관리자상품등록창" />
+        <put-attribute name="body" value="/WEB-INF/views/admin/add_product.jsp"/>
+    </definition>
+    
+    <definition name="product/admin_listProduct" extends="baseLayout">
+	    <put-attribute name="title" value="관리자상품목록창" />
+        <put-attribute name="body" value="/WEB-INF/views/admin/admin_listproduct.jsp"/>
+    </definition>
+    <definition name="product/admin_detailproduct" extends="baseLayout">
+	    <put-attribute name="title" value="관리자상품상세창" />
+        <put-attribute name="body" value="/WEB-INF/views/admin/admin_detailproduct.jsp"/>
+    </definition>
+    <definition name="product/modProduct" extends="baseLayout">
+	    <put-attribute name="title" value="관리자상품수정창" />
+        <put-attribute name="body" value="/WEB-INF/views/admin/modProduct.jsp"/>
+    </definition>
+    
+        <definition name="product/admin_listProduct/productSearch" extends="baseLayout">
+	    <put-attribute name="title" value="관리자상품목록검색창" />
+        <put-attribute name="body" value="/WEB-INF/views/admin/admin_listproduct.jsp"/>
     </definition>
     
 

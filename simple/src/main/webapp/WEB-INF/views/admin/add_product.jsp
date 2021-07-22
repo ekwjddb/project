@@ -236,6 +236,30 @@ $('document').ready(function() {
 
 
 	   });
+	   
+$(document).ready(function() {
+	   $('.btnAdd').click(function() {
+
+	     $('.buttons').append(
+
+	       '<div style="margin-left: 35px; margin-top: 5px;"><input type="text" name="option1" size=10>&nbsp;<input type="text" name="option2" size=10></div><input style="margin-left: 35px;width: 225px;margin-top: 5px;" type="button" class="btnRemove" value="삭제"><br>'
+
+	     ); // end append   
+
+	     $('.btnRemove').on('click', function() {
+	       $(this).prev().remove(); // remove the textbox
+
+	       $(this).next().remove(); // remove the <br>
+
+	       $(this).remove(); // remove the button
+
+	     });		     
+
+	   }); // end click                                            
+
+	 }); // end ready  
+	 
+	 
 
 </script>
 
@@ -318,13 +342,11 @@ $('document').ready(function() {
                                    <label><a style="color: red; padding-right: 5px; write-space: nowrap;">*</a>상품상세이미지</label>
                                         <input type="file" name="productContentImage" value="">
                                </div>
-                               <div style="padding-left: 109px;"> 
-                                   <label>상품옵션2</label>
-                                        <input type="text" name="option1" value="">
-                               </div>
-                               <div style="padding-left: 109px;"> 
-                                   <label>상품옵션2</label>
-                                        <input type="text" name="option2" value="">
+                                <div class="buttons" style="padding-left: 109px;"> 
+                                   <label style="margin-bottom: 0px;">옵션</label>
+                                        <input type="text" name="option1" size=10; value="" placeholder="색상">
+                                        <input type="text" name="option2" size=10; value="" placeholder="사이즈">
+                                       <input type="button" value="추가" class="btnAdd" >                       
                                </div>
 							</form>
 							

@@ -70,6 +70,7 @@ public class ProductControllerImpl implements ProductController {
 
 
 		}
+	
 
 		List<String> productImage1 = upload(multipartRequest);
 		String productImage = productImage1.get(0).toString();
