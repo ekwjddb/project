@@ -418,31 +418,36 @@ public class ProductControllerImpl implements ProductController {
 		}
 		return resEnt;
 	}
-
-	@RequestMapping(value = "/product/viewProduct.do", method = RequestMethod.GET)
+           	@RequestMapping(value = "/product/viewProduct.do", method = RequestMethod.GET)
 	public ModelAndView viewProduct(@RequestParam("productNum") String productNum, Criteria cri,HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		Map<String, Object> productMap = new HashMap();
 		String viewName = (String) request.getAttribute("viewName");
 		HttpSession session=request.getSession();
 		productVO = productService.viewProduct(productNum);
+		Map<String, Object> option = (Map<String, Object>) productService.viewOptionvalue(productNum);
+		ModelAndView mav = new ModelAndView();
+		
 		int pageStart = cri.getPageStart();
 		int perPageNum = cri.getPerPageNum();
 		productMap.put("pageStart", pageStart);
 		productMap.put("perPageNum", perPageNum);
 		productMap.put("productNum", productNum);
-		productMap = productService.listProductReview(productMap);
-		int productReviewCount = productService.productReviewCount();
+		List<ProductVO> productReviewList= productService.listProductReview(productMap);
+		int productReviewCount = productService.productReviewCount(productNum);
+		List<ProductVO> productQuestionList = productService.listProductQuestion(productMap);
+		int productQuestionCount = productService.productQuestionCount(productNum);
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(productReviewCount);
 		int pageNum = pageMaker.getCri().getPage();
 
 		addQuick(productNum,productVO,session);
-		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
+		mav.addObject("option", option);
 		mav.addObject("product", productVO);
-		mav.addObject("productMap", productMap);
+		mav.addObject("productReviewList", productReviewList);
+		mav.addObject("productQuestionList", productQuestionList);
 		mav.addObject("pageMaker", pageMaker);
 		mav.addObject("pageNum", pageNum);
 
@@ -450,6 +455,7 @@ public class ProductControllerImpl implements ProductController {
 		return mav;
 
 	}
+
 
 
 	@RequestMapping(value = "product/admin_detailproduct.do", method = RequestMethod.GET)

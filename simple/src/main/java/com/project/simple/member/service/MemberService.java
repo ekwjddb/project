@@ -33,10 +33,6 @@ public interface MemberService{
 
 	public MemberVO admin_removeMember(String memId) throws DataAccessException;
 
-	public void findPw(HttpServletResponse response, MemberVO member)throws Exception;
-	
-	//이메일발송
-	public void sendEmail(MemberVO member, String div) throws Exception;
 	
 	
 }

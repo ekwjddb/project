@@ -2,7 +2,6 @@
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -143,7 +142,7 @@
 }
 </style>
 </head>
-<title>최근 본 상품창</title>
+<title>주문결제창</title>
 <body>
 	<section class="ftco-section"
 		style="padding-top: 50px; margin-bottom: 50px; padding-bottom: 0px; margin-bottom:500px;">
@@ -163,7 +162,7 @@
 				<ul
 					style="list-style: none; margin-top: 10px; padding-left: 20px; margin-bottom: 10px;">
 					<li><a href="#"
-						style="padding-left: -10px; padding-bottom: 1px; color: black;">최근 본 상품</a></li>
+						style="padding-left: -10px; padding-bottom: 1px; color: black;">최근본상품</a></li>
 				</ul>
 				<hr style="margin-top: 0px; margin-bottom: 0px; color: #d2d2d2;">
 				<ul style="list-style: none; padding-top: 5px;">
@@ -203,35 +202,20 @@
 						</tr>
 					</thead>
 					<tbody>
-					<c:choose>
-						<c:when test="${empty quickListAll}">
-						<tr height="200">
-							<td colspan="5" style="background-color:white; padding-top:100px;">
-								<p align="center">
-									<b><span style="color:black;">최근 본 상품이 없습니다.</span></b>
-								</p>
-							</td>
-						</tr>	
-					</c:when>
-					<c:when test="${!empty quickListAll }">
-					<c:forEach var="item" items="${quickListAll}">
+	
 						<tr>
 							
-							<td scope="col" align="center">
-							<img  class="block-20" style="width: 130px; height:130px;"src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}" id="preview" /></td>
+							<td scope="col" align="center"><img
+								src="${contextPath}/resources/images/chair01.jpg" width=130
+								height=130></td>
 							<td scope="col" align="center" style="padding-top: 0px;"><br>
 							<br>
-							<br><a href="${contextPath}/product/viewProduct.do?productNum=${item.productNum}">${item.productName}</a></td>
+							<br>원목의자</td>
 							<td scope="col" align="center" style="padding-top: 0px;"><br>
 							<br>
-							<br><fmt:formatNumber pattern="###,###,###" value="${item.productPrice}"/></td>
+							<br>100,000</td>
 						</tr>
 
-                     </c:forEach>
-                     </c:when>
-                     </c:choose>
-	
-						
 
 					</tbody>
 				</table>

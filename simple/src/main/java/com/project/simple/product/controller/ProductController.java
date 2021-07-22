@@ -20,8 +20,7 @@ public interface ProductController {
 	
 	public ResponseEntity removeProduct(@RequestParam("productNum") String productNum, HttpServletRequest request, HttpServletResponse response)
 			throws Exception;
-	public ModelAndView viewProduct(@RequestParam("productNum") String productNum, Criteria cri,HttpServletRequest request,
-			HttpServletResponse response) throws Exception;
+	
 	public @ResponseBody String keywordSearch(@RequestParam("keyword") String keyword,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView searchProduct(@RequestParam("searchWord") String searchWord,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView admin_detailproduct(@RequestParam("productNum") String productNum,HttpServletRequest request, HttpServletResponse response)throws Exception;
@@ -29,8 +28,8 @@ public interface ProductController {
 			throws Exception;
 
 	public ModelAndView productForm(@RequestParam("productNum") String productNum,MultipartHttpServletRequest multipartRequest, HttpServletResponse response)throws Exception;
-	public ModelAndView productSearch(@RequestParam("search") String search,@RequestParam("searchType") String searchType, Criteria1 cri, HttpServletRequest request,
+	public ModelAndView productSearch(@RequestParam("search") String search, @RequestParam("searchType") String searchType,
+			Criteria1 cri, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView viewProduct(@RequestParam("productNum") String productNum, Criteria cri,HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
-	
-
 }

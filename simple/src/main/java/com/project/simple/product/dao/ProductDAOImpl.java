@@ -1,6 +1,7 @@
 package com.project.simple.product.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,15 @@ public class ProductDAOImpl implements ProductDAO{
 		return result;
 	}
 	
-	
+	@Override
+	public Map<String, Object> selectOptionvalue(String productNum) throws DataAccessException {
+		List<ProductVO> optionList1 = sqlSession.selectList("mapper.product.selectOptionList1", productNum);
+		List<ProductVO> optionList2 = sqlSession.selectList("mapper.product.selectOptionList2", productNum);
+		Map<String, Object> option = new HashMap<String, Object>();
+		option.put("optionList1", optionList1);
+		option.put("optionList2", optionList2);
+		return option;
+	}
 
 	@Override
 	public ProductVO selectProduct(String productNum) throws DataAccessException {
@@ -63,6 +72,7 @@ public class ProductDAOImpl implements ProductDAO{
 		
 	}
 	
+	
 	@Override
 	public List<ProductVO> selectAllProductReviewList(Map<String, Object> productMap) throws DataAccessException {
 		List<ProductVO> productReviewList = sqlSession.selectList("mapper.product.selectAllProductReviewList", productMap);
@@ -70,10 +80,23 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 	
 	@Override
-	public int selectProductReviewCount() throws DataAccessException {
-		int productReviewCount = sqlSession.selectOne("mapper.product.selectProductReviewCount");
+	public int selectProductReviewCount(String productNum) throws DataAccessException {
+		int productReviewCount = sqlSession.selectOne("mapper.product.selectProductReviewCount",productNum);
 
 		return productReviewCount;
+	}
+	
+	@Override
+	public List<ProductVO> selectAllProductQuestionList(Map<String, Object> productMap) throws DataAccessException {
+		List<ProductVO> productQuestionList = sqlSession.selectList("mapper.product.selectAllProductQuestionList", productMap);
+		return productQuestionList;
+	}
+	
+	@Override
+	public int selectProductQuestionCount(String productNum) throws DataAccessException {
+		int productQuestionCount = sqlSession.selectOne("mapper.product.selectProductQuestionCount",productNum);
+
+		return productQuestionCount;
 	}
 	@Override
 	public int selectProductCount() throws DataAccessException {

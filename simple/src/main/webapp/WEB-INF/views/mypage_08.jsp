@@ -298,7 +298,7 @@
 						<tr height="200">
 							<td colspan="5" style="background-color:white; padding-top:100px;">
 								<p align="center">
-									<b><span style="color:black; ">관심상품이 없습니다.</span></b>
+									<b><span style="color:black; ">관심상품이 없습니다.</sapn></b>
 								</p>
 							</td>
 						</tr>	
@@ -308,9 +308,8 @@
 						<tr>
 							<td scope="col" align=center><br> <br> 
 							<input type="checkbox" name="RowCheck" style="zoom: 2.0;"  value="${item.productNum}"></td>
-							<td scope="col">
-							<a href="${contextPath}/product/viewProduct.do?productNum=${item.productNum}"> 
-							<img  class="block-20" style="width: 130px; height:130px;"src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}" id="preview" /></a></td>
+							<td scope="col"> 
+							<img  class="block-20" style="width: 130px; height:130px;"src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}" id="preview" /></td>
 							<td scope="col" style="padding-left: 230px;"><br>
 								<br> <br><a href="${contextPath}/product/viewProduct.do?productNum=${item.productNum}">${item.productName}</a></td>
 							<td scope="col" align=center ><br> <br><fmt:formatNumber pattern="###,###,###" value="${item.productPrice}"/><br></td>

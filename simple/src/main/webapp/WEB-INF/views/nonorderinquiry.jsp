@@ -87,6 +87,16 @@ h4 {
 						<tr>
 						    <th scope="col" style=" padding-top: 15px;">${item.nonMemOrderNum}</th>
 							<th scope="col"><img src="${contextPath}/download_product.do?productNum=${item.productNum}&productImage=${item.productImage}"style="width: 40px;height: 40px;margin-right: 20px;" >${item.productName}
+								<c:if test="${item.option1 !=null}">
+											<p
+												style="font-size: 13px;margin-bottom: 0px;">옵션1
+													 ${item.option1}</p>
+								</c:if>
+								<c:if test="${item.option2 !=null}">
+											<p
+												style="font-size: 13px;">옵션2
+													: ${item.option2}</p>
+								</c:if>
 							
 							</th>
 							<th scope="col" style=" padding-top: 15px;">${item.productCnt}</th>
@@ -143,10 +153,13 @@ h4 {
 							<th scope="col" style="padding-left: 40px"class="table-dark">연락처1</th>
 							<th scope="col">${nonOrderLookupList[0].nonMemPhoneNum1 }</th>
 						</tr>
+						<c:if test="${nonOrderLookupList[0].nonMemPhoneNum2 !=null}">
 						<tr>
 							<th scope="col" style="padding-left: 40px"class="table-dark">연락처2</th>
 							<th scope="col">${nonOrderLookupList[0].nonMemPhoneNum2 }</th>
-						</tr>
+						</tr>				
+						</c:if>
+						
 						<tr>
 						<th scope="col" style="padding-left: 40px; padding-bottom: 50px;"class="table-dark"><br>주문메세지<br>(100자내외)</th>
 						<th scope="col"><textarea name="textarea" rows="4" cols="40" readonly>${nonOrderLookupList[0].nonMemOrderMsg }</textarea></th>

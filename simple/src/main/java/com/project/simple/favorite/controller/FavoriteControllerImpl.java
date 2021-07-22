@@ -27,7 +27,8 @@ public class FavoriteControllerImpl implements FavoriteController{
 	private FavoriteService favoriteService;
 	@Autowired
 	private FavoriteVO favoriteVO;
-
+	@Autowired
+	private MemberVO memberVO;
 	
 	
 	@RequestMapping(value="/mypage_08.do" ,method = RequestMethod.GET)

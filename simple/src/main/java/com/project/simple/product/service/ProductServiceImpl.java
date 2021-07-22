@@ -73,16 +73,26 @@ public class ProductServiceImpl implements ProductService{
 		
 	}
 	
-	public Map<String, Object> listProductReview(Map<String, Object> productMap) throws Exception{
+	public List<ProductVO> listProductReview(Map<String, Object> productMap) throws Exception{
 		List<ProductVO> productReviewList = productDAO.selectAllProductReviewList(productMap);
-		productMap.put("productReviewList", productReviewList);
 
-		return productMap;
+		return productReviewList;
 	}
 	
-	public int productReviewCount() throws Exception{
-		int productReviewCount = productDAO.selectProductReviewCount();
+	public int productReviewCount(String productNum) throws Exception{
+		int productReviewCount = productDAO.selectProductReviewCount(productNum);
 		return productReviewCount;
+	}
+	
+	public List<ProductVO> listProductQuestion(Map<String, Object> productMap) throws Exception{
+		List<ProductVO> productQuestionList = productDAO.selectAllProductQuestionList(productMap);
+
+		return productQuestionList;
+	}
+	
+	public int productQuestionCount(String productNum) throws Exception{
+		int productQuestionCount = productDAO.selectProductQuestionCount(productNum);
+		return productQuestionCount;
 	}
 
 	@Override
@@ -102,6 +112,13 @@ public class ProductServiceImpl implements ProductService{
 	public int productSearchCount(Map<String, Object> search) throws Exception {
 		int productSearchCount = productDAO.productSearchCount(search);
 		return productSearchCount;
+	}
+	
+	@Override
+	public Map<String, Object> viewOptionvalue(String productNum) throws Exception {
+		Map<String, Object> option = productDAO.selectOptionvalue(productNum);
+		
+		return option;
 	}
 
 
