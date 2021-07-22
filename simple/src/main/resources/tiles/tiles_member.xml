@@ -68,69 +68,9 @@
 			value="/WEB-INF/views/member/login_06.jsp" />
 	</definition>
 
-	<definition name="cart" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cart.jsp" />
-	</definition>
-
-	<definition name="cs_01" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_01.jsp" />
-	</definition>
-
-	<definition name="cs_02" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_02.jsp" />
-	</definition>
-
-	<definition name="cs_03" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_03.jsp" />
-	</definition>
-
-	<definition name="cs_04" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_04.jsp" />
-	</definition>
-
-	<definition name="cs_05" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_05.jsp" />
-	</definition>
-
-	<definition name="cs_06" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_06.jsp" />
-	</definition>
-
 	<definition name="cs_07" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/cs_07.jsp" />
-	</definition>
-
-	<definition name="cs_08" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_08.jsp" />
-	</definition>
-
-	<definition name="cs_09" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_09.jsp" />
-	</definition>
-
-	<definition name="cs_10" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_10.jsp" />
-	</definition>
-
-	<definition name="cs_11" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_11.jsp" />
-	</definition>
-
-	<definition name="drop_out" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/drop_out.jsp" />
 	</definition>
 
 	<definition name="nonorderinquiry" extends="baseLayout">
@@ -157,12 +97,6 @@
 	<definition name="order_03" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/order/order_03.jsp" />
-	</definition>
-
-	
-	<definition name="deletemember" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/deletemember.jsp" />
 	</definition>
 
 

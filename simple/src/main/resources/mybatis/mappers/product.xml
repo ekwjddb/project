@@ -37,7 +37,32 @@
 		<result property="productQuestionDate" column="productQuestionDate" />
 		<result property="productAnswerContent" column="productAnswerContent" />
 	</resultMap>
-
+	
+	<!-- best상품 조회 -->
+	<select id="selectBestList" resultMap="proResult">
+	<![CDATA[
+		select productNum, count(*) ,productPrice,productImage
+        from(
+        select productNum,MemOrderNum,productPrice,productImage
+        from simple.memberorder
+        union
+        select productNum,nonMemOrderNum,productPrice,nonMemOrderSeqNum
+        from simple.nonmemberorder) as best
+        group by productNum limit 3;
+	]]>
+	</select>
+	<select id="selectProductList" resultMap="proResult" parameterType="java.util.Map">
+      <![CDATA[
+          select *
+          from simple.product
+          where productNum in
+          
+      ]]>
+      <foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item.productNum}
+		</foreach>
+		
+	</select>
 
 	<!-- 상품 조회 -->
 
@@ -169,7 +194,7 @@
 		resultMap="productReviewResult">
 	<![CDATA[
 			
-			select reviewNum, productNum, memOrderSeqNum , productReviewTitle, reviewDate, productContent, m.memName from member as m right join productReview as a on m.memId=a.memId 
+			select reviewNum, productNum, memOrderSeqNum , productReviewTitle, reviewDate, productContent, m.memName from simple.member as m right join simple.productReview as a on m.memId=a.memId 
 			where productNum = #{productNum} order by reviewNum desc
 			limit #{pageStart}, #{perPageNum};
 			

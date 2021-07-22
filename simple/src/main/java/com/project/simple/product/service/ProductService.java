@@ -31,6 +31,7 @@ public interface ProductService {
 	public Map<String, Object> productSearch(Map<String, Object> productSearchMap)throws Exception;
 	public int productCount() throws Exception;
 	public int productSearchCount(Map<String, Object> search) throws Exception;
+	public Map<String, List> BestProductList()throws Exception;
 	
 
 

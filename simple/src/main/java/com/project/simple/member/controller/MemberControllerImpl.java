@@ -212,13 +212,7 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/main.do", method = RequestMethod.GET)
-	private ModelAndView main(HttpServletRequest request, HttpServletResponse response) {
-		String viewName = (String) request.getAttribute("viewName");
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		return mav;
-	}
+	
 
 	@RequestMapping(value = "/mypage_02.do", method = RequestMethod.GET)
 	private ModelAndView mypage_02(HttpServletRequest request, HttpServletResponse response) {

@@ -114,6 +114,22 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/mypage/mypage_13.jsp" />
 	</definition>
+	
+	<definition name="drop_out" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/mypage/drop_out.jsp" />
+	</definition>
+	
+		<definition name="deletemember" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/mypage/deletemember.jsp" />
+	</definition>
+	
+	<definition name="cart" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/cart/cart.jsp" />
+	</definition>
+	
 
 
 </tiles-definitions>	
