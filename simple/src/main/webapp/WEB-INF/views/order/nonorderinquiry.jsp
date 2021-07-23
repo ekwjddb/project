@@ -123,7 +123,7 @@ h4 {
 							<th scope="col">${nonOrderLookupList[0].nonMemName }</th>
 						</tr>
 						<tr>
-							<th scope="col" style="padding-left: 40px"class="table-dark">전화번호</th>
+							<th scope="col" style="padding-left: 40px"class="table-dark">연락처</th>
 							<th scope="col">${nonOrderLookupList[0].nonMemPhoneNum }</th>
 						</tr>
 						<tr>
@@ -161,7 +161,7 @@ h4 {
 						</c:if>
 						
 						<tr>
-						<th scope="col" style="padding-left: 40px; padding-bottom: 50px;"class="table-dark"><br>주문메세지<br>(100자내외)</th>
+						<th scope="col" style="padding-left: 40px; padding-bottom: 50px;"class="table-dark"><br>주문메시지<br>(100자내외)</th>
 						<th scope="col"><textarea name="textarea" rows="4" cols="40" readonly>${nonOrderLookupList[0].nonMemOrderMsg }</textarea></th>
 						</tr>
 					

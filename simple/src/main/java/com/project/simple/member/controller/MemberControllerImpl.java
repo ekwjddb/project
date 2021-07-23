@@ -65,6 +65,23 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 
+	@RequestMapping(value = "/findId.do", method = RequestMethod.POST)
+	public ModelAndView findId(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		memberVO = memberService.findId(member);
+		if (memberVO != null) {
+			mav.addObject("check", 1);
+			mav.setViewName("redirect:/login_01.do");
+		} else {
+			mav.addObject("check", 0);
+			mav.addObject("memId",memberVO.getmemId());
+			rAttr.addAttribute("result", "loginFailed");
+			mav.setViewName("redirect:/login_01.do");
+		}
+		return mav;
+	}
+	
 	// 로그아웃 작업
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {

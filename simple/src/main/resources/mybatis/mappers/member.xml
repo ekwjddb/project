@@ -15,7 +15,13 @@
 		<result property="logintype" column="logintype" />
 		<result property="memRegdate" column="memRegdate" />
 	</resultMap>
-
+	
+    <select id="find_Id" resultType="memberVO"
+		parameterType="memberVO">
+    <![CDATA[
+		select * from simple.member where memId=#{memId} and memPhoneNum=#{memPhoneNum};
+	]]>
+	</select>
 
 	<!-- 회원리스트 조회 -->
 	<select id="selectAllMemberList" resultMap="memResult">

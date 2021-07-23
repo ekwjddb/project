@@ -32,6 +32,8 @@ public interface MemberService{
 	public int memberSearchCount(Map<String, Object> search) throws Exception;
 
 	public MemberVO admin_removeMember(String memId) throws DataAccessException;
+	
+	public MemberVO findId(MemberVO memberVO) throws Exception;
 
 	
 	

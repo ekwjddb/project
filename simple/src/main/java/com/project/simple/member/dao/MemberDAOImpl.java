@@ -84,4 +84,10 @@ public class MemberDAOImpl implements MemberDAO{
 		MemberVO result = sqlSession.selectOne("mapper.member.deleteMemberlist",memId);
 		return result;
 	}
+
+	@Override
+	public MemberVO find_Id(MemberVO memberVO) throws DataAccessException {
+		MemberVO vo = sqlSession.selectOne("mapper.member.find_Id", memberVO);
+		return vo;
+	}
 }

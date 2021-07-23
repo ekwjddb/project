@@ -20,5 +20,6 @@ public interface MemberDAO{
 	public List<MemberVO> memberSearchList(Map<String, Object> memberSearchMap)throws DataAccessException;
 	public int memberSearchCount(Map<String, Object> search) throws DataAccessException;
 	public MemberVO deleteMemberlist(String memId) throws DataAccessException;
+	public MemberVO find_Id(MemberVO memberVO) throws DataAccessException;
 	
 }

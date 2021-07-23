@@ -179,24 +179,24 @@ h3 {
 
 		var form = document.find_user_id_password;
 
-		if (form.id_find_name.value == "") {
+		if (form.memId.value == "") {
 			alert("이름을 입력해주세요!");
-			form.id_find_name.focus();
+			form.memId.focus();
 			return false;
 
 		}
-		if (form.id_find_phone.value == "") {
+		if (form.memPhoneNum.value == "") {
 			alert("휴대전화번호 뒤7~8자리를 입력해주세요!");
 			form.id_find_phone.focus();
 			return false;
 		}
 
-		for (var i = 0; i < form.id_find_phone.length; i++) {
-			ch = form.id_find_phone.value.charAt(i)
+		for (var i = 0; i < form.memPhoneNum.length; i++) {
+			ch = form.memPhoneNum.value.charAt(i)
 			if (!(ch >= '0' && ch <= '9')) {
 				alert("핸드폰번호는 숫자만 입력가능합니다.")
-				form.id_find_phone.focus();
-				form.id_find_phone.select();
+				form.memPhoneNum.focus();
+				form.memPhoneNum.select();
 				return false;
 			}
 		}
@@ -279,21 +279,21 @@ h3 {
 						<div id="LeftBox" style="margin-right: 100px;">
 							<h3 id="login_text">아이디 찾기</h3>
 							<div class="id_find_text">
-								<form name="find_user_id_password" action="${contextPath}/login_findid.do"
+								<form name="find_user_id_password" action="${contextPath}/findId.do"
 									method="post">
 									<div id="id_find_name">
-										<input type="text" name="id_find_name" size="37"
+										<input type="text" name="memId" size="37"
 											placeholder="이름을 입력하세요">
 									</div>
 									<div id="id_find_phone">
-										<input type="text" name="id_find_phone" size="37"
+										<input type="text" name="memPhoneNum" size="37"
 											placeholder="휴대전화번호 뒤 7~8자리를 입력하세요">
 									</div>
 								</form>
 							</div>
 
 							<div id="btn_find_id">
-								<input type="submit" id="find_id" value="아이디찾기"
+								<input type="button" id="find_id" value="아이디찾기"
 									onclick="find_user_id()"
 									style="width: 325px; background-color: #212529; color: white; border-radius: 2px;">
 							</div>
