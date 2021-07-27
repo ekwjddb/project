@@ -179,27 +179,19 @@ h3 {
 
 		var form = document.find_user_id_password;
 
-		if (form.memId.value == "") {
+		if (form.memName.value == "") {
 			alert("이름을 입력해주세요!");
-			form.memId.focus();
+			form.memName.focus();
 			return false;
 
 		}
 		if (form.memPhoneNum.value == "") {
-			alert("휴대전화번호 뒤7~8자리를 입력해주세요!");
+			alert("핸드폰번호를 입력해주세요!");
 			form.id_find_phone.focus();
 			return false;
 		}
 
-		for (var i = 0; i < form.memPhoneNum.length; i++) {
-			ch = form.memPhoneNum.value.charAt(i)
-			if (!(ch >= '0' && ch <= '9')) {
-				alert("핸드폰번호는 숫자만 입력가능합니다.")
-				form.memPhoneNum.focus();
-				form.memPhoneNum.select();
-				return false;
-			}
-		}
+		
 		form.submit();
 
 	}
@@ -282,12 +274,12 @@ h3 {
 								<form name="find_user_id_password" action="${contextPath}/findId.do"
 									method="post">
 									<div id="id_find_name">
-										<input type="text" name="memId" size="37"
+										<input type="text" name="memName" size="37"
 											placeholder="이름을 입력하세요">
 									</div>
 									<div id="id_find_phone">
 										<input type="text" name="memPhoneNum" size="37"
-											placeholder="휴대전화번호 뒤 7~8자리를 입력하세요">
+											placeholder="핸드폰번호를 입력하세요 ex) 000-0000-0000">
 									</div>
 								</form>
 							</div>
