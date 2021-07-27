@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,7 +47,23 @@ public class MemberControllerImpl implements MemberController {
 
 		return "admin_listmember";
 	}
-
+	// 비밀번호 찾기
+	@RequestMapping(value = "/find_pw.do", method = RequestMethod.POST)
+	public void find_pw(@ModelAttribute MemberVO memberVO, HttpServletResponse response) throws Exception{
+		memberService.find_pw(response, memberVO);
+	}
+	
+	//아이디 중복 확인
+	@Override
+	@RequestMapping(value="/overlapped.do" ,method = RequestMethod.POST)
+	public ResponseEntity overlapped(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ResponseEntity resEntity = null;
+		String result =	memberService.overlapped(memId);
+		resEntity = new ResponseEntity(result, HttpStatus.OK);
+		return resEntity;
+		
+		
+	}
 	// 멤버로그인작업 ppt226
 	// @Override
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
@@ -356,6 +374,6 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 	
-	
+
 
 }

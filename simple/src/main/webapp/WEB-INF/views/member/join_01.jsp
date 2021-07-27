@@ -69,6 +69,8 @@ h3 {
 }
 </style>
 <script type="text/javascript">
+
+    var idck = 0;
 	//로그인
 	function Check_Join() {
 		var form = document.CheckJoin;
@@ -117,6 +119,7 @@ h3 {
 			form.memId.select();
 			return false;
 		}
+
 
 		//비밀번호 입력여부 체크
 		if (form.memPwd.value == "") {
@@ -224,8 +227,18 @@ h3 {
 			agree2.focus();
 			return false;
 		}
+		if(confirm("회원가입을 하시겠습니까?")){
+		        if(idck==0){
+		            alert('아이디 중복확인을 체크해주세요');
+		            return false;
+		        }else{
+		        form.submit();
+		        }
+		    }
+	
 
-		form.submit();
+
+		
 
 	}
 	function checkAllCheckbox(obj) {
@@ -261,11 +274,35 @@ h3 {
 			});
 		});
 	});
+	
+	function fn_overlapped(){
+		var _id=$("#memId").val();
+	    $.ajax({
+	       type:"post",
+	       async:false,  
+	       url:"${contextPath}/overlapped.do",
+	       dataType:"text",
+	       data: {memId:_id},
+	       success:function (data,textStatus){
+	          if(data=='false'){
+	       	    alert("사용할 수 있는 ID입니다.");
+	       	    idck = 1;
+	       	    $('#btnOverlapped').prop("disabled", true);
+	       	   
+	          }else{
+	        	  alert("사용할 수 없는 ID입니다.");
+	          }
+	       },
+	       error:function(data,textStatus){
+	          alert("에러가 발생했습니다.");ㅣ
+	       },
+	       complete:function(data,textStatus){
+	          //alert("작업을완료 했습니다");
+	       }
+	    });  //end ajax	 
+	 }	
 
-	//아이디 중복체크 팝업창
-	function id_check() {
-		window.open("idCheckForm.jsp", "idwin", "width=400, height=350");
-	}
+
 	//핸드폰 인증 팝업창
 	function phone_check() {
 		window.open("phone_check.jsp", "phonewin", "width=400, height=350");
@@ -387,9 +424,9 @@ h3 {
 											</div>
 										</td>
 										<td colspan="3" class="user_id" style="padding-left: 10px;">
-											<input type="text" name="memId" size="30" value=""
-											style="margin-bottom: 10px;"> <input type="button"
-											name="check_id_overlap" value="중복확인" onclick="id_check()">
+	
+											<input type="text" name="memId" id="memId" size="30" style="margin-bottom: 10px;">
+											 <input type="button" id="idck" name="btnOverlapped" value="중복확인" onClick="fn_overlapped()">
 											<input type="hidden" name="idDuplication" value="idUncheck">
 										</td>
 									</tr>

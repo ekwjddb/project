@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.member.vo.MemberVO;
@@ -16,6 +17,12 @@ import com.project.simple.page.Criteria;
 public class MemberDAOImpl implements MemberDAO{
 	@Autowired
 	private SqlSession sqlSession;
+	
+	// 비밀번호 변경
+	@Transactional
+	public int update_pw(MemberVO memberVO) throws Exception{
+		return sqlSession.update("mapper.member.update_pw", memberVO);
+	}
 	
 	@Override
 	public List<MemberVO> selectAllMemberList(Criteria cri) throws DataAccessException{
@@ -89,5 +96,11 @@ public class MemberDAOImpl implements MemberDAO{
 	public MemberVO find_Id(MemberVO memberVO) throws DataAccessException {
 		MemberVO vo = sqlSession.selectOne("mapper.member.find_Id", memberVO);
 		return vo;
+	}
+
+	@Override
+	public String selectOverlappedID(String memId) throws DataAccessException {
+		String result =  sqlSession.selectOne("mapper.member.selectOverlappedID",memId);
+		return result;
 	}
 }

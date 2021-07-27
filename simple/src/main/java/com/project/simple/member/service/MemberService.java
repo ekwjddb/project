@@ -35,6 +35,14 @@ public interface MemberService{
 	
 	public MemberVO findId(MemberVO memberVO) throws Exception;
 
+	public String overlapped(String memId)throws Exception;
+
+	public void send_mail(MemberVO memberVO, String div) throws Exception;
+
+	public void find_pw(HttpServletResponse response, MemberVO memberVO) throws Exception;
+
+
+
 	
 	
 }
