@@ -209,24 +209,35 @@ h3 {
 		}
 	}
 	//비밀번호 찾기_이메일
-	function find_user_password_email() {
-		var form = document.find_user_password;
-		if (form.memId.value == "") {
-			alert("아이디를 입력해주세요!");
-			form.memId.focus();
+	
+	$(function(){
+		$("#findBtn").click(function(){
+			if($("#memId").val() == ""){
+				alert("아이디를 입력해주세요!");
+				return false;
 
-		}if (form.memEmail.value == "") {
-			alert("이메일을 입력해주세요!");
-			form.memEmail.focus();
+			}
+			if($("#memEmail").val() == ""){
+				alert("이메일을 입력해주세요!");
+				return false;
 
-		} else {
-			form.submit();
-		}
-
-	}
+			}
+			$.ajax({
+				url : "${contextPath}/find_pw.do",
+				type : "POST",
+				data : {
+					memId : $("#memId").val(),
+					memEmail : $("#memEmail").val()
+				},
+				success : function(result) {
+					alert(result);
+				},
+			})
+		});
+	})
 </script>
 </head>
-<title>주문결제창</title>
+<title>아이디/비밀번호 찾기창</title>
 <body>
 
 	<!-- 타이틀 -->
@@ -302,18 +313,18 @@ h3 {
 						<h3 id="Non_login_text">비밀번호 찾기</h3>
 
 						<div class="pwd_find">
-							<form name="find_user_password" action="${contextPath}/find_pw.do" method="post">
+							
 								<input type="text" name="memId" id="memId" size="37" placeholder="아이디를 입력하세요">
 								<input type="text" name="memEmail" id="memEmail" size="37" placeholder="이메일을 입력하세요">
 
-							</form>
+						
 							<div id="confirm">
 								<input type="submit" id="phone_confirm" value="휴대폰 인증"
 									onclick="find_user_password_phone()"
 									style="width: 160px !important; background-color: #212529; color: white; border-radius: 2px; margin-top: 10px;">
-								<input type="submit" id="email_confirm" value="이메일 인증"
-									onclick="find_user_password_email()"
-									style="width: 160px !important; background-color: #212529; color: white; border-radius: 2px;">
+								<button type="button" id=findBtn value="이메일 인증"
+									
+									style="width: 160px; height:100px; !important; background-color: #212529; color: white; border-radius: 2px;"></button>
 							</div>
 						</div>
 

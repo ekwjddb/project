@@ -29,6 +29,7 @@ public class MemberServiceImpl implements MemberService{
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 	
+		   
 			// 임시 비밀번호 생성
 			String memPwd = "";
 			for (int i = 0; i < 12; i++) {
@@ -50,19 +51,19 @@ public class MemberServiceImpl implements MemberService{
 		public void send_mail(MemberVO memberVO, String div) throws Exception {
 			// Mail Server 설정
 			String charSet = "utf-8";
-			String hostSMTP = "smtp.naver.com";
-			String hostSMTPid = "ekwjd8683";
-			String hostSMTPpwd = "Dbek4026";
+			String hostSMTP = "smtp.gmail.com";
+			String hostSMTPid = "ekwjd8683@gmail.com";
+			String hostSMTPpwd = "Dbek4026!";
 
 			// 보내는 사람 EMail, 제목, 내용
-			String fromEmail = "ekwjd8683@naver.com";
-			String fromName = "Spring Homepage";
+			String fromEmail = "ekwjd8683@gmail.com";
+			String fromName = "SIMPLE";
 			String subject = "";
 			String msg = "";
 
 			if(div.equals("find_pw")) {
 
-				subject = "Spring Homepage 임시 비밀번호 입니다.";
+				subject = "SIMPLE 임시 비밀번호 입니다.";
 				msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
 				msg += "<h3 style='color: blue;'>";
 				msg += memberVO.getmemId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";

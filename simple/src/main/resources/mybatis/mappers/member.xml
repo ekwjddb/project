@@ -21,16 +21,6 @@
 	<update id="update_pw" parameterType="memberVO">
 		update simple.member set memPwd = #{memPwd} where memId = #{memId}
 	</update>
-	<!-- 비밀번호 찾기(아이디 조회) -->
-	  <select id="find_Pwd_id" resultType="memberVO"
-		parameterType="memberVO">
-    <![CDATA[
-		select * from simple.member where memId=#{memId};
-	]]>
-	</select>
-	
-	
-	
 	
     <select id="find_Id" resultType="memberVO"
 		parameterType="memberVO">
@@ -38,7 +28,10 @@
 		select * from simple.member where memName=#{memName} and memPhoneNum=#{memPhoneNum};
 	]]>
 	</select>
-	
+	<!-- 비번찾기(아이디 확인) -->
+	<select id="check_id" parameterType="String" resultType="int">
+		select count(*) from simple.member where memId = #{memId}
+	</select>
 	
 	<!-- 아이디 중복 확인 -->
 	<select id="selectOverlappedID" parameterType="String" resultType="String">
