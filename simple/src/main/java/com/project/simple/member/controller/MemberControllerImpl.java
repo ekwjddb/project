@@ -1,5 +1,6 @@
 package com.project.simple.member.controller;
 
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,28 +48,14 @@ public class MemberControllerImpl implements MemberController {
 
 		return "admin_listmember";
 	}
-	// 비밀번호 찾기
-	@RequestMapping(value = "/find_pw.do", method = RequestMethod.POST)
-	public void find_pw(@ModelAttribute MemberVO memberVO, HttpServletResponse response) throws Exception{
-		memberService.find_pw(response, memberVO);
-	}
 	
-	//아이디 중복 확인
-	@Override
-	@RequestMapping(value="/overlapped.do" ,method = RequestMethod.POST)
-	public ResponseEntity overlapped(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		ResponseEntity resEntity = null;
-		String result =	memberService.overlapped(memId);
-		resEntity = new ResponseEntity(result, HttpStatus.OK);
-		return resEntity;
-		
-		
-	}
 	// 멤버로그인작업 ppt226
 	// @Override
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		ModelAndView mav = new ModelAndView();
 		memberVO = memberService.login(member);
 		if (memberVO != null) {
@@ -77,16 +64,22 @@ public class MemberControllerImpl implements MemberController {
 			session.setAttribute("isLogOn", true);
 			mav.setViewName("redirect:/main.do");
 		} else {
-			rAttr.addAttribute("result", "loginFailed");
-			mav.setViewName("redirect:/login_01.do");
+			out.println("<script>");
+			out.println("alert('아이디 또는 비밀번호가 일치하지 않습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return null;
 		}
 		return mav;
 	}
-
+    //아이디 찾기
 	@RequestMapping(value = "/findId.do", method = RequestMethod.POST)
 	public ModelAndView findId(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
 		ModelAndView mav = new ModelAndView();
+		PrintWriter out = response.getWriter();
 		memberVO = memberService.findId(member);
 		if (memberVO != null) {
 			HttpSession session = request.getSession();
@@ -95,11 +88,16 @@ public class MemberControllerImpl implements MemberController {
 			mav.setViewName("redirect:/login_04.do");
 
 		} else {
-			rAttr.addAttribute("result", "findIdFailed");
-			mav.setViewName("redirect:/login_03.do");
+			out.println("<script>");
+			out.println("alert('찾으시는 아이디가 없습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return null;
 		}
 		return mav;
 	}
+	//아이디 찾기 완료
 	@RequestMapping(value = "/login_04.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
@@ -302,7 +300,7 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName(viewName);
 		return mav;
 	}
-	
+	//아이디,비밀번호 찾기
 	@RequestMapping(value = "/login_03.do", method = RequestMethod.GET)
 	private ModelAndView login_03(HttpServletRequest request, HttpServletResponse response) {
 		String viewName = (String) request.getAttribute("viewName");
@@ -311,7 +309,7 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 
-
+    //관리자 회원리스트
 	@Override
 	@RequestMapping(value = "/admin_listmember.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView listMembers(Criteria cri, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -330,7 +328,7 @@ public class MemberControllerImpl implements MemberController {
 
 		return mav;
 	}
-
+    //관리자 회원 검색 리스트
 	@Override
 	@RequestMapping(value = "/admin_listmember/memberSearch.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberSearch(@RequestParam("search") String search, @RequestParam("searchType") String searchType,
@@ -362,7 +360,7 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 
 	}
-	
+	//관리자 회원 삭제
 	@RequestMapping(value = "/admin_removeMember.do", method = RequestMethod.GET)
 	private ModelAndView admin_removeMember(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		String viewName = (String) request.getAttribute("viewName");
@@ -373,7 +371,21 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName("redirect:/admin_listmember.do");
 		return mav;
 	}
-	
+	// 비밀번호 찾기
+	@RequestMapping(value = "/find_pw.do", method = RequestMethod.POST)
+	public void find_pw(@ModelAttribute MemberVO memberVO, HttpServletResponse response) throws Exception{
+		memberService.find_pw(response, memberVO);
+	}
+	//아이디 중복 확인
+	@Override
+	@RequestMapping(value="/overlapped.do" ,method = RequestMethod.POST)
+	public ResponseEntity overlapped(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ResponseEntity resEntity = null;
+		String result =	memberService.overlapped(memId);
+		resEntity = new ResponseEntity(result, HttpStatus.OK);
+		return resEntity;
+			
+	}	
 
 
 }

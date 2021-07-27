@@ -41,7 +41,7 @@ public interface MemberService{
 
 	public void find_pw(HttpServletResponse response, MemberVO memberVO) throws Exception;
 
-
+	public void check_id(String memId, HttpServletResponse response) throws Exception;
 
 	
 	

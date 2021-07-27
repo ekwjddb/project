@@ -212,16 +212,7 @@ h3 {
 	
 	$(function(){
 		$("#findBtn").click(function(){
-			if($("#memId").val() == ""){
-				alert("아이디를 입력해주세요!");
-				return false;
-
-			}
-			if($("#memEmail").val() == ""){
-				alert("이메일을 입력해주세요!");
-				return false;
-
-			}
+			
 			$.ajax({
 				url : "${contextPath}/find_pw.do",
 				type : "POST",
@@ -314,17 +305,17 @@ h3 {
 
 						<div class="pwd_find">
 							
-								<input type="text" name="memId" id="memId" size="37" placeholder="아이디를 입력하세요">
-								<input type="text" name="memEmail" id="memEmail" size="37" placeholder="이메일을 입력하세요">
+								<input type="text" name="memId" id="memId" size="37" placeholder="아이디를 입력하세요" style="margin-bottom: 10px;">
+								<input type="text" name="memEmail" id="memEmail" size="37" placeholder="이메일을 입력하세요" style="margin-bottom: 10px;">
 
 						
 							<div id="confirm">
 								<input type="submit" id="phone_confirm" value="휴대폰 인증"
 									onclick="find_user_password_phone()"
 									style="width: 160px !important; background-color: #212529; color: white; border-radius: 2px; margin-top: 10px;">
-								<button type="button" id=findBtn value="이메일 인증"
+								<button type="button" id=findBtn 
 									
-									style="width: 160px; height:100px; !important; background-color: #212529; color: white; border-radius: 2px;"></button>
+									style="width: 160px; height:100px; !important; background-color: #212529; color: white; border-radius: 2px;">이메일 인증</button>
 							</div>
 						</div>
 

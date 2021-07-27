@@ -103,4 +103,16 @@ public class MemberDAOImpl implements MemberDAO{
 		String result =  sqlSession.selectOne("mapper.member.selectOverlappedID",memId);
 		return result;
 	}
+
+	// 아이디 중복 검사
+	@Override
+	public int check_id(String memId) throws Exception{
+		return sqlSession.selectOne("mapper.member.check_id", memId);
+	}
+	
+	// 로그인 검사
+	@Override
+	public MemberVO check_email(String memId) throws Exception{
+		return sqlSession.selectOne("mapper.member.check_email", memId);
+	}
 }

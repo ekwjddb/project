@@ -23,78 +23,6 @@ import com.project.simple.page.Criteria;
 public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDAO memberDAO;
-	
-	@Override
-	public void find_pw(HttpServletResponse response, MemberVO memberVO) throws Exception {
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-	
-		   
-			// 임시 비밀번호 생성
-			String memPwd = "";
-			for (int i = 0; i < 12; i++) {
-				memPwd += (char) ((Math.random() * 26) + 97);
-			}
-			memberVO.setmemPwd(memPwd);
-			// 비밀번호 변경
-			memberDAO.update_pw(memberVO);
-			// 비밀번호 변경 메일 발송
-			send_mail(memberVO, "find_pw");
-			
-			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
-			out.close();
-		
-	}
-	
-	// 이메일 발송
-		@Override
-		public void send_mail(MemberVO memberVO, String div) throws Exception {
-			// Mail Server 설정
-			String charSet = "utf-8";
-			String hostSMTP = "smtp.gmail.com";
-			String hostSMTPid = "ekwjd8683@gmail.com";
-			String hostSMTPpwd = "Dbek4026!";
-
-			// 보내는 사람 EMail, 제목, 내용
-			String fromEmail = "ekwjd8683@gmail.com";
-			String fromName = "SIMPLE";
-			String subject = "";
-			String msg = "";
-
-			if(div.equals("find_pw")) {
-
-				subject = "SIMPLE 임시 비밀번호 입니다.";
-				msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
-				msg += "<h3 style='color: blue;'>";
-				msg += memberVO.getmemId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
-				msg += "<p>임시 비밀번호 : ";
-				msg += memberVO.getmemPwd() + "</p></div>";
-			}
-			
-
-		
-			// 받는 사람 E-Mail 주소
-			String mail = memberVO.getmemEmail();
-			try {
-				HtmlEmail memEmail = new HtmlEmail();
-				memEmail.setDebug(true);
-				memEmail.setCharset(charSet);
-				memEmail.setSSL(true);
-				memEmail.setHostName(hostSMTP);
-				memEmail.setSmtpPort(587);
-
-				memEmail.setAuthentication(hostSMTPid, hostSMTPpwd);
-				memEmail.setTLS(true);
-				memEmail.addTo(mail, charSet);
-				memEmail.setFrom(fromEmail, fromName, charSet);
-				memEmail.setSubject(subject);
-				memEmail.setHtmlMsg(msg);
-				memEmail.send();
-			} catch (Exception e) {
-				System.out.println("메일발송 실패 : " + e);
-			}
-		}
-		
 
 	@Override
 	public List<MemberVO> listMembers(Criteria cri) throws DataAccessException{
@@ -165,5 +93,93 @@ public class MemberServiceImpl implements MemberService{
 		
 		return memberDAO.selectOverlappedID(memId);
 	}
+	// 아이디 중복 검사(AJAX)
+	@Override
+	public void check_id(String memId, HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter();
+		out.println(memberDAO.check_id(memId));
+		out.close();
+		
+	}
+	// 이메일 발송
+	@Override
+	public void send_mail(MemberVO memberVO, String div) throws Exception {
+		// Mail Server 설정
+		String charSet = "utf-8";
+		String hostSMTP = "smtp.gmail.com";
+		String hostSMTPid = "ekwjd8683@gmail.com";
+		String hostSMTPpwd = "Dbek4026!";
+
+		// 보내는 사람 EMail, 제목, 내용
+		String fromEmail = "ekwjd8683@gmail.com";
+		String fromName = "SIMPLE";
+		String subject = "";
+		String msg = "";
+
+		if(div.equals("find_pw")) {
+
+			subject = "SIMPLE 임시 비밀번호 입니다.";
+			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
+			msg += "<h3 style='color: blue;'>";
+			msg += memberVO.getmemId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+			msg += "<p>임시 비밀번호 : ";
+			msg += memberVO.getmemPwd() + "</p></div>";
+		}
+			
+
+		
+		// 받는 사람 E-Mail 주소
+		String name = memberVO.getmemName();
+		String mail = memberVO.getmemEmail();
+		try {
+			HtmlEmail memEmail = new HtmlEmail();
+			memEmail.setDebug(true);
+			memEmail.setCharset(charSet);
+			memEmail.setSSL(true);
+			memEmail.setHostName(hostSMTP);
+			memEmail.setSmtpPort(587);
+
+			memEmail.setAuthentication(hostSMTPid, hostSMTPpwd);
+			memEmail.setTLS(true);
+			memEmail.addTo(mail, name,charSet);
+			memEmail.setFrom(fromEmail, fromName, charSet);
+			memEmail.setSubject(subject);
+			memEmail.setHtmlMsg(msg);
+			memEmail.send();
+		} catch (Exception e) {
+			System.out.println("메일발송 실패 : " + e);
+		}
+	}
+	@Override
+	public void find_pw(HttpServletResponse response, MemberVO memberVO) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		// 아이디가 없으면
+		if(memberDAO.check_id(memberVO.getmemId()) == 0) {
+			out.print("아이디가 없습니다.");
+			out.close();
+		}// 가입에 사용한 이메일이 아니면
+		else if(!memberVO.getmemEmail().equals(memberDAO.check_email(memberVO.getmemId()).getmemEmail())) {
+			out.print("등록된 이메일이 아닙니다.");
+			out.close();
+		}else {
+		
+			   
+			// 임시 비밀번호 생성
+			String memPwd = "";
+			for (int i = 0; i < 12; i++) {
+				memPwd += (char) ((Math.random() * 26) + 97);
+			}
+			memberVO.setmemPwd(memPwd);
+			// 비밀번호 변경
+			memberDAO.update_pw(memberVO);
+			// 비밀번호 변경 메일 발송
+			send_mail(memberVO, "find_pw");
+				
+			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
+			out.close();
+		}
+			
+		}
 	
 }
