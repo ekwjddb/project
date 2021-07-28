@@ -72,7 +72,6 @@ public class FavoriteControllerImpl implements FavoriteController{
 	@RequestMapping(value="/removeFavoriteProduct.do" ,method = RequestMethod.POST)
 	public ModelAndView removeFavoriteProduct( HttpServletRequest request, HttpServletResponse response)  throws Exception{
 		ModelAndView mav=new ModelAndView();
-		
 		String[] ajaxMsg = request.getParameterValues("valueArr");
 		int size = ajaxMsg.length;
 		for(int i = 0 ; i < size; i++) {

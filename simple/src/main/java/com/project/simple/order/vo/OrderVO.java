@@ -22,21 +22,87 @@ public class OrderVO {
 	private String memSpName;
 	private String memSpPhoneNum1;
 	private String memSpPhoneNum2;
-	private String memSpAdr;
+
+
 	private String memOrderMsg;
 	private String memDepositorName;
 	private String memPaymentMethod;
 	private String option1value;
 	private String option2value;
+	
+	private String option1name;
+	private String option2name;
 	private int totalPrice;
 	private int productCnt;
-	private String productImage;
+	private String productimage;
 	private String purchaseConfirm;
 	private String returnConfirm;
 	private String reviewConfirm;
 	private String deliverycharge;
 	
+	private String memSpPhoneNum1_0;
+	private String memSpPhoneNum1_1;
+	private String memSpPhoneNum1_2;
 	
+	private String memSpPhoneNum2_0;
+	private String memSpPhoneNum2_1;
+	private String memSpPhoneNum2_2;
+	
+	private String memSpAdr;
+	private String memSpAdr1;
+	private String memSpAdr2;
+	
+	private int memCartId;
+
+	
+	public String getMemSpPhoneNum1_0() {
+		return memSpPhoneNum1_0;
+	}
+	public void setMemSpPhoneNum1_0(String memSpPhoneNum1_0) {
+		this.memSpPhoneNum1_0 = memSpPhoneNum1_0;
+	}
+	public String getMemSpPhoneNum1_1() {
+		return memSpPhoneNum1_1;
+	}
+	public void setMemSpPhoneNum1_1(String memSpPhoneNum1_1) {
+		this.memSpPhoneNum1_1 = memSpPhoneNum1_1;
+	}
+	public String getMemSpPhoneNum1_2() {
+		return memSpPhoneNum1_2;
+	}
+	public void setMemSpPhoneNum1_2(String memSpPhoneNum1_2) {
+		this.memSpPhoneNum1_2 = memSpPhoneNum1_2;
+	}
+	public String getMemSpPhoneNum2_0() {
+		return memSpPhoneNum2_0;
+	}
+	public void setMemSpPhoneNum2_0(String memSpPhoneNum2_0) {
+		this.memSpPhoneNum2_0 = memSpPhoneNum2_0;
+	}
+	public String getMemSpPhoneNum2_1() {
+		return memSpPhoneNum2_1;
+	}
+	public void setMemSpPhoneNum2_1(String memSpPhoneNum2_1) {
+		this.memSpPhoneNum2_1 = memSpPhoneNum2_1;
+	}
+	public String getMemSpPhoneNum2_2() {
+		return memSpPhoneNum2_2;
+	}
+	public void setMemSpPhoneNum2_2(String memSpPhoneNum2_2) {
+		this.memSpPhoneNum2_2 = memSpPhoneNum2_2;
+	}
+	public String getMemSpAdr1() {
+		return memSpAdr1;
+	}
+	public void setMemSpAdr1(String memSpAdr1) {
+		this.memSpAdr1 = memSpAdr1;
+	}
+	public String getMemSpAdr2() {
+		return memSpAdr2;
+	}
+	public void setMemSpAdr2(String memSpAdr2) {
+		this.memSpAdr2 = memSpAdr2;
+	}
 	public String getMemId() {
 		return memId;
 	}
@@ -127,11 +193,11 @@ public class OrderVO {
 	public void setProductCnt(int productCnt) {
 		this.productCnt = productCnt;
 	}
-	public String getProductImage() {
-		return productImage;
+	public String getProductimage() {
+		return productimage;
 	}
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
+	public void setProductimage(String productimage) {
+		this.productimage = productimage;
 	}
 	public String getPurchaseConfirm() {
 		return purchaseConfirm;
@@ -159,19 +225,45 @@ public class OrderVO {
 		this.deliverycharge = deliverycharge;
 	}
 	
-	public String getoption1value() {
+	public String getOption1value() {
 		return option1value;
 	}
-	public void setoption1value(String option1value) {
+	public void setOption1value(String option1value) {
 		this.option1value = option1value;
 	}
-	
+	public String getOption2value() {
+		return option2value;
+	}
+	public void setOption2value(String option2value) {
+		this.option2value = option2value;
+	}
+	public String getOption1name() {
+		return option1name;
+	}
+	public void setOption1name(String option1name) {
+		this.option1name = option1name;
+	}
+	public String getOption2name() {
+		return option2name;
+	}
+	public void setOption2name(String option2name) {
+		this.option2name = option2name;
+	}
 	public String getoption2value() {
 		return option2value;
 	}
 	public void setoption2value(String option2value) {
 		this.option2value = option2value;
 	}
+	public int getMemCartId() {
+		return memCartId;
+	}
+	public void setMemCartId(int memCartId) {
+		this.memCartId = memCartId;
+	}
+	
+
+	
 	
 }
 

@@ -54,33 +54,31 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">
 				<div class="col-md-20 heading-section ftco-animate">
-					<h2 class="mb-4">이달의 BEST 상품</h2>
+					<h2 class="mb-4" style="font-size:25px;">이달의 <span style="color: #7e9c8c; font-size:27px;">BEST</span> 상품</h2>
 
 				</div>
 			</div>
 			<div class="row">
-			   <c:choose>
-			      <c:when test="${empty BestProductMap.BestProductList}">
-			         <b><span style="color:black;">등록된 상품이 없습니다.</span></b>
-			      </c:when>
-			      <c:when test="${!empty BestProductMap.BestProductList}">
-			      <c:forEach var="product" items="${BestProductMap.myProductList}">
+			<c:choose>
+			 <c:when test="${empty BestProductMap.BestProductList}">
+			     <b><span style="color:black;">등록된 상품이 없습니다.</span></b>
+			 </c:when>
+			 <c:when test="${!empty BestProductMap.BestProductList}">
+			 <c:forEach var="product" items="${BestProductMap.myProductList}">
 				<div class="col-md-4 ftco-animate">
 					<div class="blog-entry">
-						
-					<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}">
-				   <img  class="block-20" style="width: 346px;"src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /></a><br>
-						
-			
+						<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}" class="block-20">
+						  <img  class="block-20" style="width: 400px; margin-left:10px" src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /></a>
 						<div class="text d-flex py-1">
 							<div class="desc pl-2">
 								<h3 class="heading">
-									<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}">${product.productName}</a>
+									<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}" style="font-size:15px;">${product.productName}</a>
 								</h3>
-								<hr style="margin-top: 25px;">
+
+								<hr style="margin-top: 15px; margin-bottom:10px;">
 								<h3 class="heading"
-									style="padding-left: 67%; white-space: nowrap;">
-									<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}" style="font-size: 22px;"><fmt:formatNumber pattern="###,###,###" value="${product.productPrice}"/></a>
+									style="float:right; white-space: nowrap; margin-bottom:10px;">
+									<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}" style="font-size: 17px; "><fmt:formatNumber pattern="###,###,###" value="${product.productPrice}"/></a>
 								</h3>
 							</div>
 						</div>
@@ -89,10 +87,8 @@
 				</c:forEach>
 				</c:when>
 				</c:choose>
-				
-			
+	
 			</div>
-				
 		</div>
 	</section>
 </body>

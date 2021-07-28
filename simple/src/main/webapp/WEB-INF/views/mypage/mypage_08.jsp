@@ -298,7 +298,7 @@
 						<tr height="200">
 							<td colspan="5" style="background-color:white; padding-top:100px;">
 								<p align="center">
-									<b><span style="color:black; ">관심상품이 없습니다.</span></b>
+									<b><span style="color:black; ">관심상품이 없습니다.</sapn></b>
 								</p>
 							</td>
 						</tr>	

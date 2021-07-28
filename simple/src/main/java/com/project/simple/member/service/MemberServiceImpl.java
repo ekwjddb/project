@@ -121,7 +121,8 @@ public class MemberServiceImpl implements MemberService{
 			subject = "SIMPLE 임시 비밀번호 입니다.";
 			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
 			msg += "<h3 style='color: blue;'>";
-			msg += memberVO.getmemId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+			
+			msg += memberDAO.check_email(memberVO.getmemId()).getmemName() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
 			msg += "<p>임시 비밀번호 : ";
 			msg += memberVO.getmemPwd() + "</p></div>";
 		}

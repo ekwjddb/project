@@ -1,7 +1,10 @@
 package com.project.simple.order.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -9,66 +12,118 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.project.simple.cart.vo.CartVO;
 //import com.bookshop01.common.base.BaseController;
 //import com.bookshop01.goods.vo.GoodsVO;
 import com.project.simple.member.vo.MemberVO;
 import com.project.simple.order.service.OrderService;
 import com.project.simple.order.vo.OrderVO;
+import com.project.simple.page.Criteria;
 
 @Controller("orderController")
 public class OrderControllerImpl implements OrderController {
+	private static final String ARTICLE_IMAGE_REPO_order = "C:\\spring\\order_image";
 	@Autowired
 	private OrderService orderService;
 	@Autowired
 	private OrderVO orderVO;
 
-	// 주문페이지 이동(회원/비회원)
-	@RequestMapping(value = "/order.do", method = RequestMethod.GET)
+	// 장바구니에서 주문페이지 이동(회원/비회원)
+	@RequestMapping(value = "/order.do", method = RequestMethod.POST)
 	private ModelAndView order(@ModelAttribute("orderVO") OrderVO orderVO, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-
 		HttpSession session = request.getSession();
+
+		List<CartVO> cartlist = (ArrayList) session.getAttribute("cartlist");
 		Boolean isLogOn = (Boolean) session.getAttribute("isLogOn");
 
-		if (isLogOn == null || isLogOn == false) {
-			session.setAttribute("orderInfo", orderVO);
-			mav.addObject("orderInfo", orderVO);
-			System.out.println(orderVO);
-			mav.setViewName("redirect:/order_02.do");
-		} else if (isLogOn == true) {
-			session.setAttribute("orderInfo", orderVO);
-			mav.addObject("orderInfo", orderVO);
-			mav.setViewName("redirect:/order_01.do");
+		if (isLogOn == null) {
+			List<CartVO> list = (ArrayList) session.getAttribute("orderlist");
+			if (list == null) {
+				list = new ArrayList<CartVO>();
+				session.setAttribute("orderlist", list);
+			}
+
+			String[] ajaxMsg01 = request.getParameterValues("valueArr");
+			int[] ajaxMsg = null;
+			if (ajaxMsg01 != null) {
+				ajaxMsg = new int[ajaxMsg01.length];
+				for (int i = 0; i < ajaxMsg01.length; i++) {
+					ajaxMsg[i] = Integer.parseInt(ajaxMsg01[i]);
+				}
+			}
+			int size = ajaxMsg01.length;
+			for (int i = 0; i < size; i++) {
+				int no = ajaxMsg[i];
+				CartVO vo = cartlist.get(no);
+				list.add(vo);
+			}
+
+			session.setAttribute("orderlist", list);
+			mav.setViewName("order_02");
+		}
+
+		if (isLogOn == true) {
+			List<OrderVO> orderlist = new ArrayList();
+			String[] ajaxMsg = request.getParameterValues("valueArr");
+			int size = ajaxMsg.length;
+
+			for (int i = 0; i < size; i++) {
+				orderlist.add(orderService.selectcartlist(ajaxMsg[i]));
+			}
+
+			session.setAttribute("orderlist", orderlist);
+			mav.setViewName("order_01");
 		}
 		return mav;
 	}
 
 	// 주문페이지 이동(회원)
 	@RequestMapping(value = "/order_01.do", method = RequestMethod.GET)
-	private ModelAndView order_01(HttpServletRequest request, HttpServletResponse response) {
+	private ModelAndView order_01(@ModelAttribute("orderVO") OrderVO orderVO, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
 		ModelAndView mav = new ModelAndView();
 		return mav;
+
 	}
 
 	// 주문페이지 이동(비회원)
 	@RequestMapping(value = "/order_02.do", method = RequestMethod.GET)
-	private ModelAndView order_02(@ModelAttribute("orderVO") OrderVO orderVO, HttpServletRequest request,
-			HttpServletResponse response) {
+	private String order_02(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 
-		return mav;
+		return "order_02";
 	}
 
-	
+	// 관리자 주문리스트 조회
+	@RequestMapping(value = "/admin_listorder.do", method = RequestMethod.GET)
+	private ModelAndView admin_listorder(@ModelAttribute("orderVO") OrderVO orderVO, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		return mav;
+
+	}
+
 	@RequestMapping(value = "/orderEachGoods.do", method = RequestMethod.POST)
 	public ModelAndView orderEachGoods(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -174,5 +229,6 @@ public class OrderControllerImpl implements OrderController {
 	 * mav.addObject("myOrderInfo",receiverMap);//OrderVO로 주문결과 페이지에 주문자 정보를 표시한다.
 	 * mav.addObject("myOrderList", myOrderList); return mav; }
 	 */
+
 
 }

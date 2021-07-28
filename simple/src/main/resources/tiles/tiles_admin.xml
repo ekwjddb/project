@@ -9,10 +9,7 @@
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
 		<put-attribute name="side" value="/WEB-INF/views/common/side.jsp" />
 	</definition>
-    <definition name="admin_login" extends="baseLayout">
-	    <put-attribute name="title" value="관리자로그인창" />
-        <put-attribute name="body" value="/WEB-INF/views/admin/admin_login.jsp"/>
-    </definition>
+
     <definition name="admin_listmember" extends="baseLayout">
 	    <put-attribute name="title" value="관리자 회원관리창" />
         <put-attribute name="body" value="/WEB-INF/views/admin/admin_listmember.jsp"/>
@@ -21,7 +18,11 @@
 	    <put-attribute name="title" value="관리자 회원조회창" />
         <put-attribute name="body" value="/WEB-INF/views/admin/admin_listmember.jsp"/>
     </definition>
-    
+    <definition name="admin/viewMember" extends="baseLayout">
+		<put-attribute name="title" value="회원상세창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/admin_detailmember.jsp" />
+	</definition>
     <definition name="product/add_product" extends="baseLayout">
 	    <put-attribute name="title" value="관리자상품등록창" />
         <put-attribute name="body" value="/WEB-INF/views/admin/add_product.jsp"/>
@@ -44,6 +45,25 @@
 	    <put-attribute name="title" value="관리자상품목록검색창" />
         <put-attribute name="body" value="/WEB-INF/views/admin/admin_listproduct.jsp"/>
     </definition>
-    
+    <definition name="admin/listAllInquiry" extends="baseLayout">
+		<put-attribute name="title" value="1:1문의 리스트" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/board/Inquiry.jsp" />
+	</definition>
+	<definition name="admin/noticeForm" extends="baseLayout">
+		<put-attribute name="title" value="공지사항글쓰기폼" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/admin_board.jsp" />
+	</definition>
+	<definition name="admin/modNotice" extends="baseLayout">
+		<put-attribute name="title" value="공지사항수정하기폼" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/admin_board.jsp" />
+	</definition>
+	
+	<definition name="admin_listorder" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin/admin_listorder.jsp" />
+	</definition>
 
 </tiles-definitions>	

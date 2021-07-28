@@ -68,35 +68,11 @@
 			value="/WEB-INF/views/member/login_06.jsp" />
 	</definition>
 
-	<definition name="cs_07" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cs_07.jsp" />
-	</definition>
-
-	<definition name="nonorderinquiry" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/order/nonorderinquiry.jsp" />
-	</definition>
+	
 
 	<definition name="storeinfomation" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/storeinfomation.jsp" />
-	</definition>
-
-
-	<definition name="order_01" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/order/order_01.jsp" />
-	</definition>
-
-	<definition name="order_02" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/order/order_02.jsp" />
-	</definition>
-
-	<definition name="order_03" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/order/order_03.jsp" />
 	</definition>
 
 

@@ -309,15 +309,15 @@ function returnConfirmResult() {
 												<img src="${contextPath}/resources/images/image_1.jpg"
 													width="110" height="110" style="float: left;"> <a
 													style="margin-left: 0px;">${memOrderNum.productName}</a>
-												<c:if test="${memOrderNum.option1 !=null}">
+												<c:if test="${memOrderNum.option1value !=null}">
 													<p
-														style="margin-left: 130px; font-size: 13px; width: 100px;">옵션1
-														: ${memOrderNum.option1}</p>
+														style="margin-left: 130px; font-size: 13px; width: 100px;">${memOrderNum.option1Name}
+														: ${memOrderNum.option1value}</p>
 												</c:if>
-												<c:if test="${memOrderNum.option2 !=null}">
+												<c:if test="${memOrderNum.option2value !=null}">
 													<p
-														style="margin-left: 130px; font-size: 13px; width: 100px;">옵션1
-														: ${memOrderNum.option2}</p>
+														style="margin-left: 130px; font-size: 13px; width: 100px;">${memOrderNum.option2Name}
+														: ${memOrderNum.option2value}</p>
 												</c:if>
 
 											</div>
@@ -400,7 +400,7 @@ function returnConfirmResult() {
 										<div style="font-size: 11px;">
 											<a>연락처 :</a> <a>${memOrderSeqNum.memSpPhoneNum1}</a>
 											<c:if test="${memOrderSeqNum.memSpPhoneNum2 !=null}">
-												<a>/ ${memOrderSeqNum.memSpPhone2}</a>
+												<a>/ ${memOrderSeqNum.memSpPhone2Num2}</a>
 											</c:if>
 										</div>
 										<div style="font-size: 11px;">

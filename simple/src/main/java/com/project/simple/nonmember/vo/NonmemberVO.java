@@ -27,9 +27,6 @@ public class NonmemberVO {
 	private String currentStatus;
 	private String productName;
 	
-	private String option1;
-	private String option2;
-	
 	public NonmemberVO() {
 
 	}
@@ -159,22 +156,6 @@ public class NonmemberVO {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
-	}
-	
-	public String getOption1() {
-		return option1;
-	}
-	
-	public void setOption1(String option1) {
-		this.option1 = option1;
-	}
-	
-	public String getOption2() {
-		return option2;
-	}
-	
-	public void setOption2(String option2) {
-		this.option2 = option2;
 	}
 
 	

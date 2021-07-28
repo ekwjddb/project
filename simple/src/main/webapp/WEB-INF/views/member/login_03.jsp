@@ -29,7 +29,7 @@
 	width: 400px;
 	height: 350px;
 	float: center;
-	border: 1px solid #a9aaac;
+	border: 1px solid #eeeeee;
 	margin: 10 10 10 10;
 }
 
@@ -101,7 +101,7 @@
 #RightBox {
 	width: 400px;
 	height: 350px;
-	border: 1px solid #a9aaac;
+	border: 1px solid #eeeeee;
 	margin: 10 10 10 10;
 }
 
@@ -209,7 +209,6 @@ h3 {
 		}
 	}
 	//비밀번호 찾기_이메일
-	
 	$(function(){
 		$("#findBtn").click(function(){
 			
@@ -233,16 +232,9 @@ h3 {
 
 	<!-- 타이틀 -->
 	<section class="ftco-section testimony-section"
-		style="padding-top: 50px;">
+		style="padding-top: 50px; margin-top:50px; ">
 		<div class="container">
-			<div class="row justify-content-center mb-5 pb-3"
-				style="background-color: #f5f5f5; border: 1px solid #e7e7e7; margin-top: 50px;">
-				<div class="col-md-20 heading-section ftco-animate"
-					style="height: 60px;">
-					<h2 class="mb-4" style="font-size: 35px; margin-top: 15px;">아이디/비밀번호
-						찾기</h2>
-				</div>
-			</div>
+
 			<!-- 타이틀 끝 -->
 			<!-- 최근 본 상품 -->
 			<div id="recentlyProduct"
@@ -280,19 +272,19 @@ h3 {
 									method="post">
 									<div id="id_find_name">
 										<input type="text" name="memName" size="37"
-											placeholder="이름을 입력하세요">
+											placeholder="이름을 입력하세요" style="font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px;">
 									</div>
 									<div id="id_find_phone">
-										<input type="text" name="memPhoneNum" size="37"
+										<input type="text" name="memPhoneNum" size="37"style="font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px;"
 											placeholder="핸드폰번호를 입력하세요 ex) 000-0000-0000">
 									</div>
 								</form>
 							</div>
 
 							<div id="btn_find_id">
-								<input type="button" id="find_id" value="아이디찾기"
+								<input type="submit" id="find_id" value="아이디찾기"
 									onclick="find_user_id()"
-									style="width: 325px; background-color: #212529; color: white; border-radius: 2px;">
+									style="width: 325px; background-color: #7e9c8c; color:white; height:45px; border:none; border-radius: 2px; ">
 							</div>
 
 						</div>
@@ -304,18 +296,19 @@ h3 {
 						<h3 id="Non_login_text">비밀번호 찾기</h3>
 
 						<div class="pwd_find">
-							
-								<input type="text" name="memId" id="memId" size="37" placeholder="아이디를 입력하세요" style="margin-bottom: 10px;">
-								<input type="text" name="memEmail" id="memEmail" size="37" placeholder="이메일을 입력하세요" style="margin-bottom: 10px;">
+							<form name="find_user_password" method="post">
+								<input type="text" name="memId" id="memId"  style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px; "
+									size="37" placeholder="아이디를 입력하세요">
+								<input type="text" name="memEmail" id="memEmail" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px;"
+									size="37" placeholder="이메일을 입력하세요">
 
-						
+							</form>
 							<div id="confirm">
 								<input type="submit" id="phone_confirm" value="휴대폰 인증"
 									onclick="find_user_password_phone()"
-									style="width: 160px !important; background-color: #212529; color: white; border-radius: 2px; margin-top: 10px;">
-								<button type="button" id=findBtn 
-									
-									style="width: 160px; height:100px; !important; background-color: #212529; color: white; border-radius: 2px;">이메일 인증</button>
+									style="width: 160px !important; background-color: #eeeeee; color:#5f5f5f;border-radius: 2px; border:none;margin-top: 10px;">
+								<button type="button" id="findBtn" 
+									style="width: 160px ; height:100px; !important; margin-left:2px; background-color: #eeeeee; color:#5f5f5f; border-radius: 2px; border:none;">이메일 인증</button>
 							</div>
 						</div>
 
@@ -329,8 +322,8 @@ h3 {
 	<div class="container">
 		<section class="Easy-sgin-in-wrap1">
 			<ul class="sign-button-list1">
-				<li><button onclick="location.href='Login-01.jsp'"
-						style="background-color: #212529; color: white; border-radius: 2px;">
+				<li><button onclick="location.href='${contextPath}/login_01.do'"
+						style="background-color: #5f5f5f; color: white; border-radius: 2px; border:none;">
 						<i class="return-login"></i><span>로그인으로 돌아가기</span>
 					</button></li>
 			</ul>

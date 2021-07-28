@@ -51,28 +51,38 @@ public class MemberControllerImpl implements MemberController {
 	
 	// 멤버로그인작업 ppt226
 	// @Override
-	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		ModelAndView mav = new ModelAndView();
-		memberVO = memberService.login(member);
-		if (memberVO != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("member", memberVO);
-			session.setAttribute("isLogOn", true);
-			mav.setViewName("redirect:/main.do");
-		} else {
-			out.println("<script>");
-			out.println("alert('아이디 또는 비밀번호가 일치하지 않습니다.');");
-			out.println("history.go(-1);");
-			out.println("</script>");
-			out.close();
-			return null;
+		@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+		public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
+				HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	                        response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			ModelAndView mav = new ModelAndView();
+			memberVO = memberService.login(member);
+		
+			if (memberVO != null) {
+				HttpSession session = request.getSession();
+				String admin=memberVO.getlogintype();
+				if (admin.equals("관리자") ) {
+					session.setAttribute("admin", memberVO);
+					session.setAttribute("AdminisLogOn", true);
+				} else {
+					session.setAttribute("member", memberVO);
+					session.setAttribute("isLogOn", true);
+				}
+
+				mav.setViewName("redirect:/main.do");
+			} else {
+				out.println("<script>");
+				out.println("alert('아이디 또는 비밀번호가 일치하지 않습니다.');");
+				out.println("history.go(-1);");
+				out.println("</script>");
+				out.close();
+				
+			}
+			return mav;
 		}
-		return mav;
-	}
+		
     //아이디 찾기
 	@RequestMapping(value = "/findId.do", method = RequestMethod.POST)
 	public ModelAndView findId(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
@@ -105,18 +115,29 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 	}
 	// 로그아웃 작업
-	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
-		session.removeAttribute("member");
-		session.removeAttribute("isLogOn");
-		session.removeAttribute("quickList");
-		session.removeAttribute("quickListNum");
-			
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/main.do");
-		return mav;
-	}
+		@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+		public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpSession session = request.getSession();
+
+			if (session.getAttribute("member") != null) {
+				session.removeAttribute("member");
+				session.removeAttribute("isLogOn");
+			}
+			if (session.getAttribute("admin") != null) {
+				session.removeAttribute("admin");
+				session.removeAttribute("AdminisLogOn");
+				System.out.println("dkdkfjdkfdjkf");
+
+			}
+			session.removeAttribute("quickList");
+			session.removeAttribute("quickListNum");
+
+
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("redirect:/main.do");
+			return mav;
+		}
+
 
 	// 회원가입작업
 	@Override

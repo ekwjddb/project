@@ -22,9 +22,8 @@
         <result property="nonMemOrderDate" column="nonMemOrderDate" />
         <result property="productCnt" column="productCnt" />
         <result property="productPrice" column="productPrice" />
+        <result property="productImage" column="productImage" />
         <result property="currentStatus" column="currentStatus" />
-           <result property="option1" column="option1" />
-        <result property="option2" column="option2" />
 	</resultMap>
 	
 	<!--비회원 로그인창에서 입력한 id와 비밀번호로 비회원주문정보를 조회하는 sql문 -->

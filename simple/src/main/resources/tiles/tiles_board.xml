@@ -100,7 +100,14 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/board/AsCenter_write.jsp" />
 	</definition>
-
+	<definition name="cs_07" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/board/cs_07.jsp" />
+	</definition>
+	<definition name="cs_13" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/board/cs_13.jsp" />
+	</definition>
 
 
 </tiles-definitions>	
