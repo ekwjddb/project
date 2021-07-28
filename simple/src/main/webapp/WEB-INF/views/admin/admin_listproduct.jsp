@@ -14,6 +14,67 @@
 <head>
 
 <style>
+@import url(https://fonts.googleapis.com/css?family=Raleway:500);
+
+.snip1284 {
+	font-family: 'Raleway', Arial, sans-serif;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 500;
+	letter-spacing: 1px;
+}
+
+.snip1284 * {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transition: all 0.35s ease;
+	transition: all 0.35s ease;
+}
+
+.snip1284 li {
+	display: inline-block;
+	list-style: outside none none;
+	margin: 0.5em 1.2em;
+	padding: 0;
+}
+
+.snip1284 a {
+	padding: 0 0.6em;
+	color: rgba(255, 255, 255, 0.5);
+	position: relative;
+	text-decoration: none;
+}
+
+.snip1284 a:before, .snip1284 a:after {
+	width: 3px;
+	height: 0;
+	position: absolute;
+	content: '';
+	-webkit-transition: all 0.35s ease;
+	transition: all 0.35s ease;
+	background-color: #7e9c8c;
+}
+
+.snip1284 a:before {
+	top: 0;
+	right: 0;
+}
+
+.snip1284 a:after {
+	bottom: 0;
+	left: 0;
+}
+
+.snip1284 a:hover, .snip1284 .current a {
+	color: #ffffff;
+}
+
+.snip1284 a:hover:before, .snip1284 .current a:before, .snip1284 a:hover:after,
+	.snip1284 .current a:after {
+	height: 100%;
+}
+
+
 .page_wrap {
 	text-align: center;
 	font-size: 0;
@@ -77,44 +138,40 @@
 }
 </style>
 
+
 </head>
 <body>
 
 
-	<section class="ftco-section" style="padding-top: 30px;">
+	<section class="ftco-section testimony-section"
+		style="padding-top: 100px;">
 		<div class="container">
-			<div class="row justify-content-center mb-5 pb-3"
-				style="background-color: #f5f5f5; border: 1px solid #e7e7e7; margin-top: 20px;">
-				<div class="col-md-20 heading-section ftco-animate"
-					style="height: 60px;">
-					<h2 class="mb-4" style="font-size: 35px; margin-top: 15px;">관리자 페이지</h2>
-				</div>
-			</div>
+		<ul class="snip1284" style="padding-left: 0px; margin-bottom: 30px;">
+	           <li class="current"><a
+					onclick="location.href='${contextPath}/product/admin_listProduct.do'"
+					data-hover="상품관리"
+					style="font-size: 20px; border: none; color: #5a5a5a; margin-right: 150px; cursor: pointer; background-color: white; margin-left: 20px; padding-bottom: 0px;">상품관리</a></li>
 
-			
 
-			<div class="btn-group btn-group-justified" role="group"
-				aria-label="..." style="margin-bottom: 30px; margin-top: 10px;">
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default" onclick="location.href='${contextPath}/product/admin_listProduct.do'"
-						style="font-size: 25px; border: none; color: #5a5a5a; padding-right: 210px; background-color: white; margin-left: 10px; font-weight: bold;">*상품조회</button>
-				</div>
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default" onclick="location.href='${contextPath}/product/add_product.do'"
-						style="font-size: 25px; border: none; color: #5a5a5a; padding-right: 210px; background-color: white;">상품등록</button>
-				</div>
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default" onclick="location.href='${contextPath}/admin_listmember.do'"
-						style="font-size: 25px; border: none; color: #5a5a5a; padding-right: 210px; background-color: white;">회원조회</button>
-				</div>
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default" onclick="location.href='${contextPath}/board/listNotice.do'"
-						style="font-size: 25px; border: none; color: #5a5a5a; background-color: white;">게시판조회</button>
-				</div>
-			
-			</div>
+				<li><a
+					onclick="location.href='${contextPath}/product/add_product.do'"
+					data-hover="상품등록"
+					style="font-size: 20px; border: none; color: #5a5a5a; margin-right: 150px; cursor: pointer; background-color: white; padding-bottom: 0px;">상품등록</a></li>
+
+
+				<li><a
+					onclick="location.href='${contextPath}/admin_listmember.do'"
+					data-hover="회원관리"
+					style="font-size: 20px; border: none; color: #5a5a5a; margin-right: 150px; cursor: pointer; background-color: white; padding-bottom: 0px;">회원관리</a></li>
+
+
+				<li><a
+					onclick="location.href='location.href='${contextPath}/board/listNotice.do'"
+					data-hover="게시판관리"
+					style="font-size: 20px; border: none; color: #5a5a5a; background-color: white; cursor: pointer; padding-bottom: 0px;">게시판관리</a></li>
+			</ul>
 		
-			<hr style="margin-top: -10px;">
+	
 
               <form name="productSearch"
 				action="${contextPath}/product/admin_listProduct/productSearch.do" method="post">
@@ -151,13 +208,13 @@
 				<c:when test="${not empty productSearch.productImage && productSearch.productImage != 'null'}">
 					<input type="hidden" name="OrignProductFile" value="${productSearch.productImage}"class="block-20" />
 					<a href="${contextPath}/product/viewProduct.do?productNum=${productSearch.productNum}">
-				   <img  class="block-20" style=" width: 346px;"src="${contextPath}/download_product.do?productNum=${productSearch.productNum}&productImage=${productSearch.productImage}" id="preview" /></a><br>
+				   <img  class="block-20" style=" width: 400px;"src="${contextPath}/download_product.do?productNum=${productSearch.productNum}&productImage=${productSearch.productImage}" id="preview" /></a><br>
 						</c:when>
 			</c:choose>
 						<div class="text d-flex py-1">
 							<div class="desc pl-2">
 								<h3 class="heading">
-									<a href="${contextPath}/product/admin_detailproduct.do?productNum=${productSearch.productNum}">${productSearch.productName}</a>
+									<a style="font-size:15px;" href="${contextPath}/product/admin_detailproduct.do?productNum=${productSearch.productNum}">${productSearch.productName}</a>
 								</h3>
 								<hr style="margin-top: 25px;">
 							
@@ -181,14 +238,14 @@
 					<c:choose>		
 				<c:when test="${not empty product.productImage && product.productImage != 'null'}">
 					<input type="hidden" name="OrignProductFile" value="${product.productImage}"class="block-20" />
-					<a href="${contextPath}/product/viewProduct.do?productNum=${product.productNum}">
-				   <img  class="block-20" style=" width: 346px;"src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /></a><br>
+					<a href="${contextPath}/product/admin_detailproduct.do?productNum=${product.productNum}">
+				   <img  class="block-20" style=" width: 400px;"src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}" id="preview" /></a><br>
 						</c:when>
 			</c:choose>
 						<div class="text d-flex py-1">
 							<div class="desc pl-2">
 								<h3 class="heading">
-									<a href="${contextPath}/product/admin_detailproduct.do?productNum=${product.productNum}">${product.productName}</a>
+									<a style="font-size:15px;" href="${contextPath}/product/admin_detailproduct.do?productNum=${product.productNum}">${product.productName}</a>
 								</h3>
 								<hr style="margin-top: 25px;">
 							

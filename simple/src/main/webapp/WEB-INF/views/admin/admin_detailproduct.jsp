@@ -2,6 +2,8 @@
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="option1" value="${option.optionList1}" />
+<c:set var="option2" value="${option.optionList2}" />
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
@@ -124,6 +126,16 @@ textarea {
 }
 </style>
 <script type="text/javascript">
+
+function getSelectValue1(frm)
+{
+	frm.option1value.value = frm.option1.options[frm.option1.selectedIndex].text;
+}
+
+function getSelectValue2(frm)
+{
+	frm.option2value.value = frm.option2.options[frm.option2.selectedIndex].text;
+}
 	function modProduct(obj) {
 		obj.action = "${contextPath}/product/modNewProduct.do?productNum=${productNum.productNum}";
 		obj.submit();
@@ -156,7 +168,7 @@ textarea {
 					<section>
 						<div class="col-md-4 ftco-animate">
 							<div class="blog-entry">
-								<a><img src="${contextPath}/resources/images/bed.jpg"
+								<a><img src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}"
 									style="width: 600px; padding-top: 10px; padding-top: 10px; margin-left: -15px; float: left;">
 								</a> <br>
 							</div>
@@ -197,25 +209,25 @@ textarea {
 
 
 						<h3 class="heading">
-							<c:forEach items="${option1}" var="name1">
+							<c:forEach items="${option1}" var="name1" begin="0" end="0">
 								<a
-									style="position: absolute; white-space: nowrap; margin-top: 82px; margin-left: 51px; float: left; font-size: 14px; color: #5f5f5f; font-weight: normal;">${name1.option1name}ㅤㅤ
+									style="position: absolute; white-space: nowrap; margin-top: 82px; margin-left: 51px; float: left; font-size: 14px; color: #5f5f5f; font-weight: normal;">${name1.option1Name}ㅤㅤ
 									ㅤ</a>
 							</c:forEach>
 						</h3>
 						<select id="option1" name="option1"
 							onchange="checkPrice();getSelectValue1(this.form);"
-							style="margin-left: 180px; margin-top: 70px; float: left !important; left: 675px; font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 32px;">
+							style="margin-left: 180px; margin-top: 70px; left: 675px; font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 32px;">
 							<option value="">옵션 선택</option>
-							<c:forEach items="${option1}" var="option1">
+							<c:forEach items="${option1}" var="option1" >
 								<option value="${option1.option1price}">${option1.option1value}
 									+ (${option1.option1price}원)</option>
 							</c:forEach>
 						</select> <input type="hidden" name="option1value"> <br>
 						<h3 class="heading">
-							<c:forEach items="${option2}" var="name2">
+							<c:forEach items="${option2}" var="name2"  begin="0" end="0">
 								<a
-									style="position: absolute; float: left !important; left: 809px; white-space: nowrap; margin-top: 100px; margin-left: 155px; float: left; font-size: 14px; color: #5f5f5f; font-weight: normal;">${name2.option2name}
+									style="position: absolute; white-space: nowrap; margin-top: 35px; margin-left: 51px; float: left; font-size: 14px; color: #5f5f5f; font-weight: normal;">${name2.option2Name}
 									ㅤ</a>
 							</c:forEach>
 
@@ -230,28 +242,8 @@ textarea {
 							</c:forEach>
 						</select> <br> <input type="hidden" name="option2value">
 
-						<button type="button" class="btn btn-default" onclick="checkbuy()"
-							style="background-color: #7e9c8c; float: left; margin-left: 50px; margin-top: 37px; width: 280px; height: 50px; border-radius: 2px; font-size: 14px; color: white;">바로구매</button>
-						<button type="button" class="btn btn-default"
-							onclick="addCartBtn()"
-							style="background-color: #eeeeee; float: left; margin-left: 350px; margin-top: -50px; width: 280px; height: 50px; border-radius: 2px; font-size: 14px;">장바구니</button>
-
-						<input type="button" name="up" onclick="up()" value=" + " size="3"
-							style="width: 27px; height: 28px; white-space: nowrap; float: left; color: #5f5f5f; margin-left: 50px; font-size: 18px; border: none; margin-top: 30px;">
-
-						<input type="text" name="productCnt" id="quantity" value="1"
-							readonly="readonly"
-							style="white-space: nowrap; float: left; font-size: 14px; width: 50px; height: 28px; text-align: center; margin-top: 30px; border: 1px solid #eeeeee;" />
-
-						<input type="button" name="down" onclick="down()" value=" - "
-							size="3"
-							style="width: 27px; height: 28px; white-space: nowrap; color: #5f5f5f; float: left; font-size: 18px; border: none; margin-top: 30px;">
-						<h2
-							style="margin-top: 200px; font-size: 18px; test-align: right; width: 400px; margin-left: 380px;">
-							총 상품 금액ㅤ<input type="text" name="totalPrice" value="0"
-								style="border: none; text-align: right; font-size: 20px; width: 98px; margin-left: 18px;"
-								readonly />원
-						</h2>
+					
+					
 
 					</div>
 
@@ -280,10 +272,8 @@ textarea {
 						<div id="tab1" class="tab_content"
 							style="margin-left: 170px; margin-right: 170px;">
 							<!--Content-->
-							<img
-								src="${contextPath}/resources/images/product/sopiaDetiles.jpg"
-								style="width: 1200px; margin-left: -180px;"> <img
-								src="${contextPath}/download_product1.do?productNum=${product.productNum}&productContentImage=${product.productContentImage}">
+							<img style="width: 1200px; margin-left: -180px;"
+							src="${contextPath}/download_product1.do?productNum=${product.productNum}&productContentImage=${product.productContentImage}">
 						</div>
 
 					</div>

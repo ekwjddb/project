@@ -471,10 +471,14 @@ public class ProductControllerImpl implements ProductController {
 	@RequestMapping(value = "product/admin_detailproduct.do", method = RequestMethod.GET)
 	public ModelAndView admin_detailproduct(@RequestParam("productNum") String productNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		Map<String, Object> productMap = new HashMap();
 		String viewName = (String) request.getAttribute("viewName");
 		productVO = productService.viewProduct(productNum);
+		Map<String, Object> option = (Map<String, Object>) productService.viewOptionvalue(productNum);
 		ModelAndView mav = new ModelAndView();
+		
 		mav.setViewName(viewName);
+		mav.addObject("option", option);
 		mav.addObject("product", productVO);
 
 		return mav;

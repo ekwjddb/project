@@ -297,6 +297,30 @@ $('document').ready(function() {
 
 
 	   });
+	   
+
+$(document).ready(function() {
+	   $('.btnAdd').click(function() {
+
+	     $('.buttons').append(
+
+	       '<div style="margin-left: 35px; margin-top: 5px;"><input type="text" name="option1" size=10>&nbsp;<input type="text" name="option2" size=10></div><input style="margin-left: 35px;width: 225px;margin-top: 5px;" type="button" class="btnRemove" value="삭제"><br>'
+
+	     ); // end append   
+
+	     $('.btnRemove').on('click', function() {
+	       $(this).prev().remove(); // remove the textbox
+
+	       $(this).next().remove(); // remove the <br>
+
+	       $(this).remove(); // remove the button
+
+	     });		     
+
+	   }); // end click                                            
+
+	 }); // end ready  
+	 
 
 </script>
 
@@ -377,7 +401,7 @@ $('document').ready(function() {
                                         <input type="file" name="productContentImage" value="" >
                                </div>
                                <div style="padding-left: 77px;"> 
-                                   <label style="margin-right:45px; ">상품옵션2</label>
+                                   <label style="margin-right:45px; ">상품옵션1</label>
                                         <input type="text" name="option1" value="" style="font-size: 14px; margin-top: 10px; border: 1px solid #dcdcdc; width: 326px; height: 36px;">
                                </div>
                                <div style="padding-left: 77px;"> 
