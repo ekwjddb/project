@@ -13,7 +13,7 @@
 
 	<section class="home-slider js-fullheight owl-carousel">
 		<div class="slider-item js-fullheight"
-			style="background-image:url(${contextPath}/resources/images/bg_1.jpg);">
+			style="background-image:url(${contextPath}/resources/images/main1.jpg);">
 			<div class="overlay"></div>
 			<div class="container">
 				<div
@@ -32,7 +32,7 @@
 		</div>
 
 		<div class="slider-item js-fullheight"
-			style="background-image:url(${contextPath}/resources/images/bg_2.jpg);">
+			style="background-image:url(${contextPath}/resources/images/main2.jpg);">
 			<div class="overlay"></div>
 			<div class="container">
 				<div
