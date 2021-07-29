@@ -147,6 +147,7 @@ public class OrderControllerImpl implements OrderController {
 				int productCnt = vo.getProductCnt();
 				String productPrice = vo.getProductPrice();
 				String totalPrice = orderVO.getTotalPrice();
+				String productImage = vo.getProductImage();
 				orderVO.setProductNum(productNum);
 				orderVO.setProductName(productName);
 				orderVO.setOption1name(option1name);
@@ -158,6 +159,7 @@ public class OrderControllerImpl implements OrderController {
 				orderVO.setProductCnt(productCnt);
 				orderVO.setProductPrice(productPrice);
 				orderVO.setTotalPrice(totalPrice);
+				orderVO.setProductImage(productImage);
 
 				orderService.addNewOrder(orderVO);
 			}
@@ -193,6 +195,7 @@ public class OrderControllerImpl implements OrderController {
 				int productCnt = vo.getProductCnt();
 				String productPrice = vo.getProductPrice();
 				String totalPrice = orderVO.getTotalPrice();
+				String productImage = vo.getProductImage();
 				orderVO.setProductNum(productNum);
 				orderVO.setProductName(productName);
 				orderVO.setOption1name(option1name);
@@ -204,6 +207,7 @@ public class OrderControllerImpl implements OrderController {
 				orderVO.setProductCnt(productCnt);
 				orderVO.setProductPrice(productPrice);
 				orderVO.setTotalPrice(totalPrice);
+				orderVO.setProductImage(productImage);
 
 				orderService.addNewOrder(orderVO); // 마이바티스에서 분기
 			}
