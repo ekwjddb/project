@@ -124,7 +124,7 @@
 	<update id="updatePurchaseConfirm" parameterType="String">
 		update
 		memberOrder
-		set purchaseConfirm = '구매확정' where
+		set purchaseConfirm = '구매확정(완)' where
 		memOrderSeqNum =
 		#{memOrderSeqNum};
 	</update>
@@ -292,7 +292,7 @@
 	<update id="updateReturnConfirm" parameterType="java.util.Map">
 		update
 		memberOrder
-		set returnConfirm = '반품신청' where
+		set returnConfirm = '반품신청(완)' where
 		memOrderSeqNum =
 		#{memOrderSeqNum};
 	</update>

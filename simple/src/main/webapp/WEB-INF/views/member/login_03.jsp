@@ -223,12 +223,6 @@ h3 {
 					alert(result);
 				},
 			})
-			
-			 $('.button').append(
-
-				       '<input type="text" name="Approval_key" size=10>&nbsp;<br>'
-
-				 );
 		});
 	})
 </script>

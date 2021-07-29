@@ -125,11 +125,6 @@
 			value="/WEB-INF/views/mypage/deletemember.jsp" />
 	</definition>
 	
-	<definition name="cart" extends="baseLayout">
-		<put-attribute name="body"
-			value="/WEB-INF/views/cart/cart.jsp" />
-	</definition>
-	
 
 
 </tiles-definitions>	

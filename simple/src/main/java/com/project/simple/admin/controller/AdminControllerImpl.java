@@ -75,7 +75,7 @@ public class AdminControllerImpl implements AdminController {
 	}
 
 	// 회원상세보기
-	@RequestMapping(value = "/admin/viewMember.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/viewMember.do",  method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView viewMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String memId = request.getParameter("memId");
 		String viewName = (String) request.getAttribute("viewName");

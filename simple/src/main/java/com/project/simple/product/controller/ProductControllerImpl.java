@@ -45,12 +45,13 @@ import com.project.simple.product.vo.ProductVO;
 
 public class ProductControllerImpl implements ProductController {
 	private static final String ARTICLE_IMAGE_REPO = "C:\\spring\\product_image";
-	private static final String ARTICLE_IMAGE_REPO_productReview = "C:\\spring\\asCenter_image";
+	private static final String ARTICLE_IMAGE_REPO_review = "C:\\spring\\review_image";
 	@Autowired
 	private ProductService productService;
 	@Autowired
 	private ProductVO productVO;
 	private static final Logger logger = LoggerFactory.getLogger(ProductControllerImpl.class);
+	
 	
 	@Override // 메인 best상품 조회
 	@RequestMapping(value = "/main.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -471,14 +472,10 @@ public class ProductControllerImpl implements ProductController {
 	@RequestMapping(value = "product/admin_detailproduct.do", method = RequestMethod.GET)
 	public ModelAndView admin_detailproduct(@RequestParam("productNum") String productNum, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		Map<String, Object> productMap = new HashMap();
 		String viewName = (String) request.getAttribute("viewName");
 		productVO = productService.viewProduct(productNum);
-		Map<String, Object> option = (Map<String, Object>) productService.viewOptionvalue(productNum);
 		ModelAndView mav = new ModelAndView();
-		
 		mav.setViewName(viewName);
-		mav.addObject("option", option);
 		mav.addObject("product", productVO);
 
 		return mav;

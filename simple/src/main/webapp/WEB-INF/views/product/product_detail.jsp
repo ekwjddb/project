@@ -143,12 +143,12 @@ function getSelectValue2(frm)
 var fo;
 window.onload = function() {
 	fo = document.forms["form1"];
-	fo['totalPrice'].value = fo['price'].value;
+	fo['productPrice'].value = fo['price'].value;
 }
 
 
 function checkPrice() {
-	fo['totalPrice'].value= Number(fo['price'].value) + Number(fo['option1'].value) + Number(fo['option2'].value);
+	fo['productPrice'].value= Number(fo['price'].value) + Number(fo['option1'].value) + Number(fo['option2'].value);
 }
 	
 	
@@ -202,8 +202,48 @@ function addCartBtn() {
 	form.action="${contextPath}/cartall.do"
 	form.submit();
 }
+
+function add_favorite(productNum) {
+	if(confirm("관심상품에 등록하시겠습니까?"))
+	{
+		if(${isLogOn != true}){
+		      alert("로그인이 필요합니다.");
+		}else{
+    	    $.ajax({
+	        	type : "post",
+	        	async : false, //false인 경우 동기식으로 처리한다.
+	        	url : "${contextPath}/addProductInFavorite.do",
+	        	data : {
+	        		productNum:productNum
+			
+    	    	},
+    	    	success : function(data, textStatus) {
+	        		//alert(data);
+	            	//	$('#message').append(data);
+	        		if(data.trim()=='add_success'){
+	        			alert("관심상품에 등록되었습니다.");	
+	        			
+	        			document.getElementById('favorite').style.display = 'none';
+	        			document.getElementById('favorite_add').style.display = 'block';
+	        			
+	        		}else if(data.trim()=='already_existed'){
+		    	    	alert("이미 관심상품에 등록된 상품입니다.");	
+		        	}
+	     		
+	        	},
+	        	error : function(data, textStatus) {
+	        		alert("에러가 발생했습니다."+data);
+    	    	},
+    	    	complete : function(data, textStatus) {
+    	     		//alert("작업을완료 했습니다");
+    	    	}
+        	}); //end ajax	
+		}
+	}else{
+		return false;
+	}
 	
-	
+}
 
 
 	
@@ -224,8 +264,8 @@ function addCartBtn() {
 				<input type="hidden" name="productNum" value="${product.productNum}" />
 				<input type="hidden" name="productName"
 					value="${product.productName}" /> <input type="hidden"
-					name="option1Name" value="${option1[1].option1Name}" /> <input
-					type="hidden" name="option2Name" value="${option2[1].option2Name}" />
+					name="option1name" value="${option1[1].option1Name}" /> <input
+					type="hidden" name="option2name" value="${option2[1].option2Name}" />
 				<input type="hidden" name="deliverycharge" value="무료배송" />
 
 
@@ -236,8 +276,9 @@ function addCartBtn() {
 					<section>
 						<div class="col-md-4 ftco-animate">
 							<div class="blog-entry">
-								<a><img src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}"
-									style="width: 600px; padding-top: 10px; padding-top: 10px; margin-left: -15px; float: left;">
+								<a><img
+									src="${contextPath}/download_product.do?productNum=${product.productNum}&productImage=${product.productImage}"
+									style="border:1px solid gray; width: 600px; height:409.68px; padding-top: 10px; padding-top: 10px; margin-left: -15px; float: left;">
 								</a> <br>
 							</div>
 						</div>
@@ -245,8 +286,12 @@ function addCartBtn() {
 
 
 					<div style="width: 685px; height: 480px;">
-						<h3
-							style="font-size: 20px; color: #7e9c8c; margin-left: 50px; margin-top: 5px;">${product.productName}</h3>
+					
+						<h1
+							style="font-weight:bold; font-size: 20px; color: #7e9c8c; float: left; margin-left: 50px; margin-top: 5px;">${product.productName}</h1>
+
+						<a  href="javascript:add_favorite('${product.productNum }')"
+							style="all: none; font-size: 15px; color: #7e9c8c; margin-left: 430px; margin-top: 5px;">관심상품</a>
 						<hr style="width: 600px;">
 						<h3 class="heading">
 							<a
@@ -287,13 +332,13 @@ function addCartBtn() {
 							onchange="checkPrice();getSelectValue1(this.form);"
 							style="margin-left: 180px; margin-top: 70px; left: 675px; font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 32px;">
 							<option value="">옵션 선택</option>
-							<c:forEach items="${option1}" var="option1" >
+							<c:forEach items="${option1}" var="option1">
 								<option value="${option1.option1price}">${option1.option1value}
 									+ (${option1.option1price}원)</option>
 							</c:forEach>
 						</select> <input type="hidden" name="option1value"> <br>
 						<h3 class="heading">
-							<c:forEach items="${option2}" var="name2"  begin="0" end="0">
+							<c:forEach items="${option2}" var="name2" begin="0" end="0">
 								<a
 									style="position: absolute; white-space: nowrap; margin-top: 35px; margin-left: 51px; float: left; font-size: 14px; color: #5f5f5f; font-weight: normal;">${name2.option2Name}
 									ㅤ</a>
@@ -328,7 +373,7 @@ function addCartBtn() {
 							style="width: 27px; height: 28px; white-space: nowrap; color: #5f5f5f; float: left; font-size: 18px; border: none; margin-top: 30px;">
 						<h2
 							style="margin-top: 200px; font-size: 18px; test-align: right; width: 400px; margin-left: 380px;">
-							총 상품 금액ㅤ<input type="text" name="totalPrice" value="0"
+							총 상품 금액ㅤ<input type="text" name="productPrice" value="0"
 								style="border: none; text-align: right; font-size: 20px; width: 98px; margin-left: 18px;"
 								readonly />원
 						</h2>
@@ -409,7 +454,7 @@ function addCartBtn() {
 			</ul>
 			<hr style="margin-right: 30px;">
 			<div id="wrapper">
-				<div class="tab_container" >
+				<div class="tab_container">
 
 					<div id="tab1" class="tab_content"
 						style="margin-left: 190px; margin-right: 170px;">
@@ -448,8 +493,8 @@ function addCartBtn() {
 											<div class="modal-dialog">
 												<div class="modal-content"
 													style="width: 600px; height: 500px;">
-													<div class="modal-header" style=" text-align:center;">
-														<h4 class="modal-title" style="font-size:17px;">${productReview.productReviewTitle}</h4>
+													<div class="modal-header" style="text-align: center;">
+														<h4 class="modal-title" style="font-size: 17px;">${productReview.productReviewTitle}</h4>
 														<button type="button" class="close" data-dismiss="modal"
 															aria-hidden="true">&times;</button>
 													</div>

@@ -167,18 +167,18 @@ public class MemberServiceImpl implements MemberService{
 		}else {
 		
 			   
-			// 임시 비밀번호 생성
+			// 인증번호 생성
 			String Approval_key = "";
 			for (int i = 0; i < 12; i++) {
 				Approval_key += (char) ((Math.random() * 26) + 97);
 			}
 			memberVO.setApproval_key(Approval_key);
-			// 비밀번호 변경
+			// 인증번호 변경
 			memberDAO.update_pw(memberVO);
-			// 비밀번호 변경 메일 발송
+			// 인증번호 메일 발송
 			send_mail(memberVO, "find_pw");
 				
-			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
+			out.print("이메일로 인증번호를 발송하였습니다.");
 			out.close();
 		}
 			

@@ -156,6 +156,7 @@ public class BoardControllerImpl implements BoardController {
 		pageMaker.setTotalCount(inquiryCount);
 		session.setAttribute("inquiryMap", inquiryMap);
 		session.setAttribute("pageMaker", pageMaker);
+		mav.addObject("pageNum", pageNum);
 		return mav;
 
 	}
