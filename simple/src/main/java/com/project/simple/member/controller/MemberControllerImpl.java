@@ -329,6 +329,7 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName(viewName);
 		return mav;
 	}
+	//새 비밀번호 변경
 	@RequestMapping(value = "/login_05.do", method = RequestMethod.GET)
 	private ModelAndView login_05(HttpServletRequest request, HttpServletResponse response) {
 		String viewName = (String) request.getAttribute("viewName");
@@ -336,6 +337,15 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName(viewName);
 		return mav;
 	}
+	//새 비밀번호 변경 완료
+	@RequestMapping(value = "/login_06.do", method = RequestMethod.GET)
+	private ModelAndView login_06(HttpServletRequest request, HttpServletResponse response) {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		return mav;
+	}
+
 
     //관리자 회원리스트
 	@Override
@@ -391,7 +401,6 @@ public class MemberControllerImpl implements MemberController {
 	//관리자 회원 삭제
 	@RequestMapping(value = "/admin_removeMember.do", method = RequestMethod.GET)
 	private ModelAndView admin_removeMember(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response)  throws Exception{
-		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
 		memberVO = memberService.admin_removeMember(memId);
 		mav.addObject("memId", memberVO);
@@ -414,18 +423,44 @@ public class MemberControllerImpl implements MemberController {
 		return resEntity;
 			
 	}	
+	//이메일 인증번호 확인
 	@Override
 	@RequestMapping(value="/email_confirm.do" ,method = RequestMethod.POST)
 	public ModelAndView email_confirm(@RequestParam("Approval_key") String Approval_key, HttpServletRequest request, HttpServletResponse response) throws Exception{
+	
 		String viewName = (String) request.getAttribute("viewName");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		ModelAndView mav = new ModelAndView();
 
 		memberVO = memberService.email_confirm(Approval_key);
-		mav.addObject("memId", memberVO);
-		mav.setViewName("redirect:/login_06.do");
+		if(memberVO == null) {
+			out.println("<script>");
+			out.println("alert('인증번호가 일치하지 않습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return null;
+		}else {
+			mav.addObject("member", memberVO);
+		mav.setViewName("redirect:/login_05.do");
 		return mav;
+		}
+
+		
 			
 	}	
+	  //새 비밀번호 
+		@RequestMapping(value = "/newPassWord.do", method = RequestMethod.POST)
+		public ModelAndView newPassWord(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
+				HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+			ModelAndView mav = new ModelAndView();
+			int result = 0;
+			result = memberService.newPassWord(member);
+			mav.setViewName("redirect:/login_06.do");
+			return mav;
+		}
 
 
 }

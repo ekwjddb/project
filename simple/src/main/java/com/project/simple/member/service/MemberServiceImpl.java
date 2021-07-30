@@ -186,6 +186,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public MemberVO email_confirm(String approval_key) throws Exception {
 		return memberDAO.EmailConfirm(approval_key);
+		
+	}
+	@Override
+	public int newPassWord(MemberVO member) throws Exception {
+		return memberDAO.updatenewPassWord(member);
 	}
 	
 	

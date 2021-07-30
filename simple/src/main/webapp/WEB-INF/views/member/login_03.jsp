@@ -121,7 +121,7 @@
 }
 
 .pwd_find {
-	padding-top: 25px;
+
 	padding-left: 40px;
 }
 
@@ -221,11 +221,47 @@ h3 {
 				},
 				success : function(result) {
 					alert(result);
+				
 				},
 			})
 		});
 	})
+	
+
+
+	function div_show(selectList) {
+	    var obj1 = document.getElementById("phone"); // 핸드폰
+	    var obj2 = document.getElementById("email"); // 이메일
+	  
+
+	    if( selectList == "0" ) { // 핸드폰
+	        obj1.style.display = "block";    
+	        obj2.style.display = "none";
+
+	 
+	    } else if( selectList == "1" ) { // 이메일
+	        obj1.style.display = "none";    
+	        obj2.style.display = "block";
+	 
+	    }
+	}
+	
+	//비밀번호 찾기_핸드폰
+	function Approval_key_find() {
+		var form = document.Approval_key_send;
+		if (form.Approval_key.value == "") {
+			alert("인증번호를 입력해주세요!");
+			form.Approval_key.focus();
+
+		} else {
+			form.submit();
+		}
+	}
+	 
 </script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <title>아이디/비밀번호 찾기창</title>
 <body>
@@ -293,28 +329,43 @@ h3 {
 				</div>
 				<div class="container">
 					<div id="RightBox" style="margin-left: 100px;">
-						<h3 id="Non_login_text">비밀번호 찾기</h3>
+						<h3 id="Non_login_text"  style="padding-bottom: 15px;">비밀번호 찾기</h3>
 
 						<div class="pwd_find">
-							<form name="find_user_password" method="post">
+						 <input type="radio" name="test" id="phone_con"  onclick="div_show('0');"><label >핸드폰 인증</label>
+                         <input type="radio" name="test" id="email_con"onclick="div_show('1');"><label>이메일 인증</label>
+                         
+                         <div id="phone" style="display:none">
+                           
+						 </div> 
+						 
+						 
+						 <div id="email" style="display:none">
+							<form name="find_user_password" id="divEmail" method="post" style="margin-bottom: 15px;">
 								<input type="text" name="memId" id="memId"  style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px; "
 									size="37" placeholder="아이디를 입력하세요">
 								<input type="text" name="memEmail" id="memEmail" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px;"
 									size="37" placeholder="이메일을 입력하세요">
-
+								
 							</form>
-							<div id="confirm">
-								<input type="submit" id="phone_confirm" value="휴대폰 인증"
-									onclick="find_user_password_phone()"
-									style="width: 160px !important; background-color: #eeeeee; color:#5f5f5f;border-radius: 2px; border:none;margin-top: 10px;">
-								<button type="button" id="findBtn" 
-									style="width: 160px ; height:100px; !important; margin-left:2px; background-color: #eeeeee; color:#5f5f5f; border-radius: 2px; border:none;">이메일 인증</button>
-							</div>
+							<button type="button" id="findBtn" 
+									style="width: 325px; background-color: #7e9c8c; color:white; height:45px; border:none; border-radius: 2px; margin-bottom: 10px;">이메일 인증</button>
+							<form name="Approval_key_send" method="post" style="margin-bottom: 15px;" action="${contextPath}/email_confirm.do">
+							<input type="text" name="Approval_key" id="Approval_key" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 163px; height: 36px;"
+									size="37" placeholder="인증번호를 입력하세요">
+							</form>
+							<button type="button"  onclick="Approval_key_find()"
+									style="width: 160px; background-color: #7e9c8c; color:white; height:36px; border:none; border-radius: 2px;">인증번호 전송</button>
+						</div>
+							
 						</div>
 
 
 					</div>
-				</div>
+
+
+					</div>
+				
 			</section>
 		</div>
 	</section>

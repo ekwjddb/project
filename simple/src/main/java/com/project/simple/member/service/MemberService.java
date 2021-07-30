@@ -45,6 +45,10 @@ public interface MemberService{
 
 	public MemberVO email_confirm(String approval_key)throws Exception;
 
+	public int newPassWord(MemberVO member)throws Exception;
+
+	
+
 	
 	
 }

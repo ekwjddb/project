@@ -121,4 +121,10 @@ public class MemberDAOImpl implements MemberDAO{
 		MemberVO result =  sqlSession.selectOne("mapper.member.EmailConfirm",approval_key);
 		return result;
 	}
+
+	@Override
+	public int updatenewPassWord(MemberVO member) throws Exception {
+		int result =  sqlSession.update("mapper.member.updatenewPassWord",member);
+		return result;
+	}
 }

@@ -43,10 +43,15 @@
 	   from simple.member
 	  where memId=#{memId};
 	</select>
-	<select id="EmailConfirm" parameterType="MemberVO" resultType="String">
+	<update id="updatenewPassWord" parameterType="MemberVO">
+	update simple.member
+		set memPwd = #{memPwd} where memId=#{memId};
+	</update>
+	<!-- 이메일 인증번호 확인 -->
+	<select id="EmailConfirm" parameterType="String" resultType="MemberVO">
 	 select *
-	   from simple.member
-	  where memId=#{memId};
+	  from simple.member
+	  where Approval_key=#{Approval_key};
      </select>
 	<!-- 회원리스트 조회 -->
 	<select id="selectAllMemberList" resultMap="memResult">
