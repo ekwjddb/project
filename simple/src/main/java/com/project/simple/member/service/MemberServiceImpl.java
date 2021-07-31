@@ -189,9 +189,10 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 	@Override
-	public int newPassWord(MemberVO member) throws Exception {
+	public int newPassWord(MemberVO member) throws Exception{
 		return memberDAO.updatenewPassWord(member);
+		
 	}
-	
+
 	
 }
