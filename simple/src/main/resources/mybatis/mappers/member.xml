@@ -44,8 +44,10 @@
 	  where memId=#{memId};
 	</select>
 	<update id="updatenewPassWord" parameterType="MemberVO">
+	<![CDATA[ 
 	update simple.member
 		set memPwd = #{memPwd} where memId=#{memId};
+	]]>
 	</update>
 	<!-- 이메일 인증번호 확인 -->
 	<select id="EmailConfirm" parameterType="String" resultType="MemberVO">

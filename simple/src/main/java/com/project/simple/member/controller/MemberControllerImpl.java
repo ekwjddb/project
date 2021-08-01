@@ -458,7 +458,6 @@ public class MemberControllerImpl implements MemberController {
 			ModelAndView mav = new ModelAndView();
 			int result = 0;
 			result = memberService.newPassWord(member);
-			System.out.println(result);
 			mav.setViewName("redirect:/login_06.do");
 			return mav;
 		}

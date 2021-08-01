@@ -342,6 +342,33 @@ function getCookie(cookieName) {
 
 	}
 </script>
+<!-- 카카오 로그인 --> 
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script> 
+<script type="text/javascript"> 
+//초기화 시키기.
+
+	window.Kakao.init('72798dfe7ab0f4bdee296d16939d369e'); 
+	
+	function kakaoLogin(){
+		window.Kakao.Auth.login({
+			scope:'account_email',
+			success: function(authObj){
+				console.log(authObj);
+				window.KaKao.API.request({
+					 url: '/v2/user/me',
+                     success: (res) => {
+                         const kakao_account = res.kakao_account;
+                         console.log(kakao_account);
+                     }
+				});
+			}
+		});
+	}
+
+</script>
+
+
+
 </head>
 <title>로그인창</title>
 <body>
@@ -408,7 +435,7 @@ function getCookie(cookieName) {
 											style="margin-right: 5px; margin-bottom: 3px; vertical-align: middle;"><span
 											style="font-size: 14px;" class="fas fa-qrcode">네이버로 로그인</span>
 									</button></li>
-								<li><button onclick="location.href='#'"
+								<li><button onclick="location.href='javascript:kakaoLogin();'"
 										style="background-color: #eeeeee; color: black; border: none;">
 
 										<img

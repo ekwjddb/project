@@ -198,17 +198,17 @@ h3 {
 
 	//비밀번호 찾기_핸드폰
 	function find_user_password_phone() {
-		var form = document.find_user_password;
-		if (form.pwd_find_id.value == "") {
+		var form = document.find_user_pwd_phone;
+		if (form.memId.value == "") {
 			alert("아이디를 입력해주세요!");
-			form.id_find_name.focus();
+			form.memId.focus();
 
 		} else {
 			form.submit();
 			form.action = "login-05.jsp";
 		}
 	}
-	//비밀번호 찾기_이메일
+	//비밀번호 찾기_이메일_아이디/이메일 보내기
 	$(function(){
 		$("#findBtn").click(function(){
 			
@@ -246,7 +246,7 @@ h3 {
 	    }
 	}
 	
-	//비밀번호 찾기_핸드폰
+	//비밀번호 찾기_이메일_인증번호_확인
 	function Approval_key_find() {
 		var form = document.Approval_key_send;
 		if (form.Approval_key.value == "") {
@@ -336,15 +336,22 @@ h3 {
                          <input type="radio" name="test" id="email_con"onclick="div_show('1');"><label>이메일 인증</label>
                          
                          <div id="phone" style="display:none">
-                           
+                             <form name="find_user_pwd_phone" id="divPhone" method="post" style="margin-bottom: 15px;">
+								<input type="text" name="memId" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px; "
+									size="37" placeholder="아이디를 입력하세요">
+								<input type="text" name="memPhone" id="memPhone" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px;"
+									size="37" placeholder="핸드폰을 입력하세요">
+							</form>
+						<button type="button" 
+									style="width: 325px; background-color: #7e9c8c; color:white; height:45px; border:none; border-radius: 2px; margin-bottom: 10px;">핸드폰 인증</button>
 						 </div> 
 						 
 						 
 						 <div id="email" style="display:none">
 							<form name="find_user_password" id="divEmail" method="post" style="margin-bottom: 15px;">
-								<input type="text" name="memId" id="memId"  style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px; "
+								<input type="text" id="memId"  style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px; "
 									size="37" placeholder="아이디를 입력하세요">
-								<input type="text" name="memEmail" id="memEmail" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px;"
+								<input type="text" id="memEmail" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px;"
 									size="37" placeholder="이메일을 입력하세요">
 								
 							</form>
