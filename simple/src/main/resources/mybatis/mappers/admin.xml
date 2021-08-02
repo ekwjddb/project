@@ -49,7 +49,7 @@
 	<select id="adminloginById" resultType="adminVO"
 		parameterType="adminVO">
 	<![CDATA[ 
-		select * from admin
+		select * from simple.admin
 		where adminId = #{adminId} and adminPwd = #{adminPwd}
 	]]>
 	</select>
@@ -59,7 +59,7 @@
 		parameterType="String"> 
 	<![CDATA[
 			
-			select * from member
+			select * from simple.member
 			where memId = #{memId}
 			
 
@@ -71,7 +71,7 @@
 		parameterType="java.util.HashMap" resultMap="inquiryResult">
 	<![CDATA[
 			
-			select * from inquiry  order by inquiryNum desc
+			select * from simple.inquiry  order by inquiryNum desc
 			limit #{pageStart}, #{perPageNum};
 			
 
@@ -81,7 +81,7 @@
 	<select id="selectInquiryCount" resultType="int">
 	<![CDATA[
 			
-			select count(*) as inquiryCount from inquiry;
+			select count(*) as inquiryCount from simple.inquiry;
 			
 
 	]]>
@@ -92,7 +92,7 @@
 		parameterType="int"> 
 	<![CDATA[
 			
-			select * from notice
+			select * from simple.notice
 			where noticeNum = #{noticeNum};
 			
 
