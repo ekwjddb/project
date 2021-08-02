@@ -347,23 +347,16 @@ function getCookie(cookieName) {
 <script type="text/javascript"> 
 //초기화 시키기.
 
-	window.Kakao.init('72798dfe7ab0f4bdee296d16939d369e'); 
 	
-	function kakaoLogin(){
-		window.Kakao.Auth.login({
-			scope:'account_email',
-			success: function(authObj){
-				console.log(authObj);
-				window.KaKao.API.request({
-					 url: '/v2/user/me',
-                     success: (res) => {
-                         const kakao_account = res.kakao_account;
-                         console.log(kakao_account);
-                     }
-				});
-			}
+	$(document).ready(function(){ 
+		Kakao.init('40acc8a0f94fc942b570f1aebb0094de'); 
+		Kakao.isInitialized(); 
 		});
-	}
+	function kakaoLogin() { 
+		Kakao.Auth.authorize({
+			redirectUri: 'http://localhost:8080/simple/kakaoLogin.do' 
+			}); 
+		}
 
 </script>
 

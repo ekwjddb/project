@@ -31,5 +31,4 @@ public interface MemberController{
 	public ModelAndView newPassWord(@RequestParam("memPwd") String memPwd,  RedirectAttributes rAttr,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	
 }

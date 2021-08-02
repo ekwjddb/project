@@ -331,7 +331,7 @@ $(document).ready(function(){
 							href="javascript:add_favorite('${product.productNum }')"
 							style="all: none; font-size: 15px; color: #7e9c8c; float:right; margin-top: 10px; margin-right:50px;  ">
 						<img src="${contextPath}/resources/images/heart.jpg"
-							id="favoritHeart" style="width:23px; height:20px; display:none; "/><span style="padding-top:5px;">관심상품</span></a>  
+							id="favoritHeart" style="width:17px; height:17px; display:none; margin-bottom:3px;"/><span style="padding-top:7px;"> 관심상품</span></a>   
 						<hr style="width: 600px; margin-top:45px;">
 						<h3 class="heading">
 							<a

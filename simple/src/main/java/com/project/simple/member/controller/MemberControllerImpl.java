@@ -1,27 +1,38 @@
 package com.project.simple.member.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.List;
+
+import org.codehaus.jackson.JsonNode;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UrlPathHelper;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -310,6 +321,13 @@ public class MemberControllerImpl implements MemberController {
 		mav.setViewName(viewName);
 		return mav;
 	}
+	@RequestMapping(value = "/join_03.do", method = RequestMethod.GET)
+	private ModelAndView join_03(HttpServletRequest request, HttpServletResponse response) {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		return mav;
+	}
 
 	@RequestMapping(value = "/storeinfomation.do", method = RequestMethod.GET)
 	private ModelAndView storeinfomation(HttpServletRequest request, HttpServletResponse response) {
@@ -467,6 +485,62 @@ public class MemberControllerImpl implements MemberController {
 			mav.setViewName("redirect:/login_06.do");
 			return mav;
 		}
+	
+	//카카오톡 로그인.. 
+	@RequestMapping(value="/kakaoLogin.do", produces = "application/json",method=RequestMethod.GET)
+	public ModelAndView kakaoLogin(@RequestParam("code") String code, RedirectAttributes ra, HttpSession session,
+			HttpServletResponse response) throws IOException{
+		   JsonNode accessToken;
+		   
+		   // JsonNode트리형태로 토큰받아온다
+	        JsonNode jsonToken = KakaoAccessToken.getKakaoAccessToken(code);
+	        // 여러 json객체 중 access_token을 가져온다
+	        accessToken = jsonToken.get("access_token");
+	 
+	        System.out.println("access_token : " + accessToken);
+	     // access_token을 통해 사용자 정보 요청
+	        JsonNode userInfo = KakaoUserInfo.getKakaoUserInfo(accessToken);
+	 
+	        // Get id
+	        JsonNode id = userInfo.path("id");
+	       
 
+	       // String id = userInfo.path("id").getTextValue();
+	        String memId = null;
+	        String memName = null;
+	        String memEmail = null;
+
+
+
+	        // 유저정보 카카오에서 가져오기 Get properties
+	        JsonNode properties = userInfo.path("properties");
+	        JsonNode kakao_account = userInfo.path("kakao_account");
+	        
+	        
+	        memName = properties.path("nickname").getTextValue();
+	        memEmail = kakao_account.path("email").getTextValue();
+
+
+	        System.out.println("id : " + id);
+	        System.out.println("name : " + memName);
+	        System.out.println("email : " + memEmail);
+
+	    	MemberVO member = new MemberVO();
+	    	member.setmemId(memId);
+	    	member.setmemName(memName);
+	    	member.setmemEmail(memEmail);
+	    	
+	    	System.out.println(member);
+	        
+
+
+
+	        ModelAndView mav = new ModelAndView("redirect:/join_03.do");
+
+		return mav;
+		
+	}
+
+	
 
 }
