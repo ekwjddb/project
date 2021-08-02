@@ -94,7 +94,7 @@
 		<![CDATA[ 
 
 			insert into simple.member(memId, memName, memPwd, memEmail, memPhoneNum, memAdr, logintype) 
-			values(#{memId},#{memName},#{memPwd},(select concat_ws('@',#{memEmail},#{memEmail1})),(select concat_ws('-',#{memPhoneNum},#{memPhoneNum1},#{memPhoneNum2})),(select concat_ws('-',#{memAdr},#{memAdr1},#{memAdr2})),"네이버");
+			values(#{memId},#{memName},#{memPwd},(select concat_ws('@',#{memEmail},#{memEmail1})),(select concat_ws('-',#{memPhoneNum},#{memPhoneNum1},#{memPhoneNum2})),(select concat_ws('-',#{memAdr},#{memAdr1},#{memAdr2})),"카카오");
 		]]>
 	</insert>
 
@@ -107,7 +107,22 @@
 		]]>
 	</select>
 
+     <!--DB에있는 네이버아이디정보로로그인(네이버로그인) -->
+	<select id="loginBykakao" resultType="memberVO" parameterType="memberVO">
+		<![CDATA[ 
 
+		select * from simple.member
+		where memId = #{memId};
+		]]>
+	</select>
+	<!-- 네이버아이디로로그인 후 추가정보기입 -->
+	<insert id="insertMember_kakao" parameterType="memberVO">
+		<![CDATA[ 
+
+			insert into simple.member(memId, memName, memPwd, memEmail, memPhoneNum, memAdr, logintype) 
+			values(#{memId},#{memName},#{memPwd},(select concat_ws('@',#{memEmail},#{memEmail1})),(select concat_ws('-',#{memPhoneNum},#{memPhoneNum1},#{memPhoneNum2})),(select concat_ws('-',#{memAdr},#{memAdr1},#{memAdr2})),"네이버");
+		]]>
+	</insert>
 
 	<!--로그인창에서 입력한 id와 비밀번호로 회원정보를 조회하는 sql문 -->
 	<select id="loginById" resultType="memberVO"

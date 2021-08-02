@@ -30,5 +30,7 @@ public interface MemberController{
 			throws Exception;
 	public ModelAndView newPassWord(@RequestParam("memPwd") String memPwd,  RedirectAttributes rAttr,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView addMember_kakao(@ModelAttribute("info") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
 
 }

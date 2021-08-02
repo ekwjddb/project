@@ -239,7 +239,7 @@ h3 {
 	}
 </script>
 </head>
-<title>네이버회원가입창</title>
+<title>카카오회원가입창</title>
 <body>
 	<section class="ftco-section testimony-section"
 		style="padding-top: 50px;">
@@ -276,7 +276,7 @@ h3 {
 				</ul>
 			</div>
 
-			<form name="CheckJoin" action="${contextPath}/addMembers_naver.do"
+			<form name="CheckJoin" action="${contextPath}/addMembers_kakao.do"
 				method="post">
 				<section class="ftco-section testimony-section" id="sect"
 					style="padding-top: 50px; padding-left: 170px;">

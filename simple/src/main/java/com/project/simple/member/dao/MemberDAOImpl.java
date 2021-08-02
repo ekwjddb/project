@@ -130,6 +130,18 @@ public class MemberDAOImpl implements MemberDAO{
 		return result;
 	}
 
+	@Override
+	public MemberVO loginBykakao(MemberVO memberVO) throws DataAccessException {
+		MemberVO vo = sqlSession.selectOne("mapper.member.loginBykakao", memberVO);
+		return vo;
+	}
+
+	@Override
+	public int insertMember_kakao(MemberVO memberVO) throws DataAccessException {
+		int result=sqlSession.insert("mapper.member.insertMember_kakao", memberVO);
+		return result;
+	}
+
 
 
 }

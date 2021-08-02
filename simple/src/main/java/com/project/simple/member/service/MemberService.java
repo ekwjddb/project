@@ -48,6 +48,9 @@ public interface MemberService{
 
 	public int newPassWord(MemberVO member) throws  DataAccessException ;
 
+	public MemberVO login_kakao(MemberVO memberVO)throws Exception;
+
+	public int addMember_kakao(MemberVO memberVO) throws DataAccessException;
 
 	
 

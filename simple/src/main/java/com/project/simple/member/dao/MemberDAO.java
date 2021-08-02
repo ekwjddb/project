@@ -27,6 +27,8 @@ public interface MemberDAO{
 	public MemberVO check_email(String memId) throws Exception;
 	public MemberVO EmailConfirm(String approval_key) throws Exception;
 	public int updatenewPassWord(MemberVO member)throws DataAccessException;
+	public MemberVO loginBykakao(MemberVO memberVO)throws DataAccessException;
+	public int insertMember_kakao(MemberVO memberVO)throws DataAccessException;
 	
 
 	

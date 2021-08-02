@@ -197,6 +197,14 @@ public class MemberServiceImpl implements MemberService{
 	public int newPassWord(MemberVO member) throws DataAccessException {
 		return memberDAO.updatenewPassWord(member);
 	}
+	@Override
+	public MemberVO login_kakao(MemberVO memberVO) throws Exception {
+		return memberDAO.loginBykakao(memberVO);
+	}
+	@Override
+	public int addMember_kakao(MemberVO member) throws DataAccessException {
+		return memberDAO.insertMember_kakao(member);
+	}
 	
 
 	

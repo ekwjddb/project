@@ -10,8 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.List;
 
-import org.codehaus.jackson.JsonNode;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.project.simple.member.service.MemberService;
 import com.project.simple.member.vo.MemberVO;
 import com.project.simple.page.Criteria;
@@ -488,8 +487,8 @@ public class MemberControllerImpl implements MemberController {
 	
 	//카카오톡 로그인.. 
 	@RequestMapping(value="/kakaoLogin.do", produces = "application/json",method=RequestMethod.GET)
-	public ModelAndView kakaoLogin(@RequestParam("code") String code, RedirectAttributes ra, HttpSession session,
-			HttpServletResponse response) throws IOException{
+	public String kakaoLogin(Model model,@RequestParam("code") String code, RedirectAttributes ra, HttpSession session,
+			HttpServletRequest request,HttpServletResponse response) throws Exception{
 		   JsonNode accessToken;
 		   
 		   // JsonNode트리형태로 토큰받아온다
@@ -502,43 +501,105 @@ public class MemberControllerImpl implements MemberController {
 	        JsonNode userInfo = KakaoUserInfo.getKakaoUserInfo(accessToken);
 	 
 	        // Get id
-	        JsonNode id = userInfo.path("id");
-	       
+	        String Id = userInfo.path("id").asText();
 
-	       // String id = userInfo.path("id").getTextValue();
-	        String memId = null;
-	        String memName = null;
-	        String memEmail = null;
-
-
+	        String Name = null;
+	        String Email = null;
 
 	        // 유저정보 카카오에서 가져오기 Get properties
 	        JsonNode properties = userInfo.path("properties");
-	        JsonNode kakao_account = userInfo.path("kakao_account");
-	        
-	        
-	        memName = properties.path("nickname").getTextValue();
-	        memEmail = kakao_account.path("email").getTextValue();
+	        JsonNode kakao_account = userInfo.path("kakao_account");	        
+	
+	        Name = properties.path("nickname").asText();
+	        Email = kakao_account.path("email").asText();
 
 
-	        System.out.println("id : " + id);
-	        System.out.println("name : " + memName);
-	        System.out.println("email : " + memEmail);
+	        System.out.println("memId : " + Id);
+	        System.out.println("memName : " + Name);
+	        System.out.println("memEmail : " + Email);
 
 	    	MemberVO member = new MemberVO();
-	    	member.setmemId(memId);
-	    	member.setmemName(memName);
-	    	member.setmemEmail(memEmail);
+	    	member.setmemId(Id);
+	    	member.setmemName(Name);
+	    	memberVO = memberService.login_kakao(member);
+	    
+	    
 	    	
-	    	System.out.println(member);
-	        
+	    	
+	    	if (memberVO != null) {
+	
+				HttpSession session1 = request.getSession();
+				session1.setAttribute("member", memberVO);
+				session1.setAttribute("isLogOn", true);
+				return "main";
+				
+			} else {
 
+	//4.파싱  세션으로 저장//세션 생성
+				model.addAttribute("Id",Id);
+				model.addAttribute("Email", Email);
+				model.addAttribute("Name", Name);
+				model.addAttribute("result", userInfo);
+				System.out.println(userInfo);
 
+				
+				String FullmemEmail = Email;
 
-	        ModelAndView mav = new ModelAndView("redirect:/join_03.do");
+				String e1 = "@";
+		
+
+				String[] memEmail = FullmemEmail.split(e1);
+				
+				for (int i = 0; i < memEmail.length; i++) {
+				}
+			
+
+				model.addAttribute("Email0", memEmail[0]);
+				model.addAttribute("Email1", memEmail[1]);
+
+			
+				return "join_03";
+			}
+
+		
+	}
+	// 카카오로 DB에 추가정보작업 후 로그인작업
+	@Override
+	@RequestMapping(value = "/addMembers_kakao.do", method = RequestMethod.POST)
+	public ModelAndView addMember_kakao(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		request.setCharacterEncoding("utf-8");
+		int result = 0;
+		result = memberService.addMember_kakao(member);
+
+		// 로그인작업
+		memberVO = memberService.login_kakao(member);
+
+		if (memberVO != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("member", memberVO);
+			session.setAttribute("isLogOn", true);
+			mav.setViewName("redirect:/main.do");
+		} else {
+			rAttr.addAttribute("result", "loginFailed");
+			mav.setViewName("redirect:/login_01.do");
+		}
+		return mav;
+	}
+
+	//카카오 로그인시 DB에 값이 있으면 추가정보 거치지 않고 바로 로그인
+	@RequestMapping(value = "/login_kakao.do", method = RequestMethod.GET)
+	public ModelAndView kakao_login(RedirectAttributes rAttr,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		request.setCharacterEncoding("utf-8");
+		HttpSession session = request.getSession();
+		session.setAttribute("member", memberVO);
+		session.setAttribute("isLogOn", true);
+		mav.setViewName("redirect:/main.do");
 
 		return mav;
-		
 	}
 
 	
