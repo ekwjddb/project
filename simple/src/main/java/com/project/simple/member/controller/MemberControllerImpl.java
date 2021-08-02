@@ -128,6 +128,10 @@ public class MemberControllerImpl implements MemberController {
 				session.removeAttribute("AdminisLogOn");
 				System.out.println("dkdkfjdkfdjkf");
 
+			}if (session.getAttribute("myInfo") != null) {
+				session.removeAttribute("myInfo");
+
+
 			}
 			session.removeAttribute("quickList");
 			session.removeAttribute("quickListNum");
@@ -277,14 +281,6 @@ public class MemberControllerImpl implements MemberController {
 
 	@RequestMapping(value = "/mypage_02.do", method = RequestMethod.GET)
 	private ModelAndView mypage_02(HttpServletRequest request, HttpServletResponse response) {
-		String viewName = (String) request.getAttribute("viewName");
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		return mav;
-	}
-
-	@RequestMapping(value = "/mypage_01.do", method = RequestMethod.GET)
-	private ModelAndView mypage_01(HttpServletRequest request, HttpServletResponse response) {
 		String viewName = (String) request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
