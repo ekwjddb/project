@@ -122,12 +122,14 @@ public class MemberDAOImpl implements MemberDAO{
 		return result;
 	}
 
-
-	public int updatenewPassWord(MemberVO member) throws Exception {
-		int result =  sqlSession.update("mapper.member.updatenewPassWord",member);
+	@Override
+	public int updatenewPassWord(MemberVO member) throws DataAccessException {
 		System.out.println(member);
-		System.out.println(result);
+		int result = sqlSession.update("mapper.member.updatenewPassWord", member);
+	
 		return result;
 	}
-	
+
+
+
 }

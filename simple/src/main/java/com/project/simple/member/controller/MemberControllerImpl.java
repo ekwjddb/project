@@ -222,6 +222,7 @@ public class MemberControllerImpl implements MemberController {
 		request.setCharacterEncoding("utf-8");
 		int result = 0;
 		result = memberService.modMember(modmember);
+		System.out.println(result);
 		session.removeAttribute("member");
 		session.removeAttribute("isLogOn");
 		ModelAndView mav = new ModelAndView("redirect:/mypage_10.do");
@@ -410,8 +411,8 @@ public class MemberControllerImpl implements MemberController {
 	}
 	// 비밀번호 찾기
 	@RequestMapping(value = "/find_pw.do", method = RequestMethod.POST)
-	public void find_pw(@ModelAttribute MemberVO memberVO, HttpServletResponse response) throws Exception{
-		memberService.find_pw(response, memberVO);
+	public void find_pw(@ModelAttribute MemberVO memberVO,HttpServletRequest request, HttpServletResponse response) throws Exception{
+		memberService.find_pw(request,response, memberVO);
 	}
 	//아이디 중복 확인
 	@Override
@@ -427,13 +428,15 @@ public class MemberControllerImpl implements MemberController {
 	@Override
 	@RequestMapping(value="/email_confirm.do" ,method = RequestMethod.POST)
 	public ModelAndView email_confirm(@RequestParam("Approval_key") String Approval_key, HttpServletRequest request, HttpServletResponse response) throws Exception{
-	
+		
 		String viewName = (String) request.getAttribute("viewName");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		ModelAndView mav = new ModelAndView();
 
 		memberVO = memberService.email_confirm(Approval_key);
+		HttpSession session = request.getSession();
+		session.setAttribute("memberPwd", memberVO);
 		if(memberVO == null) {
 			out.println("<script>");
 			out.println("alert('인증번호가 일치하지 않습니다.');");
@@ -442,7 +445,6 @@ public class MemberControllerImpl implements MemberController {
 			out.close();
 			return null;
 		}else {
-			mav.addObject("member", memberVO);
 		mav.setViewName("redirect:/login_05.do");
 		return mav;
 		}
@@ -451,13 +453,21 @@ public class MemberControllerImpl implements MemberController {
 			
 	}	
 	  //새 비밀번호 
-		@RequestMapping(value = "/newPassWord.do", method = RequestMethod.POST)
-		public ModelAndView newPassWord(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
-				HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+	@Override
+		@RequestMapping(value = "/newPassWord.do", method = RequestMethod.POST)
+		public ModelAndView newPassWord(@RequestParam("memPwd") String memPwd,  RedirectAttributes rAttr,
+				HttpServletRequest request, HttpServletResponse response) throws Exception {
+		    HttpSession session = request.getSession();
+		    MemberVO memberVO = (MemberVO) session.getAttribute("memberPwd");
+			memberVO.setmemPwd(memPwd);
+			
 			ModelAndView mav = new ModelAndView();
+			System.out.println(memPwd);
 			int result = 0;
-			result = memberService.newPassWord(member);
+			result = memberService.newPassWord(memberVO);
+			System.out.println(result);
+	
 			mav.setViewName("redirect:/login_06.do");
 			return mav;
 		}

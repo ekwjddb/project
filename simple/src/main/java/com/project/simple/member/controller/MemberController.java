@@ -28,6 +28,8 @@ public interface MemberController{
 	public ResponseEntity overlapped(@RequestParam("memId") String id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView email_confirm(@RequestParam("Approval_key") String Approval_key, HttpServletRequest request, HttpServletResponse response)
 			throws Exception;
+	public ModelAndView newPassWord(@RequestParam("memPwd") String memPwd,  RedirectAttributes rAttr,
+			HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	
 }

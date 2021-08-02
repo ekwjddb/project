@@ -5,7 +5,9 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,8 +154,9 @@ public class MemberServiceImpl implements MemberService{
 			System.out.println("메일발송 실패 : " + e);
 		}
 	}
+
 	@Override
-	public void find_pw(HttpServletResponse response, MemberVO memberVO) throws Exception {
+	public void find_pw( HttpServletRequest request, HttpServletResponse response, MemberVO memberVO) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		// 아이디가 없으면
@@ -177,8 +180,10 @@ public class MemberServiceImpl implements MemberService{
 			memberDAO.update_pw(memberVO);
 			// 인증번호 메일 발송
 			send_mail(memberVO, "find_pw");
-				
+			HttpSession session = request.getSession();
+			session.setAttribute("memberPwd", memberVO);	
 			out.print("이메일로 인증번호를 발송하였습니다.");
+			
 			out.close();
 		}
 			
@@ -189,10 +194,10 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 	@Override
-	public int newPassWord(MemberVO member) throws Exception{
+	public int newPassWord(MemberVO member) throws DataAccessException {
 		return memberDAO.updatenewPassWord(member);
-		
 	}
+	
 
 	
 }

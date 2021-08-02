@@ -30,7 +30,7 @@
 }
 </style>
 </head>
-<title>주문결제창</title>
+<title>새비밀번호완료창</title>
 <body>
 	
 

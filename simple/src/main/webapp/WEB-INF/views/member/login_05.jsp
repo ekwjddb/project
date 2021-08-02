@@ -157,11 +157,11 @@
 					<div class="pass_input_confirm">
 						<form name="NewPassWord" action="${contextPath}/newPassWord.do" method="post">
 							<div id="user_password1" style="padding-bottom: 10px">
-								<input type="password" name="memPwd" size="37"
+								<input type="password" name="memPwd" size="37" value=""
 									placeholder="비밀번호를 입력해주세요">
 							</div>
 							<div id="user_password2" style="padding-bottom: 20px">
-								<input type="password" name="memPwd1" size="37"
+								<input type="password" name="memPwd1" size="37" value=""
 									placeholder="비밀번호 확인">
 							</div>
 						</form>
