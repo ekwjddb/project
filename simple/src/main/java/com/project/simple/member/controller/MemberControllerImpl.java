@@ -447,17 +447,12 @@ public class MemberControllerImpl implements MemberController {
 		PrintWriter out = response.getWriter();
 		// 아이디가 없으면
 		if(memberService.check_id(memberVO.getmemId()) == 0) {
-			out.println("<script>");
-			out.print("alert('아이디가 없습니다.');");
-			out.println("history.go(-1);");
-			out.println("</script>");
+			out.print("아이디가 없습니다.");
 			out.close();
 		}// 가입에 사용한 이메일이 아니면
 		else if(!memberVO.getmemPhoneNum().equals(memberService.check_phone(memberVO.getmemId()).getmemPhoneNum())) {
-			out.println("<script>");
-			out.print("alert('등록된 핸드폰번호가 아닙니다.');");
-			out.println("history.go(-1);");
-			out.println("</script>");
+	
+			out.print("등록된 핸드폰번호가 아닙니다.");
 			out.close();
 		}else {
 		// 인증번호 생성
@@ -474,10 +469,9 @@ public class MemberControllerImpl implements MemberController {
         memberService.certifiedPhoneNumber(memPhoneNum,Approval_key);
     	HttpSession session = request.getSession();
 		session.setAttribute("memberPwd", memberVO);	
-		out.println("<script>");
-		out.print("alert('핸드폰번호로 인증번호를 발송하였습니다.');");
-		out.println("history.go(-1);");
-		out.println("</script>");
+
+		out.print("핸드폰번호로 인증번호를 발송하였습니다.");
+
 		out.close();
 
 		}

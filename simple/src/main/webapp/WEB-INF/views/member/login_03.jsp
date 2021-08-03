@@ -197,22 +197,24 @@ h3 {
 	}
 
 	//비밀번호 찾기_핸드폰
-	function find_user_password_phone() {
-		var form = document.find_user_pwd_phone;
-		if (form.memId.value == "") {
-			alert("아이디를 입력해주세요!");
-			form.memId.focus();
-			return false;
-
-		}if (form.memPhoneNum.value == "") {
-			alert("핸드폰번호를 입력해주세요!");
-			form.memPhoneNum.focus();
-			return false;
-
-		} 
-			form.submit();
+	$(function(){
+		$("#findBtnPhone").click(function(){
+			
+			$.ajax({
+				url : "${contextPath}/check/sendSMS",
+				type : "POST",
+				data : {
+					memId : $("#memId1").val(),
+					memPhoneNum : $("#memPhoneNum").val()
+				},
+				success : function(result) {
+					alert(result);
+				
+				},
+			})
+		});
+	})
 	
-	}
 	//비밀번호 찾기_이메일_아이디/이메일 보내기
 	$(function(){
 		$("#findBtn").click(function(){
@@ -261,6 +263,7 @@ h3 {
 			form.submit();
 		}
 	}
+	
 	//비밀번호 찾기_핸드폰_인증번호_확인
 	function Approval_key_find_phone() {
 		var form = document.Approval_key_send_phone;
@@ -351,19 +354,19 @@ h3 {
                          <input type="radio" name="test" id="email_con"onclick="div_show('1');"><label>이메일 인증</label>
                          
                          <div id="phone" style="display:none">
-                             <form name="find_user_pwd_phone" action="${contextPath}/check/sendSMS" id="divPhone" method="post" style="margin-bottom: 15px;">
-								<input type="text" name="memId" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px; "
+                             <form name="find_user_pwd_phone" method="post" style="margin-bottom: 15px;">
+								<input type="text" id="memId1" name="memId" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px; "
 									size="37" placeholder="아이디를 입력하세요">
 								<input type="text" name="memPhoneNum" id="memPhoneNum" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 326px; height: 36px;"
 									size="37" placeholder="핸드폰번호를 입력하세요 ex) 000-0000-0000">
 							</form>
-						<button type="button" onclick="find_user_password_phone()"
+						<button type="button" id="findBtnPhone" 
 									style="width: 325px; background-color: #7e9c8c; color:white; height:45px; border:none; border-radius: 2px; margin-bottom: 10px;">핸드폰 인증</button>
 									
 							<form name="Approval_key_send_phone" method="post" style="margin-bottom: 15px;" action="${contextPath}/email_confirm.do">
 							<input type="text" name="Approval_key" id="Approval_key" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 163px; height: 36px;"
 									size="37" placeholder="인증번호를 입력하세요">
-									<button type="button"  onclick="Approval_key_find_phone()"
+									<button type="button" onclick="Approval_key_find_phone()"
 									style="width: 160px; background-color: #7e9c8c; color:white; height:36px; border:none; border-radius: 2px;">인증번호 전송</button>
 							</form>
 						 </div> 
