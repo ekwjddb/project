@@ -70,6 +70,9 @@ h3 {
 </style>
 <script type="text/javascript">
     var idck = 0;
+    var check = 0;
+ 
+ 
 	//로그인
 	function Check_Join() {
 		var form = document.CheckJoin;
@@ -224,13 +227,15 @@ h3 {
 			alert("개인정보 수집 및 이용안내 동의를 체크하세요.");
 			agree2.focus();
 			return false;
-		}if(confirm("회원가입을 하시겠습니까?")){
-	        if(idck==0){
-	            alert('아이디 중복확인을 체크해주세요');
+		}if(idck==0){
+	            alert("아이디 중복확인을 체크해주세요");
 	            return false;
-	        }else{
+	    }if(check==0){
+	            alert("핸드폰인증을 확인해주세요");
+	            return false;
+	    }if(confirm("회원가입을 하시겠습니까?")){
+	       
 	        form.submit();
-	        }
 	    }
 
 	}
@@ -283,6 +288,7 @@ h3 {
 	       	    $('#btnOverlapped').prop("disabled", true);
 	       	   
 	          }else{
+	        	  idck = 0;
 	        	  alert("사용할 수 없는 ID입니다.");
 	          }
 	       },
@@ -301,14 +307,14 @@ h3 {
 			var phone1 = jQuery("#phone1").val();
 			var phone2 = jQuery("#phone2").val();
 			var phone3 = jQuery("#phone3").val();
-			var memPhoneNum = "";
-			memPhoneNum = phone1 +"-"+ phone2 +"-"+ phone3;
+			var memPhoneNum4 = "";
+			memPhoneNum4 = phone1 +"-"+ phone2 +"-"+ phone3;
 			
 			$.ajax({
 				url : "${contextPath}/join/check/sendSMS",
 				type : "POST",
 				data : {
-					memPhoneNum : memPhoneNum
+					memPhoneNum : memPhoneNum4
 				},
 				success : function(result) {
 					alert(result);
@@ -376,7 +382,8 @@ h3 {
 	<section class="ftco-section testimony-section"
 		style="padding-top: 0px;">
 		<div class="container" style="height: 650px">
-
+         <input type="hidden" name="check" value="${check}"
+					id="check" />
 			<!-- 최근 본 상품 -->
 			<!--  -->
 			<form name="CheckJoin" action="${contextPath}/addMembers.do"
@@ -479,7 +486,7 @@ h3 {
 											</div>
 										</td>
 										<td colspan="3" class="phone" style="padding-left: 50px;">
-										<input type="hidden" id="memPhoneNum" />
+										<input type="hidden" id="memPhoneNum4" />
 											<select name="memPhoneNum" id="phone1"
 											style="height: 34px; margin-bottom: 10px; border: 1px solid #dcdcdc; width: 66px; height: 36px;">
 												<option value="">선택</option>

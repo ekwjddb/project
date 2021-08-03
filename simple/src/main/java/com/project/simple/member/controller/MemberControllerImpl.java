@@ -515,28 +515,40 @@ public class MemberControllerImpl implements MemberController {
 	//회원가입 핸드폰 인증번호 확인
 	@Override
 	@RequestMapping(value="/phone_confirm.do" ,method = RequestMethod.POST)
-	public ModelAndView phone_confirm(@RequestParam("Approval_key") String Approval_key, HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public void phone_confirm(@RequestParam("Approval_key") String Approval_key, HttpServletRequest request, HttpServletResponse response,Model model) throws Exception{
 		
 		String viewName = (String) request.getAttribute("viewName");
 		response.setContentType("text/html;charset=utf-8");
+		int check = 0;
 		PrintWriter out = response.getWriter();
 		ModelAndView mav = new ModelAndView();
 
 		HttpSession session = request.getSession();
 
-		session.getAttribute("memPhoneNum");
-		session.getAttribute("Approval_key");
+		String memPhoneNum = (String) session.getAttribute("memPhoneNum");
+		String session_Approval_key = (String) session.getAttribute("Approval_key");
 		
-		if(session.getAttribute("memPhoneNum") == null) {
+		if(session_Approval_key.equals(Approval_key)) {
+		    check = 1;
+			out.println("<script>");
+			out.println("alert('핸드폰인증이 완료되었습니다.');");
+			out.println("window.close();");
+			out.println("</script>");
+			model.addAttribute("check", check);
+			
+
+			out.close();
+	
+		
+		}else {
+			check = 0;
 			out.println("<script>");
 			out.println("alert('인증번호가 일치하지 않습니다.');");
 			out.println("history.go(-1);");
 			out.println("</script>");
+			model.addAttribute("check", check);
 			out.close();
-			return null;
-		}else {
-		mav.setViewName("redirect:/login_05.do");
-		return mav;
+		
 		}
 
 		
