@@ -489,7 +489,7 @@ function getCookie(cookieName) {
 	<div class="container">
 		<section class="Easy-sgin-in-wrap1" style="margin-bottom: 50px;">
 			<ul class="sign-button-list1">
-				<li><button onclick="location.href='Join.jsp'"
+				<li><button onclick="location.href='${contextPath}/join_01.do'"
 						style="background-color: #757575; color: white; margin-top: 50px; font-size:14px; border:none;">
 						<i class="sgin-up"></i><span>회원가입</span>
 					</button></li>

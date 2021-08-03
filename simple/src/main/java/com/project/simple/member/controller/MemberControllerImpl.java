@@ -357,11 +357,19 @@ public class MemberControllerImpl implements MemberController {
 	@RequestMapping(value = "/login_06.do", method = RequestMethod.GET)
 	private ModelAndView login_06(HttpServletRequest request, HttpServletResponse response) {
 		String viewName = (String) request.getAttribute("viewName");
+		HttpSession session = request.getSession();
+		session.removeAttribute("memberPwd");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
 		return mav;
 	}
-
+	@RequestMapping(value = "/phone_check.do", method = RequestMethod.GET)
+	private ModelAndView phone_check(HttpServletRequest request, HttpServletResponse response) {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		return mav;
+	}
 
     //관리자 회원리스트
 	@Override
@@ -476,6 +484,64 @@ public class MemberControllerImpl implements MemberController {
 
 		}
     }
+	//회원가입 핸드폰 인증
+	@RequestMapping(value="join/check/sendSMS" ,method = RequestMethod.POST)
+    public @ResponseBody void joinPhoneConf(String memPhoneNum ,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		// 인증번호 생성
+		String Approval_key = "";
+			for (int i = 0; i < 8; i++) {
+			Approval_key += (char) ((Math.random() * 26) + 97);
+		}
+
+        System.out.println("수신자 번호 : " + memPhoneNum);
+        System.out.println("인증번호 : " + Approval_key);
+        HttpSession session = request.getSession();
+		session.setAttribute("memPhoneNum", memPhoneNum);
+		session.setAttribute("Approval_key", Approval_key);
+       // memberService.certifiedPhoneNumber(memPhoneNum,Approval_key);
+    		
+
+		out.print("핸드폰번호로 인증번호를 발송하였습니다.");
+
+		out.close();
+
+		
+    }
+	//회원가입 핸드폰 인증번호 확인
+	@Override
+	@RequestMapping(value="/phone_confirm.do" ,method = RequestMethod.POST)
+	public ModelAndView phone_confirm(@RequestParam("Approval_key") String Approval_key, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
+		String viewName = (String) request.getAttribute("viewName");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		ModelAndView mav = new ModelAndView();
+
+		HttpSession session = request.getSession();
+
+		session.getAttribute("memPhoneNum");
+		session.getAttribute("Approval_key");
+		
+		if(session.getAttribute("memPhoneNum") == null) {
+			out.println("<script>");
+			out.println("alert('인증번호가 일치하지 않습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+			return null;
+		}else {
+		mav.setViewName("redirect:/login_05.do");
+		return mav;
+		}
+
+		
+			
+	}	
 	//이메일 인증번호 확인
 	@Override
 	@RequestMapping(value="/email_confirm.do" ,method = RequestMethod.POST)
@@ -497,15 +563,15 @@ public class MemberControllerImpl implements MemberController {
 			out.close();
 			return null;
 		}else {
-		mav.setViewName("redirect:/login_05.do");
+
 		return mav;
 		}
 
 		
 			
 	}	
-	  //새 비밀번호 
-
+	
+	//새 비밀번호 
 	@Override
 		@RequestMapping(value = "/newPassWord.do", method = RequestMethod.POST)
 		public ModelAndView newPassWord(@RequestParam("memPwd") String memPwd,  RedirectAttributes rAttr,

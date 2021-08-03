@@ -63,6 +63,10 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/member/login_06.jsp" />
 	</definition>
+	<definition name="phone_check" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/phone_check.jsp" />
+	</definition>
 	
 
 	<definition name="storeinfomation" extends="baseLayout">

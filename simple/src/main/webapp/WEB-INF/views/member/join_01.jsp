@@ -296,9 +296,29 @@ h3 {
 	 }	
 
 	//핸드폰 인증 팝업창
-	function phone_check() {
-		window.open("phone_check.jsp", "phonewin", "width=400, height=350");
-	}
+	$(function(){
+		$("#BtnPhoneConf").click(function(){
+			var phone1 = jQuery("#phone1").val();
+			var phone2 = jQuery("#phone2").val();
+			var phone3 = jQuery("#phone3").val();
+			var memPhoneNum = "";
+			memPhoneNum = phone1 +"-"+ phone2 +"-"+ phone3;
+			
+			$.ajax({
+				url : "${contextPath}/join/check/sendSMS",
+				type : "POST",
+				data : {
+					memPhoneNum : memPhoneNum
+				},
+				success : function(result) {
+					alert(result);
+					window.open("${contextPath}/phone_check.do", "phonewin", "width=400, height=350");
+				
+				},
+			})
+		});
+	})
+	
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -459,7 +479,8 @@ h3 {
 											</div>
 										</td>
 										<td colspan="3" class="phone" style="padding-left: 50px;">
-											<select name="memPhoneNum" id="selcet1"
+										<input type="hidden" id="memPhoneNum" />
+											<select name="memPhoneNum" id="phone1"
 											style="height: 34px; margin-bottom: 10px; border: 1px solid #dcdcdc; width: 66px; height: 36px;">
 												<option value="">선택</option>
 												<option value="010">010</option>
@@ -468,13 +489,12 @@ h3 {
 												<option value="017">017</option>
 												<option value="019">019</option>
 												<option value="010">010</option>
-										</select>- <input type="text" name="memPhoneNum1" value="" size="3"
+										</select>- <input type="text" name="memPhoneNum1" value="" size="3"  id="phone2"
 											style="border: 1px solid #dcdcdc; width: 77px; height: 36px;">-
-											<input type="text" name="memPhoneNum2" value="" size="3"
+											<input type="text" name="memPhoneNum2" value="" size="3"  id="phone3"
 											style="border: 1px solid #dcdcdc; width: 77px; height: 36px;">
-											<input type="button" name="phone_certification"
-											style="background-color: #c6c6c6; border: none; color: white; height: 36px; margin-left: 4px;"
-											onclick="phone_check()" value="핸드폰인증">
+											<button type="button" name="phone_certification" id="BtnPhoneConf"
+											style="background-color: #c6c6c6; border: none; color: white; height: 36px; margin-left: 4px;">핸드폰인증</button>
 										</td>
 									</tr>
 									<tr>
