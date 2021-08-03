@@ -52,6 +52,16 @@ public interface MemberService{
 
 	public int addMember_kakao(MemberVO memberVO) throws DataAccessException;
 
+	public void certifiedPhoneNumber(String phoneNumber, String approval_key)throws Exception;
+
+	public int check_id(String memId)throws Exception;
+
+	public MemberVO check_phone(String memId)throws Exception;
+
+	public void update_pw(MemberVO memberVO)throws Exception;
+
+
+
 	
 
 	

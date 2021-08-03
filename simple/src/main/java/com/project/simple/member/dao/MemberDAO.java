@@ -29,7 +29,8 @@ public interface MemberDAO{
 	public int updatenewPassWord(MemberVO member)throws DataAccessException;
 	public MemberVO loginBykakao(MemberVO memberVO)throws DataAccessException;
 	public int insertMember_kakao(MemberVO memberVO)throws DataAccessException;
-	
+	public MemberVO check_phone(String memId) throws Exception;
+
 
 	
 }

@@ -142,6 +142,11 @@ public class MemberDAOImpl implements MemberDAO{
 		return result;
 	}
 
+	@Override
+	public MemberVO check_phone(String memId) throws Exception {
+		return sqlSession.selectOne("mapper.member.check_phone", memId);
+	}
+
 
 
 }

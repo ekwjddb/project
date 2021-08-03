@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.List;
 
 
@@ -27,6 +28,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -182,7 +184,7 @@ public class MemberControllerImpl implements MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", memberVO);
 			session.setAttribute("isLogOn", true);
-			mav.setViewName("redirect:/main.do");
+			mav.setViewName("redirect:/join_02.do");
 		} else {
 			rAttr.addAttribute("result", "loginFailed");
 			mav.setViewName("redirect:/login_01.do");
@@ -437,6 +439,49 @@ public class MemberControllerImpl implements MemberController {
 		return resEntity;
 			
 	}	
+	@RequestMapping(value="/check/sendSMS" ,method = RequestMethod.POST)
+    public @ResponseBody void sendSMS(String memPhoneNum ,HttpServletRequest request, HttpServletResponse response, MemberVO memberVO) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		ModelAndView mav = new ModelAndView();
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		// 아이디가 없으면
+		if(memberService.check_id(memberVO.getmemId()) == 0) {
+			out.println("<script>");
+			out.print("alert('아이디가 없습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+		}// 가입에 사용한 이메일이 아니면
+		else if(!memberVO.getmemPhoneNum().equals(memberService.check_phone(memberVO.getmemId()).getmemPhoneNum())) {
+			out.println("<script>");
+			out.print("alert('등록된 핸드폰번호가 아닙니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+		}else {
+		// 인증번호 생성
+		String Approval_key = "";
+			for (int i = 0; i < 8; i++) {
+				Approval_key += (char) ((Math.random() * 26) + 97);
+		}
+		memberVO.setApproval_key(Approval_key);
+			// 인증번호 변경
+		memberService.update_pw(memberVO);
+			// 인증번호 메일 발송
+        System.out.println("수신자 번호 : " + memPhoneNum);
+        System.out.println("인증번호 : " + Approval_key);
+        memberService.certifiedPhoneNumber(memPhoneNum,Approval_key);
+    	HttpSession session = request.getSession();
+		session.setAttribute("memberPwd", memberVO);	
+		out.println("<script>");
+		out.print("alert('핸드폰번호로 인증번호를 발송하였습니다.');");
+		out.println("history.go(-1);");
+		out.println("</script>");
+		out.close();
+
+		}
+    }
 	//이메일 인증번호 확인
 	@Override
 	@RequestMapping(value="/email_confirm.do" ,method = RequestMethod.POST)
@@ -580,7 +625,7 @@ public class MemberControllerImpl implements MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", memberVO);
 			session.setAttribute("isLogOn", true);
-			mav.setViewName("redirect:/main.do");
+			mav.setViewName("redirect:/join_02.do");
 		} else {
 			rAttr.addAttribute("result", "loginFailed");
 			mav.setViewName("redirect:/login_01.do");
