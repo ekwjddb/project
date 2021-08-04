@@ -1,6 +1,7 @@
 package com.project.simple.favorite.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
@@ -17,7 +18,7 @@ public interface FavoriteDAO {
 
 	public void insertProductInFavorite(FavoriteVO favoriteVO) throws DataAccessException;
 
-	public void deleteFavoriteProduct(String productNum)throws DataAccessException;
+	public void deleteFavoriteProduct(Map<String, Object> map)throws DataAccessException;
 
 
 

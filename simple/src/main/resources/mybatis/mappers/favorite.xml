@@ -63,10 +63,10 @@
     	]]>
 	</select>
 	
-	<delete id="deleteFavoriteProduct" parameterType="String">
+	<delete id="deleteFavoriteProduct" parameterType="java.util.Map">
 	    <![CDATA[
 	      delete from simple.favoriteproduct
-	      where productNum=#{productNum};
+	      where productNum=#{productNum} and memId=#{memId};;
     	]]>
 	</delete><!-- 관심상품에 상품 삭제 -->
 	

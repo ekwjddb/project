@@ -44,9 +44,11 @@ public class FavoriteServiceImpl implements FavoriteService{
 	}//관심상품 추가
 
 	@Override
-	public void removeFavoriteProduct(String productNum) throws Exception {
-		favoriteDAO.deleteFavoriteProduct(productNum);
+	public void removeFavoriteProduct(Map<String, Object> map) throws Exception {
+		favoriteDAO.deleteFavoriteProduct(map);
 		
 	}
+
+	
 
 }

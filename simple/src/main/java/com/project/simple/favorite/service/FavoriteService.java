@@ -14,6 +14,6 @@ public interface FavoriteService {
 
 	public void addProductInFavorite(FavoriteVO favoriteVO) throws Exception;
 
-	public void removeFavoriteProduct(String productNum)throws Exception;
+	public void removeFavoriteProduct(Map<String, Object> map)throws Exception;
 
 }

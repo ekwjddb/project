@@ -213,7 +213,7 @@ public class MemberServiceImpl implements MemberService{
 			HttpSession session = request.getSession();
 			session.setAttribute("memberPwd", memberVO);	
 			out.print("이메일로 인증번호를 발송하였습니다.");
-			
+			System.out.println(Approval_key);
 			out.close();
 		}
 			
