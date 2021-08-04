@@ -145,7 +145,24 @@
 	height: 100%;
 }
 </style>
+<script>
+    
+	function listMemberSearch() {
+		var form = document.memberSearch;
 
+		if (form.search.value == "") {
+			alert("검색 단어를 입력해주세요")
+			form.search.focus();
+			return false;
+		}else{
+			form.submit();
+		}
+
+
+	}
+    
+    
+</script>
 
 </head>
 <title>회원관리창</title>
@@ -189,7 +206,7 @@
 				action="${contextPath}/admin_listmember/memberSearch.do"
 				method="post">
 				<div style="margin-bottom: 10px;">
-					<button type="submit" id="buttonmy" class="btn btn-dark"
+					<button type="button" id="buttonmy" class="btn btn-dark" onclick="listMemberSearch()"
 						style="margin-top: 21px; float: right; padding-top: 4px; height: 34px; font-size: 14px; padding-top: 4px; background-color: #7e9c8c; border: none;">조회</button>
 					<input type="text"
 						style="margin-top: 21px; float: right; height: 34px; border: 1px solid #dcdcdc; font-size: 14px; margin-right: 5px;"
@@ -227,7 +244,7 @@
 							<c:choose>
 								<c:when test="${empty memberSearchMap.memberSearchList}">
 									<tr height="200">
-										<td colspan="5"
+										<td colspan="10"
 											style="background-color: white; padding-top: 100px;">
 											<p align="center">
 												<b><span style="color: black;">등록된 회원이 없습니다.</span></b>

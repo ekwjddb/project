@@ -22,5 +22,7 @@ public interface AdminDAO {
 	
 	public ArticleVO selectNotice(int noticeNum) throws DataAccessException ;
 
+	public int updateAdminMember(MemberVO modmember) throws DataAccessException;
+
 
 }

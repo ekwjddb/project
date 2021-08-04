@@ -99,5 +99,12 @@
 	]]>
 	</select>
 
+    <!-- 회원정보수정 -->
+	<update id="updateAdminMember" parameterType="memberVO">
+	<![CDATA[ 
+		update simple.member
+		set memName=#{memName}, memEmail=(select concat_ws('@',#{memEmail},#{memEmail1})), memPhoneNum=(select concat_ws('-',#{memPhoneNum},#{memPhoneNum1},#{memPhoneNum2})), memAdr=(select concat_ws('-',#{memAdr},#{memAdr1},#{memAdr2})),logintype = #{logintype} where memId=#{memId} 
+	]]>
+	</update>
 
 </mapper>

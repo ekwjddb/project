@@ -2,6 +2,8 @@ package com.project.simple.admin.service;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+
 import com.project.simple.admin.vo.AdminVO;
 import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.member.vo.MemberVO;
@@ -16,6 +18,8 @@ public interface AdminService {
 	public int inquiryCount() throws Exception;
 	
 	public ArticleVO noticeForm(int noticeNum) throws Exception;
+
+	public int admin_modMember(MemberVO modmember) throws DataAccessException;
 
 
 }

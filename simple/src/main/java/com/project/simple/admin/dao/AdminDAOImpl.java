@@ -51,4 +51,10 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectOne("mapper.admin.selectNotice", noticeNum);
 	}
 
+	@Override
+	public int updateAdminMember(MemberVO modmember) throws DataAccessException {
+		int result = sqlSession.update("mapper.admin.updateAdminMember", modmember);
+		return result;
+	}
+
 }

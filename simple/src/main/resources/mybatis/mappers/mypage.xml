@@ -77,7 +77,7 @@
 	<![CDATA[
 			
 		select memOrderNum, memOrderDate, purchaseConfirm, reviewConfirm, returnConfirm,  o.memOrderSeqNum, productCnt, option1name, option2name, option1value, option2value, p.productImage,p.productPrice, p.productName, p.productNum, d.deliveryStatus 
-		from memberOrder as o left join product as p on o.productNum=p.productNum 
+		from simple.memberOrder as o left join simple.product as p on o.productNum=p.productNum 
 		join memdelivery as d on o.memOrderSeqNum=d.memOrderSeqNum  where o.memId=#{memId} order by memOrderSeqNum desc
 		limit #{pageStart}, #{perPageNum};
 			
@@ -87,7 +87,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memberOrder where memId=#{memId};
+			select count(*)  from simple.memberOrder where memId=#{memId};
 			
 	]]>
 	</select>
@@ -98,7 +98,7 @@
 			
 
 		select memOrderNum, memOrderDate, purchaseConfirm, reviewConfirm, returnConfirm,  o.memOrderSeqNum, productCnt, option1Name, option2Name, option1value, option2value, p.productImage, p.productPrice, p.productName, p.productNum, d.deliveryStatus 
-		from memberOrder as o left join product as p on o.productNum=p.productNum 
+		from simple.memberOrder as o left join simple.product as p on o.productNum=p.productNum 
 		join memdelivery as d on o.memOrderSeqNum=d.memOrderSeqNum
 			where memOrderNum = #{memOrderNum} order by memOrderSeqNum desc;
 			
@@ -112,7 +112,7 @@
 			
 
 		select m.memName, memAdr, memPhoneNum, memSpName, memSpPhoneNum1, memSpPhoneNum2, memSpAdr,memOrderMsg, memDepositorName, memPaymentMethod, totalPrice
-		from memberOrder as o left join member as m on o.memId=m.memId 
+		from simple.memberOrder as o left join simple.member as m on o.memId=m.memId 
 			where memOrderSeqNum = #{memOrderSeqNum} order by memOrderSeqNum desc;
 			
 
@@ -125,7 +125,7 @@
 	<![CDATA[
 			
 			select memOrderNum, memOrderDate, purchaseConfirm, reviewConfirm, returnConfirm,  o.memOrderSeqNum, productCnt, option1value, option2value, p.productImage,p.productPrice, p.productName, p.productNum, d.deliveryStatus 
-			from memberOrder as o left join product as p on o.productNum=p.productNum 
+			from simple.memberOrder as o left join simple.product as p on o.productNum=p.productNum 
 			join memdelivery as d on o.memOrderSeqNum=d.memOrderSeqNum  
 			where memId=#{memId} and memOrderDate between #{search1} and DATE_ADD(#{search2}, interval 1 day) order by memOrderSeqNum desc
 			limit #{pageStart}, #{perPageNum};
@@ -139,7 +139,7 @@
 		parameterType="java.util.Map">
 	<![CDATA[
 			
-			select count(*) from memberOrder where memId=#{memId} and memOrderDate between #{search1} and  DATE_ADD(#{search2}, interval 1 day);
+			select count(*) from simple.memberOrder where memId=#{memId} and memOrderDate between #{search1} and  DATE_ADD(#{search2}, interval 1 day);
 			
 
 	]]>
@@ -147,7 +147,7 @@
 
 	<update id="updatePurchaseConfirm" parameterType="String">
 		update
-		memberOrder
+		simple.memberOrder
 		set purchaseConfirm = '구매확정(완)' where
 		memOrderSeqNum =
 		#{memOrderSeqNum};
@@ -159,7 +159,7 @@
 			
 
 		select memOrderNum, memOrderDate, o.memOrderSeqNum, productCnt, option1Name, option2Name, option1value, option2value, p.productImage, p.productPrice, p.productName,p.productNum
-		from memberOrder as o left join product as p on o.productNum=p.productNum 
+		from simple.memberOrder as o left join simple.product as p on o.productNum=p.productNum 
 		join memdelivery as d on o.memOrderSeqNum=d.memOrderSeqNum  where o.memOrderSeqNum=#{memOrderSeqNum};
 			
 
@@ -170,7 +170,7 @@
 	<![CDATA[
 			
 			select reviewNum, o.productImage, reviewFile, r.productNum, r.memOrderSeqNum , productReviewTitle, reviewDate, productContent, p.productName, o.option1Name, o.option2Name, o.option1value, o.option2value 
-			from productReview as r left join product as p on r.productNum=p.productNum
+			from simple.productReview as r left join simple.product as p on r.productNum=p.productNum
 			join memberOrder as o on r.memOrderSeqNum=o.memOrderSeqNum 
 			where r.memId=#{memId} and reviewDate between #{search1} and DATE_ADD(#{search2}, interval 1 day) order by reviewNum desc
 			limit #{pageStart}, #{perPageNum};
@@ -184,7 +184,7 @@
 		parameterType="java.util.Map">
 	<![CDATA[
 			
-			select count(*) from productReview where memId=#{memId} and reviewDate between #{search1} and  DATE_ADD(#{search2}, interval 1 day);
+			select count(*) from simple.productReview where memId=#{memId} and reviewDate between #{search1} and  DATE_ADD(#{search2}, interval 1 day);
 			
 
 	]]>
@@ -200,7 +200,7 @@
 
 	<update id="updateReviewConfirm" parameterType="java.util.Map">
 		update
-		memberOrder
+		simple.memberOrder
 		set reviewConfirm = '리뷰작성(완)' where
 		memOrderSeqNum =
 		#{memOrderSeqNum};
@@ -209,7 +209,7 @@
 	<select id="selectNewReviewNum" resultType="int">
 	<![CDATA[
 			
-			select COALESCE(max(reviewNum),0)+1 from productReview;
+			select COALESCE(max(reviewNum),0)+1 from simple.productReview;
 			
 	
 
@@ -222,7 +222,7 @@
 			
 
 			select reviewNum, o.productImage, reviewFile, r.productNum, r.memOrderSeqNum , o.memOrderDate, o.productCnt, o.productPrice, productReviewTitle, reviewDate, productContent, p.productName, o.option1value, o.option2value 
-			from productReview as r left join product as p on r.productNum=p.productNum
+			from simple.productReview as r left join simple.product as p on r.productNum=p.productNum
 			join memberOrder as o on r.memOrderSeqNum=o.memOrderSeqNum 
 			where reviewNum = #{reviewNum} order by reviewNum desc;
 			
@@ -233,7 +233,7 @@
 
 
 	<update id="updateReview" parameterType="java.util.Map">
-		update productReview
+		update simple.productReview
 		set productReviewTitle = #{productReviewTitle},
 		productContent =
 		#{productContent},
@@ -246,14 +246,14 @@
 	<update id="deleteReview" parameterType="java.util.Map">
 
 		delete from
-		productReview
+		simple.productReview
 		where reviewNum=#{reviewNum};
 
 	</update>
 
 	<update id="updateReviewOrder" parameterType="java.util.Map">
 		update
-		memberOrder
+		simple.memberOrder
 		set reviewConfirm = '리뷰' where
 		memOrderSeqNum =
 		#{memOrderSeqNum};
@@ -265,7 +265,7 @@
 	<![CDATA[
 			
 		select r.memOrderSeqNum, returnDate, returnNum, returnType, returnContent, r.currentStatus,  o.productCnt, o.option1value, o.option2value, o.productImage,o.productPrice, p.productName, o.productNum
-		from returnhistory as r left join memberOrder as o on r.memOrderSeqNum=o.memOrderSeqNum 
+		from simple.returnhistory as r left join simple.memberOrder as o on r.memOrderSeqNum=o.memOrderSeqNum 
 		join product as p on r.productNum=p.productNum  where o.memId=#{memId} order by returnDate desc
 		limit #{pageStart}, #{perPageNum};
 			
@@ -275,7 +275,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memberOrder where memId=#{memId};
+			select count(*)  from simple.memberOrder where memId=#{memId};
 			
 	]]>
 	</select>
@@ -284,7 +284,7 @@
 	<![CDATA[
 			
 		select r.memOrderSeqNum, returnDate, returnNum, returnType, returnContent, r.currentStatus,  o.productCnt, o.option1value, o.option2value, o.productImage,o.productPrice, p.productName, o.productNum
-		from returnhistory as r left join memberOrder as o on r.memOrderSeqNum=o.memOrderSeqNum 
+		from simple.returnhistory as r left join simple.memberOrder as o on r.memOrderSeqNum=o.memOrderSeqNum 
 		join product as p on r.productNum=p.productNum
 		where r.memId=#{memId} and returnDate between #{search1} and DATE_ADD(#{search2}, interval 1 day) order by returnNum desc
 		limit #{pageStart}, #{perPageNum};
@@ -298,7 +298,7 @@
 		parameterType="java.util.Map">
 	<![CDATA[
 			
-			select count(*) from returnHistory where memId=#{memId} and returnDate between #{search1} and  DATE_ADD(#{search2}, interval 1 day);
+			select count(*) from simple.returnHistory where memId=#{memId} and returnDate between #{search1} and  DATE_ADD(#{search2}, interval 1 day);
 			
 
 	]]>
@@ -307,7 +307,7 @@
 
 	<insert id="insertNewReturn" parameterType="java.util.Map">
 		<![CDATA[
-			insert into returnhistory(memOrderSeqNum,memId, productNum, returnType, returnContent)
+			insert into simple.returnhistory(memOrderSeqNum,memId, productNum, returnType, returnContent)
 			values(#{memOrderSeqNum},#{memId}, #{productNum}, #{returnType}, #{returnContent});
 		]]>
 
@@ -315,7 +315,7 @@
 
 	<update id="updateReturnConfirm" parameterType="java.util.Map">
 		update
-		memberOrder
+		simple.memberOrder
 		set returnConfirm = '반품신청(완)' where
 		memOrderSeqNum =
 		#{memOrderSeqNum};
@@ -327,7 +327,7 @@
 			
 			
 		select r.memOrderSeqNum, returnDate, returnNum, returnType, returnContent, r.currentStatus,  o.productCnt, o.option1value, o.option2value, o.productImage,o.productPrice, p.productName, o.productNum
-		from returnhistory as r left join memberOrder as o on r.memOrderSeqNum=o.memOrderSeqNum 
+		from simple.returnhistory as r left join simple.memberOrder as o on r.memOrderSeqNum=o.memOrderSeqNum 
 		join product as p on r.productNum=p.productNum  where returnNum = #{returnNum} order by returnDate desc
 		;
 			
@@ -336,7 +336,7 @@
 	</select>
 
 	<update id="updateReturn" parameterType="java.util.Map">
-		update returnHistory
+		update simple.returnHistory
 		set
 		returnType=#{returnType},
 		returnContent=#{returnContent}
@@ -347,14 +347,14 @@
 	<update id="deleteReturn" parameterType="java.util.Map">
 
 		delete from
-		returnHistory
+		simple.returnHistory
 		where returnNum=#{returnNum};
 
 	</update>
 
 	<update id="updateReturnOrder" parameterType="java.util.Map">
 		update
-		memberOrder
+		simple.memberOrder
 		set returnConfirm = '반품' where
 		memOrderSeqNum =
 		#{memOrderSeqNum};
@@ -364,7 +364,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memberOrder where memId=#{memId};
+			select count(*)  from simple.memberOrder where memId=#{memId};
 			
 	]]>
 	</select>
@@ -373,7 +373,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from returnhistory where memId=#{memId};
+			select count(*)  from simple.returnhistory where memId=#{memId};
 			
 	]]>
 	</select>
@@ -382,7 +382,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memberCart where memId=#{memId};
+			select count(*)  from simple.memberCart where memId=#{memId};
 			
 	]]>
 	</select>
@@ -393,7 +393,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memdelivery where memId=#{memId} and deliveryStatus='주문접수';
+			select count(*)  from simple.memdelivery where memId=#{memId} and deliveryStatus='주문접수';
 			
 	]]>
 	</select>
@@ -402,7 +402,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memdelivery where memId=#{memId} and deliveryStatus='결제완료';
+			select count(*)  from simple.memdelivery where memId=#{memId} and deliveryStatus='결제완료';
 			
 	]]>
 	</select>
@@ -411,7 +411,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memdelivery where memId=#{memId} and deliveryStatus='상품준비중';
+			select count(*)  from simple.memdelivery where memId=#{memId} and deliveryStatus='상품준비중';
 			
 	]]>
 	</select>
@@ -420,7 +420,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memdelivery where memId=#{memId} and deliveryStatus='배송중';
+			select count(*)  from simple.memdelivery where memId=#{memId} and deliveryStatus='배송중';
 			
 	]]>
 	</select>
@@ -429,7 +429,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from memdelivery where memId=#{memId} and deliveryStatus='배송완료';
+			select count(*)  from simple.memdelivery where memId=#{memId} and deliveryStatus='배송완료';
 			
 	]]>
 	</select>
@@ -437,7 +437,7 @@
 	<select id="selectListInquiry" resultMap="inquiryResult">
 	<![CDATA[
 			
-		select * from inquiry where memId=#{memId} limit 1,2;
+		select * from simple.inquiry where memId=#{memId} limit 1,2;
 			
 	]]>
 	</select>
@@ -445,7 +445,7 @@
 	<select id="selectListAsCenter" resultMap="asCenterResult">
 	<![CDATA[
 			
-		select * from asCenter where memId=#{memId} limit 1,2;
+		select * from simple.asCenter where memId=#{memId} limit 1,2;
 			
 	]]>
 	</select>

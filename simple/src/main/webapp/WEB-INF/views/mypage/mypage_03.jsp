@@ -596,8 +596,8 @@ function div_show(selectList) {
 									<a style="color: red; padding-right: 5px;">*</a>이메일
 								</div>
 							</td>
-							<td colspan="3" class="email" style="padding-left: 10px;"><input
-								type="text" name="memEmail" placeholder=""
+							<td colspan="3" class="email" style="padding-left: 10px;">
+							<input type="text" name="memEmail" placeholder=""
 								value=<%=memEmail[0]%> size="20"> @ <select
 								name="memEmail1" id="selcet1"
 								style="height: 35px; width: 200px;">

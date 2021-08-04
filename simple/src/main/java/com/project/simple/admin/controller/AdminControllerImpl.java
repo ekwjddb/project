@@ -1,6 +1,7 @@
 package com.project.simple.admin.controller;
 
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +25,13 @@ import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.member.vo.MemberVO;
 import com.project.simple.page.Criteria;
 import com.project.simple.page.PageMaker;
-
+import com.project.simple.member.service.MemberService;
 @Controller("adminController")
 public class AdminControllerImpl implements AdminController {
 	@Autowired
 	private AdminService adminService;
+	@Autowired
+	private MemberService memberService;
 
 	@Autowired
 	private AdminVO adminVO;
@@ -74,20 +77,6 @@ public class AdminControllerImpl implements AdminController {
 		return "admin_login";
 	}
 
-	// 회원상세보기
-	@RequestMapping(value = "/admin/viewMember.do",  method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView viewMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
-		String memId = request.getParameter("memId");
-		String viewName = (String) request.getAttribute("viewName");
-		memberVO = adminService.viewMember(memId);
-		session.setAttribute("admin_member", memberVO);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(viewName);
-		mav.addObject("member", memberVO);
-		return mav;
-	}
-
 	// 1:1문의 전체 리스트 가져오기
 	@Override
 	@RequestMapping(value = "/admin/listAllInquiry.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -127,19 +116,40 @@ public class AdminControllerImpl implements AdminController {
 
 		return mav;
 	}
+	// 회원상세보기
+	@RequestMapping(value = "/admin/viewMember.do",  method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView viewMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		String memId = request.getParameter("memId");
+		String viewName = (String) request.getAttribute("viewName");
+		memberVO = adminService.viewMember(memId);
+		session.setAttribute("admin_member", memberVO);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		mav.addObject("member", memberVO);
+		return mav;
+	}
 	//관리자 회원정보 수정하기
 	@RequestMapping(value = "/admin/modMember.do", method = RequestMethod.POST)
-	public ModelAndView modMember(@ModelAttribute("modmember") MemberVO modmember, HttpServletRequest request,
+	public void admin_modMember(@ModelAttribute("modmember") MemberVO modmember, HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes rAttr) throws Exception {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		request.setCharacterEncoding("utf-8");
 		int result = 0;
-		//result = adminService.modMember(modmember);
+		result = adminService.admin_modMember(modmember);
 		System.out.println(result);
-		session.removeAttribute("member");
-		session.removeAttribute("isLogOn");
-		ModelAndView mav = new ModelAndView("redirect:/mypage_10.do");
-		return mav;
+		session.removeAttribute("admin_member");
+		
+		if(result == 1) {
+			out.println("<script>");
+			out.println("alert('회원 정보를 수정하였습니다.');");
+			out.println("location.href = '/simple/admin_listmember.do';");
+			out.println("</script>");
+			out.close();
+		}
+	
 	}
 
 

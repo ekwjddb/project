@@ -67,7 +67,7 @@ public class MemberControllerImpl implements MemberController {
 		public ModelAndView login(@ModelAttribute("member") MemberVO member, RedirectAttributes rAttr,
 				HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-	                        response.setContentType("text/html;charset=utf-8");
+	        response.setContentType("text/html;charset=utf-8");
 			PrintWriter out = response.getWriter();
 			ModelAndView mav = new ModelAndView();
 			memberVO = memberService.login(member);
