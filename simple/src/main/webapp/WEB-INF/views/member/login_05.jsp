@@ -72,7 +72,7 @@
 		}
 	
 		//비밀번호 길이 체크(10자이상 허용)
-		if (form.memPwd.value.length < 9) {
+		if (form.memPwd.value.length < 10) {
 			alert("비밀번호를 10자이상 입력해주세요.")
 			form.memPwd.focus();
 			form.memPwd.select();

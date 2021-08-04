@@ -250,6 +250,9 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView mypage_03(@ModelAttribute("confirmPwd") MemberVO confirmPwd, HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes rAttr) throws Exception {
 		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		ModelAndView mav = new ModelAndView();
+		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		String sessionmemPwd = member.getmemPwd();
@@ -257,11 +260,15 @@ public class MemberControllerImpl implements MemberController {
 
 		if (!(sessionmemPwd.equals(memPwd))) {
 			rAttr.addAttribute("result", false);
-			ModelAndView mav = new ModelAndView("redirect:/mypage_02.do");
-			return mav;
+			out.println("<script>");
+			out.println("alert('비밀번호가 일치하지 않습니다.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
+	
+		}else {
+		mav.setViewName("redirect:/mypage_03.do");
 		}
-
-		ModelAndView mav = new ModelAndView("redirect:/mypage_03.do");
 		return mav;
 	}
 

@@ -75,7 +75,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*) as simple.memberCount from simple.member;
+			select count(*) as memberCount from simple.member;
 			
 
 	]]>

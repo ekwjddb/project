@@ -77,9 +77,11 @@ public class AdminControllerImpl implements AdminController {
 	// 회원상세보기
 	@RequestMapping(value = "/admin/viewMember.do",  method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView viewMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
 		String memId = request.getParameter("memId");
 		String viewName = (String) request.getAttribute("viewName");
 		memberVO = adminService.viewMember(memId);
+		session.setAttribute("admin_member", memberVO);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
 		mav.addObject("member", memberVO);
@@ -123,6 +125,20 @@ public class AdminControllerImpl implements AdminController {
 		mav.setViewName(viewName);
 		mav.addObject("noticeNum", articleVO);
 
+		return mav;
+	}
+	//관리자 회원정보 수정하기
+	@RequestMapping(value = "/admin/modMember.do", method = RequestMethod.POST)
+	public ModelAndView modMember(@ModelAttribute("modmember") MemberVO modmember, HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes rAttr) throws Exception {
+		HttpSession session = request.getSession();
+		request.setCharacterEncoding("utf-8");
+		int result = 0;
+		//result = adminService.modMember(modmember);
+		System.out.println(result);
+		session.removeAttribute("member");
+		session.removeAttribute("isLogOn");
+		ModelAndView mav = new ModelAndView("redirect:/mypage_10.do");
 		return mav;
 	}
 
