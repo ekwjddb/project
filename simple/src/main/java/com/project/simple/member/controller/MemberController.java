@@ -33,7 +33,7 @@ public interface MemberController{
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView addMember_kakao(@ModelAttribute("info") MemberVO memberVO, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
-	public void phone_confirm(@RequestParam("Approval_key") String Approval_key, HttpServletRequest request, HttpServletResponse response, Model model)
+	public ResponseEntity phone_confirm(@RequestParam("Approval_key") String Approval_key, HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception;
 	
 }

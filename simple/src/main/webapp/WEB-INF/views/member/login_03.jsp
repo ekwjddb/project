@@ -367,7 +367,7 @@ h3 {
 							<input type="text" name="Approval_key" id="Approval_key" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 163px; height: 36px;"
 									size="37" placeholder="인증번호를 입력하세요">
 									<button type="button" onclick="Approval_key_find_phone()"
-									style="width: 160px; background-color: #7e9c8c; color:white; height:36px; border:none; border-radius: 2px;">인증번호 전송</button>
+									style="width: 160px; background-color: #7e9c8c; color:white; height:36px; border:none; border-radius: 2px;">인증번호 확인</button>
 							</form>
 						 </div> 
 						 
@@ -386,7 +386,7 @@ h3 {
 							<input type="text" name="Approval_key" id="Approval_key" style="margin-bottom: 10px; font-size: 14px;  border: 1px solid #dcdcdc; width: 163px; height: 36px;"
 									size="37" placeholder="인증번호를 입력하세요">
 									<button type="button"  onclick="Approval_key_find()"
-									style="width: 160px; background-color: #7e9c8c; color:white; height:36px; border:none; border-radius: 2px;">인증번호 전송</button>
+									style="width: 160px; background-color: #7e9c8c; color:white; height:36px; border:none; border-radius: 2px;">인증번호 확인</button>
 							</form>
 							
 						</div>

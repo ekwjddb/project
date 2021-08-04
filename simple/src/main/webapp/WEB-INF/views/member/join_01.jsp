@@ -72,7 +72,13 @@ h3 {
     var idck = 0;
     var check = 0;
  
- 
+    function div_show(selectList) {
+	    var obj1 = document.getElementById("phone_con"); // 핸드폰
+	
+	    if( selectList == "0" ) { // 핸드폰
+	        obj1.style.display = "block";    
+	    } 
+	}
 	//로그인
 	function Check_Join() {
 		var form = document.CheckJoin;
@@ -215,6 +221,11 @@ h3 {
 			form.memAdr.focus();
 			return false;
 		}
+		if (form.memAdr2.value == "") {
+			alert("상세주소를 입력하지 않았습니다.")
+			form.memAdr2.focus();
+			return false;
+		}
 
 		if (!agree1.checked) {
 
@@ -318,13 +329,43 @@ h3 {
 				},
 				success : function(result) {
 					alert(result);
-					window.open("${contextPath}/phone_check.do", "phonewin", "width=400, height=350");
-				
 				},
 			})
 		});
 	})
+	//비밀번호 찾기_핸드폰_인증번호_확인	
+	$(function(){
+		$("#findBtnPhone").click(function(){
+			var Approval_key=$("#Approval_key").val();
+			$.ajax({
+				url : "${contextPath}/phone_confirm.do",
+				type : "POST",
+				data : {
+					Approval_key : Approval_key
+				},
+				success : function(data,textStatus) {
+					 if(data=='false'){
+				       	    alert("핸드폰 인증이 완료되었습니다.");
+				       	    check = 1;
+				       	   
+				          }else{
+				        	  check = 0;
+				        	  alert("인증번호가 일치하지 않습니다.");
+				          }
+				},
+				error:function(data,textStatus){
+			          alert("에러가 발생했습니다.");ㅣ
+			       },
+			       complete:function(data,textStatus){
+			         // alert("작업을완료 했습니다");
+			       }
+		    });  //end ajax	 
+		 }
+		)}
+	)
 	
+	
+	 
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
@@ -500,9 +541,25 @@ h3 {
 											style="border: 1px solid #dcdcdc; width: 77px; height: 36px;">-
 											<input type="text" name="memPhoneNum2" value="" size="3"  id="phone3"
 											style="border: 1px solid #dcdcdc; width: 77px; height: 36px;">
-											<button type="button" name="phone_certification" id="BtnPhoneConf"
+											<button type="button" name="phone_certification" id="BtnPhoneConf" onclick="div_show('0');"
 											style="background-color: #c6c6c6; border: none; color: white; height: 36px; margin-left: 4px;">핸드폰인증</button>
 										</td>
+									</tr>
+								
+									<tr>
+									    <td>
+									    </td>
+									    
+									    <td>
+									   <div id="phone_con" style="display: none;">
+									    <input type="text" name="Approval_key" id="Approval_key"
+											size="10"  placeholder="인증번호를 입력하세요"
+											style="margin-left:49px; margin-bottom: 10px; border: 1px solid #dcdcdc; width: 218px; height: 36px;">
+										<button type="button" id="findBtnPhone"
+											style="background-color: #c6c6c6; border: none; color: white; height: 36px; margin-left: 4px;">인증번호 확인</button>
+										</div>
+									    </td>
+									    
 									</tr>
 									<tr>
 										<td class="addr1">
