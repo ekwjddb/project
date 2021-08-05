@@ -38,7 +38,7 @@
 }
 </style>
 </head>
-<title>주문결제창</title>
+<title>회원탈퇴완료창</title>
 <body>
 
 

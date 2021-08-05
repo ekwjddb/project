@@ -124,7 +124,7 @@ h3 {
 			</div>
 			<!-- 타이틀 끝 -->
 			<!-- 최근 본 상품 -->
-			
+			<jsp:include page="/WEB-INF/views/common/quick.jsp" flush="false" />
 
 			<section class="ftco-section testimony-section" id="sect"
 				style="padding-top: 50px;">

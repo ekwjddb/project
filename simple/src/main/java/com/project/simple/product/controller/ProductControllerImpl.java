@@ -185,65 +185,199 @@ public class ProductControllerImpl implements ProductController {
 	@Override // 상품목록 조회
 	@RequestMapping(value = "product/listProduct.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView listProduct(@RequestParam("sort") String sort, @RequestParam("subsort") String subsort,
-			HttpServletRequest request, HttpServletResponse response) throws Exception {
+			@RequestParam("filter") String filter, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> ProductMap = new HashMap<String, Object>();
 
 		// -------------------------침대카테고리--------------------------------------
 		if ("침대".equals(sort)) {
 			if ("x".equals(subsort)) {
+				if ("x".equals(filter)) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_bed");
+				} else if (filter != null) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_bed");
+				}
+			}
+		}
+		if ("침대".equals(sort) && subsort != null) {
+			if ("x".equals(filter)) {
 				ProductMap.put("sort", sort);
 				ProductMap.put("subsort", subsort);
-				List<ProductVO> productList = productService.listProduct(ProductMap);
-				mav.addObject("productList", productList);				
-				mav.setViewName("product/listProduct_bed");
-				return mav;
-			} else if (subsort != null) {
-				ProductMap.put("sort", sort);
-				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
 				List<ProductVO> productList = productService.listProduct(ProductMap);
 				mav.addObject("productList", productList);
 				mav.setViewName("product/listProduct_bed");
-				return mav;
+			} else if (filter != null) {
+				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
+				List<ProductVO> productList = productService.listProduct(ProductMap);
+				mav.addObject("productList", productList);
+				mav.setViewName("product/listProduct_bed");
 			}
-
-			return mav;
 		}
 
 		// -------------------소파카테고리------------------------------------------------
 		if ("소파".equals(sort)) {
 			if ("x".equals(subsort)) {
+				if ("x".equals(filter)) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_sofa");
+				} else if (filter != null) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_sofa");
+				}
+			}
+		}
+		if ("소파".equals(sort) && subsort != null) {
+			if ("x".equals(filter)) {
 				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
 				List<ProductVO> productList = productService.listProduct(ProductMap);
 				mav.addObject("productList", productList);
 				mav.setViewName("product/listProduct_sofa");
-				return mav;
-			}
-			if ("화장대/옷장/수납".equals(sort)) {
-
+			} else if (filter != null) {
+				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
 				List<ProductVO> productList = productService.listProduct(ProductMap);
+				mav.addObject("productList", productList);
+				mav.setViewName("product/listProduct_sofa");
+			}
+		}
+		// -------------------화장대/옷장/수납 카테고리----------------------------
 
+		if ("화장대/옷장/수납".equals(sort)) {
+			if ("x".equals(subsort)) {
+				if ("x".equals(filter)) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_wardrobe");
+				} else if (filter != null) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_wardrobe");
+				}
+			}
+		}
+		if ("화장대/옷장/수납".equals(sort) && subsort != null) {
+			if ("x".equals(filter)) {
+				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
+				List<ProductVO> productList = productService.listProduct(ProductMap);
 				mav.addObject("productList", productList);
 				mav.setViewName("product/listProduct_wardrobe");
-				return mav;
-			}
-			if ("식탁/의자".equals(sort)) {
-
+			} else if (filter != null) {
+				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
 				List<ProductVO> productList = productService.listProduct(ProductMap);
-
+				mav.addObject("productList", productList);
+				mav.setViewName("product/listProduct_wardrobe");
+			}
+		}
+		
+		//-------------------식탁/의자-----------------------------------------
+		if ("식탁/의자".equals(sort)) {
+			if ("x".equals(subsort)) {
+				if ("x".equals(filter)) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_table01");
+				} else if (filter != null) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_table01");
+				}
+			}
+		}
+		if ("식탁/의자".equals(sort) && subsort != null) {
+			if ("x".equals(filter)) {
+				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
+				List<ProductVO> productList = productService.listProduct(ProductMap);
 				mav.addObject("productList", productList);
 				mav.setViewName("product/listProduct_table01");
-				return mav;
-			}
-			if ("테이블/책상/책장".equals(sort)) {
-
+			} else if (filter != null) {
+				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
 				List<ProductVO> productList = productService.listProduct(ProductMap);
-
+				mav.addObject("productList", productList);
+				mav.setViewName("product/listProduct_table01");
+			}
+		}
+		
+		// -------------------테이블/책상/책장------------------------------------
+		
+		if ("테이블/책상/책장".equals(sort)) {
+			if ("x".equals(subsort)) {
+				if ("x".equals(filter)) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_table02");
+				} else if (filter != null) {
+					ProductMap.put("sort", sort);
+					ProductMap.put("subsort", subsort);
+					ProductMap.put("filter", filter);
+					List<ProductVO> productList = productService.listProduct(ProductMap);
+					mav.addObject("productList", productList);
+					mav.setViewName("product/listProduct_table02");
+				}
+			}
+		}
+		if ("테이블/책상/책장".equals(sort) && subsort != null) {
+			if ("x".equals(filter)) {
+				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
+				List<ProductVO> productList = productService.listProduct(ProductMap);
 				mav.addObject("productList", productList);
 				mav.setViewName("product/listProduct_table02");
-				return mav;
-			} else {
-				return mav;
+			} else if (filter != null) {
+				ProductMap.put("sort", sort);
+				ProductMap.put("subsort", subsort);
+				ProductMap.put("filter", filter);
+				List<ProductVO> productList = productService.listProduct(ProductMap);
+				mav.addObject("productList", productList);
+				mav.setViewName("product/listProduct_table02");
 			}
 		}
 		return mav;

@@ -210,7 +210,7 @@
 			</div>
 
 			<!-- 최근 본 상품 -->
-
+            <jsp:include page="/WEB-INF/views/common/quick.jsp" flush="false" />
 
 			<!-- Left Menu -->
 			<jsp:include page="/WEB-INF/views/common/mypage_sidemenu.jsp"

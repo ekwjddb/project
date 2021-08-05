@@ -499,7 +499,7 @@ function div_show(selectList) {
 			</div>
 			<!-- 마이페이지 상단메뉴 끝 -->
 			<!-- 최근 본 상품 -->
-			
+			<jsp:include page="/WEB-INF/views/common/quick.jsp" flush="false" />
 			<!-- 최근 본 상품 끝 -->
 
 

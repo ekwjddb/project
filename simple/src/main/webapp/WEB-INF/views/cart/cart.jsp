@@ -210,11 +210,11 @@
 						style="font-size: 25px; font-weight: bold; margin-bottom: 20px;">
 						<a style="color: #7e9c8c;">장바구니</a>
 						<button type="button" onclick="deleteValue01();"
-							style="float: right; border-radius: 2px; margin-bottom: 3px; margin-top: 15px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;"
+							style="float: right; border-radius: 2px; margin-bottom: 3px; margin-top: 15px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 80px; height: 30px; font-size: 14px;"
 							class="btn-secondary btn-xs">선택삭제</button>
 						<button type="button" onclick="checkAll()"
 							class="btn-secondary btn-xs"
-							style="float: right; border-radius: 2px; margin-bottom: 3px; margin-top: 15px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">전체선택</button>
+							style="float: right; border-radius: 2px; margin-bottom: 3px; margin-top: 15px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 80px; height: 30px; font-size: 14px;">전체선택</button>
 
 					</div>
 				</c:when>
@@ -223,11 +223,11 @@
 						style="font-size: 25px; font-weight: bold; margin-bottom: 20px;">
 						<a style="color: #7e9c8c;">장바구니</a>
 						<button type="button" onclick="deleteValue02();"
-							style="float: right; border-radius: 2px; margin-bottom: 3px; margin-top: 15px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;"
+							style="float: right; border-radius: 2px; margin-bottom: 3px; margin-top: 15px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 80px; height: 30px; font-size: 14px;"
 							class="btn-secondary btn-xs">선택삭제</button>
 						<button type="button" onclick="checkAll()"
 							class="btn-secondary btn-xs"
-							style="float: right; border-radius: 2px; margin-bottom: 3px; margin-top: 15px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">전체선택</button>
+							style="float: right; border-radius: 2px; margin-bottom: 3px; margin-top: 15px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 80px; height: 30px; font-size: 14px;">전체선택</button>
 
 					</div>
 
@@ -237,7 +237,7 @@
 
 
 			<!-- 장바구니타이틀끝 -->
-
+           <jsp:include page="/WEB-INF/views/common/quick.jsp" flush="false" />
 
 
 
