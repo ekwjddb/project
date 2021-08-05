@@ -2,7 +2,9 @@ package com.project.simple.admin.controller;
 
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -150,6 +152,34 @@ public class AdminControllerImpl implements AdminController {
 			out.close();
 		}
 	
+	}
+	//관리자 회원 삭제
+	@RequestMapping(value = "/admin_removeMember.do", method = RequestMethod.GET)
+	private ModelAndView admin_removeMember(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response)  throws Exception{
+		ModelAndView mav = new ModelAndView();
+		memberVO = memberService.admin_removeMember(memId);
+		mav.addObject("memId", memberVO);
+		System.out.println(memId);
+		mav.setViewName("redirect:/admin_listmember.do");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/admin_selectremoveMember.do", method = RequestMethod.POST)
+	public ModelAndView admin_selectremoveMember(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+	
+				
+		ModelAndView mav = new ModelAndView();
+		String[] ajaxMsg = request.getParameterValues("valueArr");
+		int size = ajaxMsg.length;
+		for (int i = 0; i < size; i++) {
+	
+			adminService.admin_selectremoveMember(ajaxMsg[i]);
+		}
+
+		mav.setViewName("redirect:/admin_listmember.do");
+		return mav;
 	}
 
 

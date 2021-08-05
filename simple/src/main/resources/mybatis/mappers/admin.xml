@@ -106,5 +106,12 @@
 		set memName=#{memName}, memEmail=(select concat_ws('@',#{memEmail},#{memEmail1})), memPhoneNum=(select concat_ws('-',#{memPhoneNum},#{memPhoneNum1},#{memPhoneNum2})), memAdr=(select concat_ws('-',#{memAdr},#{memAdr1},#{memAdr2})),logintype = #{logintype} where memId=#{memId} 
 	]]>
 	</update>
+	<!-- 회원 선택 삭제 -->
+	<delete id="deleteSelectRemoveMember" parameterType="memberVO">
+	    <![CDATA[
+	      delete from simple.member
+	      where memId=#{memId};
+    	]]>
+	</delete>
 
 </mapper>

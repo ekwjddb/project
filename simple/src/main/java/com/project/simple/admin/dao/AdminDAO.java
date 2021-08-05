@@ -24,5 +24,7 @@ public interface AdminDAO {
 
 	public int updateAdminMember(MemberVO modmember) throws DataAccessException;
 
+	public void deleteSelectRemoveMember(String memId) throws DataAccessException;
+
 
 }

@@ -145,7 +145,8 @@
 	height: 100%;
 }
 </style>
-<script>
+<script> src="http://code.jquery.com/jquery-1.6.4.min.js"</script>
+<script type="text/javascript">
     
 	function listMemberSearch() {
 		var form = document.memberSearch;
@@ -160,8 +161,56 @@
 
 
 	}
-    
-    
+	$(function(){
+		var chkObj = document.getElementsByName("RowCheck");
+		var rowCnt = chkObj.length;
+		
+		$("input[name='allCheck']").click(function(){
+			var chk_listArr = $("input[name='RowCheck']");
+			for(var i=0; i<chk_listArr.length; i++){
+				chk_listArr[i].checked = this.checked;
+			}
+		});
+		$("input[name='RowCheck']").click(function(){
+			if($("input[name='RowCheck']:checked").length==rowCnt){
+				$("input[name='allCheck']")[0].checked = true;
+			}else{
+				$("input[name='allCheck']")[0].checked = false;
+			}
+		});
+	});
+	function deleteValue(){
+		var url="admin_selectremoveMember.do"; //Controller로 보내고자 하는 url
+		var valueArr = new Array();
+		var list = $("input[name='RowCheck']");
+		for(var i = 0; i < list.length; i++){
+			if(list[i].checked){//선택되어 있으면 배열에 값을 저장
+					valueArr.push(list[i].value);
+				}
+			}
+			if(valueArr.length == 0){
+				alert("선택된 회원이 없습니다.");
+			}else{
+				var chk = confirm("정말 삭제하시겠습니까?");
+				$.ajax({
+					url : "admin_selectremoveMember.do", //전송 URL
+					type: 'POST',
+					traditional : true,
+					data : {
+						valueArr : valueArr   //보내고자 하는 data 변수 설정
+					},
+					success: function(jdata){
+						if(jdata = 1){
+							alert("회원을 삭제하셨습니다.");
+							location.replace("admin_listmember.do"); //admin_listmember로 페이지 새로고침
+						}else{
+							alert("회원삭제에 실패하셨습니다.");
+						}	
+					}
+
+				});
+			}
+	}
 </script>
 
 </head>
@@ -217,9 +266,9 @@
 						<option value="memAdr">주소</option>
 						<option value="logintype">회원유형</option>
 					</select>
-					<button type="button" onclick="deleteValue02();"
+					<button type="button" 
 						style="float: left; border-radius: 2px; margin-bottom: 3px; margin-top: 25px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;"
-						class="btn-secondary btn-xs">선택삭제</button>
+						class="btn-secondary btn-xs" onclick="deleteValue();">선택삭제</button>
 
 				</div>
 			</form>
@@ -257,18 +306,26 @@
 									<c:forEach var="memberSearch" items="${memberSearchList}">
 										<tr
 											style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black;">
-											<td scope="col"><input type="checkbox" name="chk"
-												value=""></td>
-											<td scope="col">${memberSearch.memId}</td>
-											<td scope="col">${memberSearch.memName }</td>
-											<td scope="col">${memberSearch.memEmail}</td>
-											<td scope="col">${memberSearch.memPhoneNum}</td>
-											<td scope="col">${memberSearch.memAdr }</td>
-											<td scope="col">${memberSearch.logintype }</td>
-											<td scope="col">${memberSearch.memRegdate}</td>
-											<td scope="col"><button type="button"
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">
+											<input type="checkbox" name="chk" value=""></td>
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memId}</td>
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memName }</td>
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memEmail}</td>
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memPhoneNum}</td>
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memAdr }</td>
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.logintype }</td>
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memRegdate}</td>
+											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">
+											<input
+												type="hidden" value="${memberSearch.memId}" name="memId" />
+												<button type="button" class="btn btn-dark"
+													onclick="location.href='${contextPath}/admin/viewMember.do?memId=${memberSearch.memId }'"
+													style="border-radius: 2px; margin-bottom: 3px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">수정</button>
+												<br>
+												<button type="button"
 													onclick="location.href='${contextPath}/admin_removeMember.do?memId=${memberSearch.memId }'"
-													class="btn btn-dark">삭제</button></td>
+													class="btn btn-dark"
+													style="border-radius: 2px; margin-bottom: 3px; margin-top: 5px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">삭제</button></td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -294,7 +351,7 @@
 											style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black;">
 											<td scope="col"
 												style="height: 70px; display: table-cell; vertical-align: middle;"><input
-												type="checkbox" name="chk" value=""></td>
+												type="checkbox" name="RowCheck" value="${member.memId}"></td>
 											<td scope="col"
 												style="height: 70px; display: table-cell; vertical-align: middle;">${member.memId}</td>
 											<td scope="col"
@@ -310,8 +367,7 @@
 											<td scope="col"
 												style="height: 70px; display: table-cell; vertical-align: middle;">${member.memRegdate}</td>
 											<td scope="col"
-												style="height: 70px; display: table-cell; vertical-align: middle;"><input
-												type="hidden" value="${member.memId}" name="memId" />
+												style="height: 70px; display: table-cell; vertical-align: middle;">
 												<button type="button" class="btn btn-dark"
 													onclick="location.href='${contextPath}/admin/viewMember.do?memId=${member.memId }'"
 													style="border-radius: 2px; margin-bottom: 3px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">수정</button>

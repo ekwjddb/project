@@ -59,5 +59,11 @@ public class AdminServiceImpl implements AdminService {
 		return adminDAO.updateAdminMember(modmember);
 	}
 
+	@Override
+	public void admin_selectremoveMember(String memId) throws Exception {
+		adminDAO.deleteSelectRemoveMember(memId);
+		
+	}
+
 
 }

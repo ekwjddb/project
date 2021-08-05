@@ -422,16 +422,6 @@ public class MemberControllerImpl implements MemberController {
 		return mav;
 
 	}
-	//관리자 회원 삭제
-	@RequestMapping(value = "/admin_removeMember.do", method = RequestMethod.GET)
-	private ModelAndView admin_removeMember(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response)  throws Exception{
-		ModelAndView mav = new ModelAndView();
-		memberVO = memberService.admin_removeMember(memId);
-		mav.addObject("memId", memberVO);
-		System.out.println(memId);
-		mav.setViewName("redirect:/admin_listmember.do");
-		return mav;
-	}
 	// 비밀번호 찾기
 	@RequestMapping(value = "/find_pw.do", method = RequestMethod.POST)
 	public void find_pw(@ModelAttribute MemberVO memberVO,HttpServletRequest request, HttpServletResponse response) throws Exception{

@@ -21,5 +21,7 @@ public interface AdminService {
 
 	public int admin_modMember(MemberVO modmember) throws DataAccessException;
 
+	public void admin_selectremoveMember(String memId) throws Exception ;
+
 
 }

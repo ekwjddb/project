@@ -57,4 +57,10 @@ public class AdminDAOImpl implements AdminDAO {
 		return result;
 	}
 
+	@Override
+	public void deleteSelectRemoveMember(String memId) throws DataAccessException {
+		sqlSession.delete("mapper.admin.deleteSelectRemoveMember",memId);
+		
+	}
+
 }
