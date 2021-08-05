@@ -51,29 +51,28 @@
 	<!-- best상품 조회 -->
 	<select id="selectBestList" resultMap="proResult">
 	<![CDATA[
-		select productNum, count(*) ,productPrice
-        from(
-        select productNum,MemOrderNum,productPrice
-        from simple.memberorder
-        union
-        select productNum,nonMemOrderNum,nonMemOrderSeqNum
-        from simple.nonmemberorder) as best
-        group by productNum limit 3;
+		select productNum, count(*) ,productPrice, productName
+        from( select productNum,MemOrderNum,productPrice,productName
+              from simple.memberorder
+              union
+              select productNum,nonMemOrderNum,nonMemOrderSeqNum,productName
+			  from simple.nonmemberorder) as best
+              group by productNum order by  count(*)desc limit 3 ;
 	]]>
 	</select>
 	<select id="selectProductList" resultMap="proResult"
 		parameterType="java.util.Map">
       <![CDATA[
-          select *
-          from simple.product
-          where productNum in
+          select p.productNum, productName, productPrice, productImage, count(f.productNum) as favoriteCount
+          from simple.product as p left join simple.favoriteproduct as f on p.productNum=f.productNum
+          where p.productNum in
           
       ]]>
 		<foreach item="item" collection="list" open="(" separator=","
 			close=")">
 			#{item.productNum}
 		</foreach>
-
+        group by p.productNum ;
 	</select>
 
 	<!-- 상품 조회 -->
@@ -81,7 +80,7 @@
 	<select id="selectAllProductList" resultMap="proResult"
 		parameterType="java.util.Map">
 
-		<if test='subsort == "x"'>
+		<if test='subsort == "x"' >
 			select p.productNum, productName, productPrice,
 			productImage,
 			count(f.productNum) as favoriteCount
@@ -205,19 +204,30 @@
 	<select id="selectProductBySearchWord" resultMap="proResult"
 		parameterType="String">
      <![CDATA[
-				select * from simple.product
-		    where productName like CONCAT('%', #{searchWord}, '%')
-		    order by category;
+     select p.productNum, productName, productPrice,
+			productImage,
+			count(f.productNum) as favoriteCount
+			from simple.product
+			as p left join simple.favoriteproduct as f on
+			p.productNum=f.productNum 
+			where productName like CONCAT('%', #{searchWord}, '%')
+			group by p.productNum ;
+			
 		]]>
 	</select><!-- 검색창에 입력한 단어를 가져와 그 단어가 포함된 상품 제목 조회 -->
 
 	<select id="selectKeywordSearch" resultType="String"
 		parameterType="String">
 	    <![CDATA[
-        select productName from simple.product 
-        where         
-        productName like CONCAT('%', #{keyword}, '%')
-        order by category;
+	     select p.productNum, productName, productPrice,
+			productImage,
+			count(f.productNum) as favoriteCount
+			from simple.product
+			as p left join simple.favoriteproduct as f on
+			p.productNum=f.productNum 
+			where productName like CONCAT('%', #{keyword}, '%')
+			group by p.productNum ;
+
 		]]>
 	</select> <!-- 검색창에 입력한 키워드를 가져와 그 키워드가 포함된 상품 제목 조회 -->
 
