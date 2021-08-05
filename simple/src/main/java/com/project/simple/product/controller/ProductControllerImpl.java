@@ -2,6 +2,7 @@ package com.project.simple.product.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -194,7 +195,7 @@ public class ProductControllerImpl implements ProductController {
 				ProductMap.put("sort", sort);
 				ProductMap.put("subsort", subsort);
 				List<ProductVO> productList = productService.listProduct(ProductMap);
-				mav.addObject("productList", productList);
+				mav.addObject("productList", productList);				
 				mav.setViewName("product/listProduct_bed");
 				return mav;
 			} else if (subsort != null) {
@@ -533,17 +534,36 @@ public class ProductControllerImpl implements ProductController {
 		quickListAll=(ArrayList<ProductVO>)session.getAttribute("quickListAll");
 		
 		if(quickList!=null){//최근 본 상품이 있는 경우
+			
 			if(quickList.size() < 2){ //미리본 상품 리스트에 상품개수가 2개 이하인 경우
 				for(int i=0; i<quickList.size();i++){
 					ProductVO productBean=(ProductVO)quickList.get(i);
-					if(productNum.equals(productBean.getproductNum())){
+					if(productNum.equals(productBean.getproductNum())){					
 						already_existed=true;
 						break;
 					}
 				}//상품 목록을 가져와 이미 존재하는 상품인지 비교
 				if(already_existed==false){
 					quickList.add(productVO);
+					
 				}//already_existed가 false이면 상품 정보를 목록에 저장
+			}
+			else {
+				for(int i=0; i<quickList.size();i++){
+					ProductVO productBean=(ProductVO)quickList.get(i);
+					if(productNum.equals(productBean.getproductNum())){					
+						already_existed=true;
+						break;
+					}
+				}//상품 목록을 가져와 이미 존재하는 상품인지 비교
+				if(already_existed==false){
+					for(int i=0; i<2;i++) {
+						Collections.reverse(quickList);
+					quickList.set(i,productVO);}
+					
+				}//already_existed가 false이면 상품 정보를 목록에 저장
+				
+			
 			}
 			
 		}else{
@@ -568,7 +588,10 @@ public class ProductControllerImpl implements ProductController {
 				}//상품 목록을 가져와 이미 존재하는 상품인지 비교
 				if(already_existed==false){
 					quickListAll.add(productVO);
+					Collections.reverse(quickList);
+					
 				}//already_existed가 false이면 상품 정보를 목록에 저장
+			
 		
 		}else{
 			quickListAll =new ArrayList<ProductVO>();
@@ -595,24 +618,47 @@ public class ProductControllerImpl implements ProductController {
 	
 		return mav;
 	}
-	/*@Override
-	@RequestMapping(value = "product/listProductReview.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView listProductReview(Criteria cri, HttpServletRequest request, HttpServletResponse response)
+	
+	//상품 상세페이지 상품문의 글 등록
+	@Override
+	@RequestMapping(value = "/addNewQuestion.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity addNewRetrun(@ModelAttribute("question") ProductVO question, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		String viewName = (String) request.getAttribute("viewName");
-		List<ProductVO> productReviewList = productService.listProductReview(cri);
-		int productReviewCount = productService.productReviewCount();
-		ModelAndView mav = new ModelAndView(viewName);
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(productReviewCount);
-		int pageNum = pageMaker.getCri().getPage();
-		mav.addObject("productReviewList", productReviewList);
-		mav.addObject("pageMaker", pageMaker);
-		mav.addObject("pageNum", pageNum);
+
+		request.setCharacterEncoding("utf-8");
+
+		HttpSession session = request.getSession();
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		String memId = memberVO.getmemId();
 		
-		return mav;
-	}*/
+		question.setMemId(memId);
+		String productNum = question.getproductNum();
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			productService.addNewQuestion(question);
+
+			message = "<script>";
+			message += " alert('글 등록을 완료하였습니다.');";
+			message += "  location.href='" + request.getContextPath() + "/mypage_07.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해주세요');";
+			message += "  location.href='" + request.getContextPath() + "/mypage/returnWrite.do?productNum="
+					+ productNum  + "';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
 
 
 }

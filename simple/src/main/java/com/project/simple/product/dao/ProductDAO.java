@@ -31,4 +31,6 @@ public interface ProductDAO {
 	public List<ProductVO> selectBestList()throws DataAccessException;
 	public List<ProductVO> selectProductList(List<ProductVO> bestList) throws DataAccessException;
 	
+	public void insertNewQuestion(ProductVO question) throws DataAccessException;
+	
 }

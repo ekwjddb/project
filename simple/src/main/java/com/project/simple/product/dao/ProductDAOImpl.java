@@ -22,6 +22,7 @@ public class ProductDAOImpl implements ProductDAO{
 	public List<ProductVO> selectAllProductList(Map<String, Object>ProductMap) throws DataAccessException{
 		
 		List<ProductVO> productList = sqlSession.selectList("mapper.product.selectAllProductList", ProductMap);
+		System.out.println(productList);
 		return productList;
 	}
 	@Override
@@ -126,6 +127,12 @@ public class ProductDAOImpl implements ProductDAO{
 		List<ProductVO> myProductList;
 		myProductList = sqlSession.selectList("mapper.product.selectProductList",bestList);
 		return myProductList;
+	}
+	
+	@Override
+	public void insertNewQuestion(ProductVO question) throws DataAccessException {
+		sqlSession.insert("mapper.product.insertNewQuestion", question);
+
 	}
 	
 

@@ -221,34 +221,8 @@
 		style="padding-top: 100px;">
 
 		<div class="container">
-			<ul class="snip1284" style="padding-left: 0px; margin-bottom: 30px;">
-				<li><a
-					onclick="location.href='${contextPath}/product/admin_listProduct.do'"
-					data-hover="상품관리"
-					style="font-size: 20px; border: none; color: #5a5a5a; margin-right: 100px; cursor: pointer; background-color: white; margin-left: 20px; padding-bottom: 0px;">상품관리</a></li>
-
-
-				<li><a
-					onclick="location.href='${contextPath}/product/add_product.do'"
-					data-hover="상품등록"
-					style="font-size: 20px; border: none; color: #5a5a5a; margin-right: 100px; cursor: pointer; background-color: white; padding-bottom: 0px;">상품등록</a></li>
-
-
-				<li class="current"><a
-					onclick="location.href='${contextPath}/admin_listmember.do'"
-					data-hover="회원관리"
-					style="font-size: 20px; border: none; color: #5a5a5a; margin-right: 100px; cursor: pointer; background-color: white; padding-bottom: 0px;">회원관리</a></li>
-
-
-				<li><a
-					onclick="location.href='${contextPath}/board/listNotice.do'"
-					data-hover="게시판관리"
-					style="font-size: 20px; border: none; color: #5a5a5a; margin-right: 100px; background-color: white; cursor: pointer; padding-bottom: 0px;">게시판관리</a></li>
-				<li><a
-					onclick="location.href='${contextPath}/admin_listorder.do'"
-					data-hover="주문관리"
-					style="font-size: 20px; border: none; color: #5a5a5a; background-color: white; cursor: pointer; padding-bottom: 0px;">주문관리</a></li>
-			</ul>
+			<jsp:include page="/WEB-INF/views/common/admin_topmenu.jsp"
+				flush="false" />
 
 
 			<form name="memberSearch"
@@ -266,8 +240,12 @@
 						<option value="memAdr">주소</option>
 						<option value="logintype">회원유형</option>
 					</select>
+					<div
+						style="font-size: 25px; font-weight: bold; margin-left: 18px; padding-top: 13px; float: left;">
+						<a style="color: #7e9c8c;">회원조회</a>
+					</div>
 					<button type="button" 
-						style="float: left; border-radius: 2px; margin-bottom: 3px; margin-top: 25px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;"
+						style="float: left; border-radius: 2px; margin-bottom: 3px; margin-right:5px; margin-left:5px; margin-top: 22px; background-color: white; color: gray; border: 1px solid #eeeeee; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;"
 						class="btn-secondary btn-xs" onclick="deleteValue();">선택삭제</button>
 
 				</div>

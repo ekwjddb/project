@@ -55,7 +55,20 @@ public class FavoriteDAOImpl implements FavoriteDAO{
 		
 	}
 
+	@Override
+	public void deleteRemoveFavorite(FavoriteVO favoriteVO) throws DataAccessException {
+		sqlSession.delete("mapper.favorite.deleteRemoveFavorite",favoriteVO);
+		
+	}
 	
+	
+	//관심상품 count
+	public int selectFavoriteCount(String productNum) throws DataAccessException{
+		int favoriteCount = sqlSession.selectOne("mapper.favorite.selectFavoriteCount",productNum);
+		return favoriteCount;
+	}
+
+
 
 
 

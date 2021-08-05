@@ -33,6 +33,7 @@ public interface ProductService {
 	public int productSearchCount(Map<String, Object> search) throws Exception;
 	public Map<String, List> BestProductList()throws Exception;
 	
+	public void addNewQuestion(ProductVO question) throws Exception;
 
 
 }

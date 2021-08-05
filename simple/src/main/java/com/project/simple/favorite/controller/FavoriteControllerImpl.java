@@ -60,7 +60,8 @@ public class FavoriteControllerImpl implements FavoriteController {
 		favoriteVO.setproductNum(productNum);
 		boolean isAreadyExisted = favoriteService.findFavoriteProduct(favoriteVO); // 상품번호가 관심상품테이블에 있는지 조회
 		// System.out.println("isAreadyExisted:"+isAreadyExisted);
-		if (isAreadyExisted == true) {// 상품 번호가 이미 관심상품 테이블에 있으면 이미 추가되었다는 메시지 전송
+		if (isAreadyExisted == true) {// 상품 번호가 이미 관심상품 테이블에 있으면 이미 추가되었다는 메시지 전송		
+			favoriteService.removeFavorite(favoriteVO);//상품 상세페이지에서 찜 제거
 			return "already_existed";
 		} else {// 없으면 관심상품 테이블에 추가
 			favoriteService.addProductInFavorite(favoriteVO);
@@ -90,7 +91,7 @@ public class FavoriteControllerImpl implements FavoriteController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/favoritInquiry.do", method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/favoriteInquiry.do", method = RequestMethod.GET, produces = "application/text; charset=utf8")
 	public @ResponseBody String favoritInquiry(@RequestParam("productNum") String productNum,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
@@ -105,10 +106,19 @@ public class FavoriteControllerImpl implements FavoriteController {
 		// System.out.println("isAreadyExisted:"+isAreadyExisted);
 		if (isAreadyExisted == true) {// 상품 번호가 이미 관심상품 테이블에 있으면 이미 추가되었다는 메시지 전송
 			return "already_existed";
-		} else {// 없으면 존재하지 않는다는 메세지 전송
-			
+		} else {// 없으면 존재하지 않는다는 메세지 전송			
 			return "not_existed";
 		}
 	}
+	@RequestMapping(value = "/favoriteCount.do", method = RequestMethod.GET, produces = "application/text; charset=utf8")
+	public @ResponseBody String favoriteCount(@RequestParam("productNum") String productNum,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		int favoriteCount = favoriteService.favoriteCount(productNum); // 상품번호가 관심상품테이블에 있는지 조회
+		 String fvaoriteCount1 = Integer.toString(favoriteCount);
+		return fvaoriteCount1;
+		
+	}
+
 
 }
