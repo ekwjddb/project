@@ -180,7 +180,7 @@
 		});
 	});
 	function deleteValue(){
-		var url="admin_selectremoveMember.do"; //Controller로 보내고자 하는 url
+		var url="${contextPath}/admin_selectremoveMember.do"; //Controller로 보내고자 하는 url
 		var valueArr = new Array();
 		var list = $("input[name='RowCheck']");
 		for(var i = 0; i < list.length; i++){
@@ -191,9 +191,9 @@
 			if(valueArr.length == 0){
 				alert("선택된 회원이 없습니다.");
 			}else{
-				var chk = confirm("정말 삭제하시겠습니까?");
+				if(confirm("정말 삭제하시겠습니까?")){
 				$.ajax({
-					url : "admin_selectremoveMember.do", //전송 URL
+					url : "${contextPath}/admin_selectremoveMember.do", //전송 URL
 					type: 'POST',
 					traditional : true,
 					data : {
@@ -202,17 +202,62 @@
 					success: function(jdata){
 						if(jdata = 1){
 							alert("회원을 삭제하셨습니다.");
-							location.replace("admin_listmember.do"); //admin_listmember로 페이지 새로고침
+							location.href = '${contextPath}/admin_listmember.do'; //admin_listmember로 페이지 새로고침
 						}else{
 							alert("회원삭제에 실패하셨습니다.");
 						}	
 					}
 
 				});
+				}else{
+					return false;
+				}
 			}
 	}
+	
+	
 </script>
-
+  <script type="text/javascript">
+		function listMemberdelete() {
+			var memId=$("#memId").val();
+			if(confirm("정말 삭제하시겠습니까?")){
+				$.ajax({
+				url : "${contextPath}/admin_removeMember.do",
+				type : "POST",
+				data : {
+						memId : memId
+					},
+				success : function(result) {
+				    alert("회원이 삭제되었습니다");
+					location.replace("${contextPath}/admin_listmember.do"); //admin_listmember로 페이지 새로고침
+					},
+				});
+			}else{
+					 return false;
+				  }
+		  }
+		
+		function listMemberdelete1() {
+			var memId=$("#memId1").val();
+			if(confirm("정말 삭제하시겠습니까?")){
+				$.ajax({
+				url : "${contextPath}/admin_removeMember.do",
+				type : "POST",
+				data : {
+						memId : memId
+					},
+				success : function(result) {
+				    alert("회원이 삭제되었습니다");
+				    location.href = '${contextPath}/admin_listmember.do'; //admin_listmember로 페이지 새로고침
+					},
+				});
+			}else{
+					 return false;
+				  }
+		  }
+		
+			  
+ </script>
 </head>
 <title>회원관리창</title>
 <body>
@@ -235,6 +280,8 @@
 						style="margin-top: 21px; float: right; height: 34px; border: 1px solid #dcdcdc; font-size: 14px; margin-right: 5px;"
 						name="search"> <select name="searchType"
 						style="font-size: 14px; margin-bottom: 10px; margin-right: 5px; float: right; width: 80px; height: 34px; border: 1px solid #dcdcdc; margin-top: 21px;">
+						<option value="memId">아이디</option>
+						<option value="memName">이름</option>
 						<option value="memEmail">이메일</option>
 						<option value="memPhoneNum">전화번호</option>
 						<option value="memAdr">주소</option>
@@ -285,7 +332,7 @@
 										<tr
 											style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black;">
 											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">
-											<input type="checkbox" name="chk" value=""></td>
+											<input type="checkbox" name="RowCheck" id="memId1" value="${memberSearch.memId}"></td>
 											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memId}</td>
 											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memName }</td>
 											<td scope="col" style="height: 70px; display: table-cell; vertical-align: middle;">${memberSearch.memEmail}</td>
@@ -301,7 +348,7 @@
 													style="border-radius: 2px; margin-bottom: 3px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">수정</button>
 												<br>
 												<button type="button"
-													onclick="location.href='${contextPath}/admin_removeMember.do?memId=${memberSearch.memId }'"
+													onclick="listMemberdelete1()"
 													class="btn btn-dark"
 													style="border-radius: 2px; margin-bottom: 3px; margin-top: 5px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">삭제</button></td>
 										</tr>
@@ -329,7 +376,7 @@
 											style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black;">
 											<td scope="col"
 												style="height: 70px; display: table-cell; vertical-align: middle;"><input
-												type="checkbox" name="RowCheck" value="${member.memId}"></td>
+												type="checkbox" name="RowCheck" id="memId" value="${member.memId}"></td>
 											<td scope="col"
 												style="height: 70px; display: table-cell; vertical-align: middle;">${member.memId}</td>
 											<td scope="col"
@@ -351,9 +398,10 @@
 													style="border-radius: 2px; margin-bottom: 3px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">수정</button>
 												<br>
 												<button type="button"
-													onclick="location.href='${contextPath}/admin_removeMember.do?memId=${member.memId }'"
+													onclick="listMemberdelete()"
 													class="btn btn-dark"
 													style="border-radius: 2px; margin-bottom: 3px; margin-top: 5px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">삭제</button>
+											
 											</td>
 										</tr>
 

@@ -154,8 +154,9 @@ public class AdminControllerImpl implements AdminController {
 	
 	}
 	//관리자 회원 삭제
-	@RequestMapping(value = "/admin_removeMember.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin_removeMember.do",method = { RequestMethod.GET, RequestMethod.POST })
 	private ModelAndView admin_removeMember(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response)  throws Exception{
+	
 		ModelAndView mav = new ModelAndView();
 		memberVO = memberService.admin_removeMember(memId);
 		mav.addObject("memId", memberVO);
@@ -164,7 +165,7 @@ public class AdminControllerImpl implements AdminController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/admin_selectremoveMember.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin_selectremoveMember.do",method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView admin_selectremoveMember(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		

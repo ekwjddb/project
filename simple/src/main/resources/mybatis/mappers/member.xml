@@ -173,6 +173,18 @@
 			select *
 			from simple.member 
 			where
+			<if test="searchType=='memId' and search != null and search != '' ">
+
+				memId like CONCAT('%', #{search}, '%')
+			
+
+			</if>
+			<if test="searchType=='memName' and search != null and search != '' ">
+
+				memName like CONCAT('%', #{search}, '%')
+			
+
+			</if>
 			<if test="searchType=='memEmail' and search != null and search != '' ">
 
 				memEmail like CONCAT('%', #{search}, '%')
@@ -214,6 +226,18 @@
 			select count(*) 
 			from simple.member 
 			where
+				<if test="searchType=='memId' and search != null and search != '' ">
+
+				memId like CONCAT('%', #{search}, '%')
+			
+
+			</if>
+			<if test="searchType=='memName' and search != null and search != '' ">
+
+				memName like CONCAT('%', #{search}, '%')
+			
+
+			</if>
 			<if test="searchType=='memEmail' and search != null and search != '' ">
 
 				memEmail like CONCAT('%', #{search}, '%')
