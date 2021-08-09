@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 
 import com.project.simple.cart.vo.CartVO;
 import com.project.simple.member.vo.MemberVO;
+import com.project.simple.mypage.vo.MypageVO;
 import com.project.simple.order.dao.OrderDAO;
 import com.project.simple.order.vo.OrderVO;
 import com.project.simple.page.Criteria;
@@ -68,6 +69,12 @@ public class OrderServiceImpl implements OrderService {
 	
 	public OrderVO findMyOrder(String order_id) throws Exception{
 		return orderDAO.findMyOrder(order_id);
+	}
+
+	@Override
+	public List<OrderVO> memOrderNumList(int memOrderNum) throws Exception {
+		List<OrderVO> orderVO = orderDAO.selectmemOrderList(memOrderNum);
+		return orderVO;
 	}
 
 }

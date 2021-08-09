@@ -55,11 +55,27 @@
 
 	<select id="selectAllOrderList" resultMap="orderResult">
 	<![CDATA[
-		select * from simple.memberorder order by memOrderDate desc
+		select * from simple.memberorder 
+		group by memOrderNum
+		order by memOrderDate desc
 		limit #{pageStart}, #{perPageNum};
 	]]>
 	</select>
+	
+     <!-- 주문 상품 정보 -->
+	<select id="selectmemOrderList" resultType="orderVO" parameterType="int"> 
+	<![CDATA[
+			
 
+		 select o.memOrderSeqNum, o.memId,o.memOrderDate, purchaseConfirm, reviewConfirm, returnConfirm,  o.memOrderSeqNum, productCnt, option1Name, option2Name, option1value, option2value, p.productImage, p.productPrice, p.productName, p.productNum, d.deliveryStatus ,memSpName,memSpAdr,memSpPhoneNum1,memSpPhoneNum2,memOrderMsg,memDepositorName
+    ,memPaymentMethod, totalPrice , memPwd, memEmail, memAdr,memPhoneNum,memName
+		from  simple.memberOrder as o left join simple.member as m on o.memId = m.memId join  simple.product as p on o.productNum=p.productNum 
+		join  simple.memdelivery as d on o.memOrderSeqNum=d.memOrderSeqNum 
+			where memOrderNum = #{memOrderNum} order by memOrderSeqNum desc;
+			
+
+	]]>
+	</select>
 
 
 

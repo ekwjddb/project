@@ -18,6 +18,7 @@ public interface OrderService {
 	public void addNewOrder(OrderVO orderVO) throws Exception;
 	public OrderVO findMyOrder(String order_id) throws Exception;
 	public OrderVO selectcartlist(String memCartId) throws Exception;
+	public List<OrderVO> memOrderNumList(int memOrderNum) throws Exception;
 
 	
 	

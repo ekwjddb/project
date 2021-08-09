@@ -130,11 +130,8 @@
 					<tr align="center"
 						style="background-color: #eeeeee; color: black; border-top: 1px solid #7e9c8c; border-bottom: 1px solid #c6c8ca; font-size: 14px;">
 						<td scope="col" style="width: 50px;">선택</td>
-						<td scope="col" style="width: 60px;">주문고유번호</td>
 						<td scope="col" style="width: 60px;">주문번호</td>
 						<td scope="col" style="width: 60px;">아이디</td>
-						<td scope="col" style="width: 120px;">상품명</td>
-						<td scope="col" style="width: 150px;">상품옵션</td>
 						<td scope="col" style="width: 1px;">가격</td>
 						<td scope="col" style="width: 100px;">전화번호</td>
 						<td scope="col" style="width: 130px;">주소</td>
@@ -161,11 +158,8 @@
 											style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black; ">
 											<th scope="col" style="vertical-align: middle;"><input
 												type="checkbox" name="chk" value=""></th>
-											<th scope="col" style="vertical-align: middle; font-weight: normal;"></th>
 											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.memOrderNum}</th>
 											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.memId}</th>
-											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.productName}</th>
-											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.option1name}:${orderSearch.option1value}<br>${orderSearch.option2name}:${orderSearch.option2value}</th>
 											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.totalPrice}원</th>
 											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.memSpPhoneNum1}</th>
 											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.memSpAdr}</th>
@@ -203,15 +197,12 @@
 									<form action="${contextPath}/admin/viewOrder.do" method="post">
 										<c:forEach var="orders" items="${ordersList}">
 
-											<tr
+											<tr 
 												style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black;">
 												<th scope="col" style="vertical-align: middle;"><input
 													type="checkbox" name="chk" value=""></th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memOrderSeqNum}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memOrderNum}</th>
+												<th onclick="location.href='${contextPath}/admin_listorder/detailorder.do?memOrderNum=${orders.memOrderNum}'" scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memOrderNum}</th>
 												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memId}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.productName}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.option1name}:${orders.option1value}<br>${orders.option2name}:${orders.option2value}</th>
 												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.totalPrice}원</th>
 												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memSpPhoneNum1}</th>
 												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memSpAdr}</th>
