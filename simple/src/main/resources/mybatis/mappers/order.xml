@@ -36,6 +36,7 @@
 		<result property="nonMemDepositorName" column="nonMemDepositorName" />
 		<result property="nonMemPaymentMethod" column="nonMemPaymentMethod" />
 		<result property="CurrentStatus" column="CurrenStatus" />
+		<result property="memOrderSeqNum" column="memOrderSeqNum" />
 	</resultMap>
 	
 	
@@ -64,7 +65,7 @@
 
 	<select id="orderSearchList" resultMap="orderResult">
 			select *
-			from memberorder 
+			from simple.memberorder 
 			where
 			<if test="searchType=='memId' and search != null and search != '' ">
 				memId like CONCAT('%', #{search}, '%')			
@@ -87,7 +88,6 @@
 	<select id="orderSearchCount" resultType="int"
 		parameterType="java.util.Map">
 			select count(*) 
-			from memberorder 
 			where
 			<if test="searchType=='memId' and search != null and search != '' ">
 				memId like CONCAT('%', #{search}, '%')

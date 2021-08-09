@@ -366,7 +366,24 @@ public class OrderControllerImpl implements OrderController {
 
 		return mav;
 	}
+	/*
+	//관리자 주문내역 상세보기
+		@RequestMapping(value = "/admin_listorder/detailorder.do", method = RequestMethod.GET)
+		public ModelAndView viewMyOrderInfo(@RequestParam("memOrderSeqNum") int memOrderSeqNum, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			String viewName = (String) request.getAttribute("viewName");
+			HttpSession session = request.getSession();
 
+			List<MypageVO> myOrderList = mypageService.viewMyOrderInfo(memOrderNum);
+			mypageVO = mypageService.viewMyOrderInfoMem(memOrderSeqNum);
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName(viewName);
+			mav.addObject("memOrderNum", myOrderList);
+			mav.addObject("memOrderSeqNum", mypageVO);
+
+			return mav;
+		}
+*/
 	@Override
 	@RequestMapping(value = "/admin_listorder/orderSearch.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView orderSearch(@RequestParam("search") String search,

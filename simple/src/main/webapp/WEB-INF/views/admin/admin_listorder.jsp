@@ -130,6 +130,7 @@
 					<tr align="center"
 						style="background-color: #eeeeee; color: black; border-top: 1px solid #7e9c8c; border-bottom: 1px solid #c6c8ca; font-size: 14px;">
 						<td scope="col" style="width: 50px;">선택</td>
+						<td scope="col" style="width: 60px;">주문고유번호</td>
 						<td scope="col" style="width: 60px;">주문번호</td>
 						<td scope="col" style="width: 60px;">아이디</td>
 						<td scope="col" style="width: 120px;">상품명</td>
@@ -160,6 +161,7 @@
 											style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black; ">
 											<th scope="col" style="vertical-align: middle;"><input
 												type="checkbox" name="chk" value=""></th>
+											<th scope="col" style="vertical-align: middle; font-weight: normal;"></th>
 											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.memOrderNum}</th>
 											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.memId}</th>
 											<th scope="col" style="vertical-align: middle; font-weight: normal;">${orderSearch.productName}</th>
@@ -178,6 +180,9 @@
 													class="btn btn-dark"
 													style="border-radius: 2px; margin-bottom: 3px; margin-top: 5px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">삭제</button>
 											</th>
+											</tr>
+											
+											
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
@@ -196,27 +201,28 @@
 								</c:when>
 								<c:otherwise>
 									<form action="${contextPath}/admin/viewOrder.do" method="post">
-										<c:forEach var="ordersList" items="${ordersList}">
+										<c:forEach var="orders" items="${ordersList}">
 
 											<tr
 												style="border-bottom: 1px solid #c6c8ca; background-color: white; color: black;">
 												<th scope="col" style="vertical-align: middle;"><input
 													type="checkbox" name="chk" value=""></th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${ordersList.memOrderNum}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${ordersList.memId}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${ordersList.productName}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${ordersList.option1name}:${ordersList.option1value}<br>${ordersList.option2name}:${ordersList.option2value}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${ordersList.totalPrice}원</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${ordersList.memSpPhoneNum1}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${ordersList.memSpAdr}</th>
-												<th scope="col" style="vertical-align: middle; font-weight: normal;">${ordersList.memOrderDate}</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memOrderSeqNum}</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memOrderNum}</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memId}</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.productName}</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.option1name}:${orders.option1value}<br>${orders.option2name}:${orders.option2value}</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.totalPrice}원</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memSpPhoneNum1}</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memSpAdr}</th>
+												<th scope="col" style="vertical-align: middle; font-weight: normal;">${orders.memOrderDate}</th>
 												<th scope="col" style="vertical-align: middle; font-weight: normal;"><input
-													type="hidden" value="${member.memId}" name="memId" />
+													type="hidden" value="" name="memId" />
 													<button type="submit" class="btn btn-dark"
 														style="border-radius: 2px; margin-bottom: 3px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">수정</button>
 													<br>
 													<button type="button"
-														onclick="location.href='${contextPath}/admin_removeMember.do?memId=${member.memId }'"
+														onclick="location.href=''"
 														class="btn btn-dark"
 														style="border-radius: 2px; margin-bottom: 3px; margin-top: 5px; background-color: white; color: gray; border: 1px solid #7e9c8c; border-radius: 2px; width: 70px; height: 30px; font-size: 14px;">삭제</button>
 												</th>

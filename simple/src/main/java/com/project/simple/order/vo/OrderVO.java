@@ -1,17 +1,13 @@
 package com.project.simple.order.vo;
 
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.Date;
-
 import org.springframework.stereotype.Component;
 
 
 @Component("orderVO")
 
 public class OrderVO {
+	
+	private int memOrderSeqNum;
 	
 	//공통변수
 	private String productNum;
@@ -88,6 +84,13 @@ public class OrderVO {
 		this.productName = productName;
 	}
 	
+	
+	public int getMemOrderSeqNum() {
+		return memOrderSeqNum;
+	}
+	public void setMemOrderSeqNum(int memOrderSeqNum) {
+		this.memOrderSeqNum = memOrderSeqNum;
+	}
 	public String getMemSpPhoneNum1() {
 		return memSpPhoneNum1;
 	}
