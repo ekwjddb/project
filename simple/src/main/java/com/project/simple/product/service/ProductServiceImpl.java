@@ -137,6 +137,15 @@ public class ProductServiceImpl implements ProductService{
 		productDAO.insertNewQuestion(question);
 	}
 	
+	@Override
+	public void removeQuestion(int productQuestionNum) throws Exception {
+		productDAO.deleteQuestion(productQuestionNum);
+	}
+	
+	@Override
+	public void modQuestion(ProductVO question) throws Exception {
+		productDAO.updateQuestion(question);
+	}
 
 
 	

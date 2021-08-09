@@ -2,6 +2,7 @@ package com.project.simple.admin.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -47,11 +48,31 @@ public class AdminServiceImpl implements AdminService {
 		return inquiryCount;
 	}
 	
-	//공지사항 수정하기
+	//공지사항 글 추가하기
+	@Override
+	public int addNewNotice(Map noticeMap) throws Exception{
+		return adminDAO.insertNewNotice(noticeMap);
+	}
+	
+	
+	//공지사항 수정하기폼
 	@Override
 	public ArticleVO noticeForm(int noticeNum) throws Exception {
 		ArticleVO articleVO = adminDAO.selectNotice(noticeNum);
 		return articleVO;
+	}
+	
+	
+	//공지사항 수정하기
+	@Override
+	public void modNotice(Map noticeMap) throws Exception {
+		adminDAO.updateNotice(noticeMap);
+	}
+	
+	//공지사항 삭제하기
+	@Override
+	public void removeNotice(int noticeNum) throws Exception {
+		adminDAO.deleteNotice(noticeNum);
 	}
 
 	@Override

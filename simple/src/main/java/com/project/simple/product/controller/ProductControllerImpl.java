@@ -38,7 +38,9 @@ import com.project.simple.member.vo.MemberVO;
 import com.project.simple.page.Criteria;
 import com.project.simple.page.PageMaker;
 import com.project.simple.product.page.Criteria1;
+import com.project.simple.product.page.Criteria2;
 import com.project.simple.product.page.PageMaker1;
+import com.project.simple.product.page.PageMaker2;
 import com.project.simple.product.service.ProductService;
 import com.project.simple.product.vo.ProductVO;
 
@@ -564,43 +566,54 @@ public class ProductControllerImpl implements ProductController {
 		}
 		return resEnt;
 	}
-           	@RequestMapping(value = "/product/viewProduct.do", method = RequestMethod.GET)
-	public ModelAndView viewProduct(@RequestParam("productNum") String productNum, Criteria cri,HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		Map<String, Object> productMap = new HashMap();
-		String viewName = (String) request.getAttribute("viewName");
-		HttpSession session=request.getSession();
-		productVO = productService.viewProduct(productNum);
-		Map<String, Object> option = (Map<String, Object>) productService.viewOptionvalue(productNum);
-		ModelAndView mav = new ModelAndView();
-		
-		int pageStart = cri.getPageStart();
-		int perPageNum = cri.getPerPageNum();
-		productMap.put("pageStart", pageStart);
-		productMap.put("perPageNum", perPageNum);
-		productMap.put("productNum", productNum);
-		List<ProductVO> productReviewList= productService.listProductReview(productMap);
-		int productReviewCount = productService.productReviewCount(productNum);
-		List<ProductVO> productQuestionList = productService.listProductQuestion(productMap);
-		int productQuestionCount = productService.productQuestionCount(productNum);
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(productReviewCount);
-		int pageNum = pageMaker.getCri().getPage();
+  	@RequestMapping(value = "/product/viewProduct.do", method = RequestMethod.GET)
+public ModelAndView viewProduct(@RequestParam("productNum") String productNum, Criteria cri,Criteria2 cri2, HttpServletRequest request,
+	HttpServletResponse response) throws Exception {
+Map<String, Object> productMap = new HashMap();
+String viewName = (String) request.getAttribute("viewName");
+HttpSession session=request.getSession();
+productVO = productService.viewProduct(productNum);
+Map<String, Object> option = (Map<String, Object>) productService.viewOptionvalue(productNum);
+ModelAndView mav = new ModelAndView();
 
-		addQuick(productNum,productVO,session);
-		mav.setViewName(viewName);
-		mav.addObject("option", option);
-		mav.addObject("product", productVO);
-		mav.addObject("productReviewList", productReviewList);
-		mav.addObject("productQuestionList", productQuestionList);
-		mav.addObject("pageMaker", pageMaker);
-		mav.addObject("pageNum", pageNum);
+int pageStart = cri.getPageStart();
+int perPageNum = cri.getPerPageNum();
+int pageStart2 = cri2.getPageStart2();
+int perPageNum2 = cri2.getPerPageNum2();
+productMap.put("pageStart", pageStart);
+productMap.put("perPageNum", perPageNum);
+productMap.put("pageStart2", pageStart2);
+productMap.put("perPageNum2", perPageNum2);
+productMap.put("productNum", productNum);
+List<ProductVO> productReviewList= productService.listProductReview(productMap);
+int productReviewCount = productService.productReviewCount(productNum);
+List<ProductVO> productQuestionList = productService.listProductQuestion(productMap);
+int productQuestionCount = productService.productQuestionCount(productNum);
+PageMaker pageMaker = new PageMaker();
+pageMaker.setCri(cri);
+pageMaker.setTotalCount(productReviewCount);
+int pageNum = pageMaker.getCri().getPage();
+
+PageMaker2 pageMaker2 = new PageMaker2();
+pageMaker2.setCri2(cri2);
+pageMaker2.setTotalCount2(productQuestionCount);
+int pageNum2 = pageMaker2.getCri2().getPage2();
+
+addQuick(productNum,productVO,session);
+mav.setViewName(viewName);
+mav.addObject("option", option);
+mav.addObject("product", productVO);
+mav.addObject("productReviewList", productReviewList);
+mav.addObject("productQuestionList", productQuestionList);
+mav.addObject("pageMaker", pageMaker);
+mav.addObject("pageNum", pageNum);
+mav.addObject("pageMaker2", pageMaker2);
+mav.addObject("pageNum2", pageNum2);
 
 
-		return mav;
+return mav;
 
-	}
+}
 
 
 
@@ -777,7 +790,7 @@ public class ProductControllerImpl implements ProductController {
 
 			message = "<script>";
 			message += " alert('글 등록을 완료하였습니다.');";
-			message += "  location.href='" + request.getContextPath() + "/mypage_07.do';";
+			message += "  location.href='" + request.getContextPath() + "/product/viewProduct.do?productNum="+ productNum  + "';";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 
@@ -785,8 +798,74 @@ public class ProductControllerImpl implements ProductController {
 
 			message = "<script>";
 			message += " alert('오류가 발생했습니다. 다시 시도해주세요');";
-			message += "  location.href='" + request.getContextPath() + "/mypage/returnWrite.do?productNum="
-					+ productNum  + "';";
+			message += "  location.href='" + request.getContextPath() + "/product/viewProduct.do?productNum="+ productNum  + "';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
+	
+	@Override
+	@RequestMapping(value = "/removeQuestion.do", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity removeQuestion(@RequestParam("productNum") String productNum, @RequestParam("productQuestionNum") int productQuestionNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		response.setContentType("text/html; charset-utf-8");
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			productService.removeQuestion(productQuestionNum);
+
+			message = "<script>";
+			message += " location.href='" + request.getContextPath() +"/product/viewProduct.do?productNum="+ productNum  + "';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 수정해주세요);";
+			message += " location.href='" + request.getContextPath() + "/product/viewProduct.do?productNum="+ productNum  + "';";
+					
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+
+	}
+	
+	@RequestMapping(value = "/modNewQuestion.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity modNewQuestion(@ModelAttribute("question") ProductVO question, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+	
+		request.setCharacterEncoding("utf-8");
+
+
+		String productNum = question.getproductNum();
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			productService.modQuestion(question);
+
+			message = "<script>";
+			message += " alert('글을 수정했습니다.');";
+			message += "  location.href='" + request.getContextPath() + "/product/viewProduct.do?productNum="+ productNum  + "';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해주세요');";
+			message += "  location.href='" + request.getContextPath() + "/product/viewProduct.do?productNum="+ productNum  + "';";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 			e.printStackTrace();

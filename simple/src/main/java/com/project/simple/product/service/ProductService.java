@@ -34,6 +34,8 @@ public interface ProductService {
 	public Map<String, List> BestProductList()throws Exception;
 	
 	public void addNewQuestion(ProductVO question) throws Exception;
+	public void removeQuestion(int productQuestionNum) throws Exception ;
+	public void modQuestion(ProductVO question) throws Exception;
 
 
 }

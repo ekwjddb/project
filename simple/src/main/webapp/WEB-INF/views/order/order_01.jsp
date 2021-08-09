@@ -11,9 +11,6 @@
 
 
 
-
-
-
 <style type="text/css">
 .table-light {
 	background: #F7F7F7;
@@ -29,105 +26,9 @@ h4 {
 }
 </style>
 <script type="text/javascript">
-	//주문자
-	function Check_Order() {
-		var form = document.CheckOrder;
-
-		if (form.user_name.value == "") {
-			alert("주문자정보의 이름을 입력하지 않았습니다.")
-			form.user_name.focus();
-			return false;
-		}
-
-		if (form.address1.value == "") {
-			alert("주문자정보의 주소를 입력하지 않았습니다.")
-			form.address1.focus();
-			return false;
-		}
-		if (form.phone1.value == "") {
-			alert("주문자정보의 연락처를 입력하지 않았습니다.")
-			form.phone1.focus();
-			return false;
-		}
-
-		if (form.phone2.value == "") {
-			alert("주문자정보의 연락처를 입력하지 않았습니다.")
-			form.phone2.focus();
-			return false;
-		}
-
-		for (var i = 0; i < form.phone2.value.length; i++) {
-			ch = form.phone2.value.charAt(i)
-			if (!(ch >= '0' && ch <= '9')) {
-				alert("주문자정보의 연락처는 숫자만 입력가능합니다.")
-				form.phone2.focus();
-				form.phone2.select();
-				return false;
-			}
-		}
-		if (form.phone3.value == "") {
-			alert("주문자정보의 연락처를 입력하지 않았습니다.")
-			form.phone3.focus();
-			return false;
-		}
-		for (var i = 0; i < form.phone3.value.length; i++) {
-			ch = form.phone3.value.charAt(i)
-			if (!(ch >= '0' && ch <= '9')) {
-				alert("주문자정보의 연락처는 숫자만 입력가능합니다.")
-				form.phone3.focus();
-				form.phone3.select();
-				return false;
-			}
-		}
-		if (form.user_SpName.value == "") {
-			alert("배송정보의 이름을 입력하지 않았습니다.")
-			form.user_Spname.focus();
-			return false;
-		}
-
-		if (form.address1_1.value == "") {
-			alert("배송정보의 주소를 입력하지 않았습니다.")
-			form.addr1.focus();
-			return false;
-		}
-		if (form.phone1_Sp.value == "") {
-			alert("배송정보의 연락처1을 입력하지 않았습니다.")
-			form.phone1_Sp.focus();
-			return false;
-		}
-		if (form.phone2_Sp.value == "") {
-			alert("배송정보의 연락처1을 입력하지 않았습니다.")
-			form.phone2_Sp.focus();
-			return false;
-		}
-
-		for (var i = 0; i < form.phone2_Sp.value.length; i++) {
-			ch = form.phone2_Sp.value.charAt(i)
-			if (!(ch >= '0' && ch <= '9')) {
-				alert("배송정보의 연락처1은 숫자만 입력가능합니다.")
-				form.phone2_Sp.focus();
-				form.phone2_Sp.select();
-				return false;
-			}
-		}
-		if (form.phone3_Sp.value == "") {
-			alert("배송정보의 연락처1을 입력하지 않았습니다.")
-			form.phone3_Sp.focus();
-			return false;
-		}
-		for (var i = 0; i < form.phone3_Sp.value.length; i++) {
-			ch = form.phone3_Sp.value.charAt(i)
-			if (!(ch >= '0' && ch <= '9')) {
-				alert("배송정보의 연락처1은 숫자만 입력가능합니다.")
-				form.phone3_Sp.focus();
-				form.phone3_Sp.select();
-				return false;
-			}
-		}
-
-		form.submit();
-
-	}
+	
+	
+	
 
 	function sameInfo(f) {
 		f.memSpName.value = f.memName.value;
@@ -143,10 +44,13 @@ h4 {
 		$(this).prop("checked", true);
 		$("form").submit();
 	})
-	
 </script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script>
+<script type="text/javascript">
 	//비회원 주문자 우편번호
 	function sample6_execDaumPostcode() {
 		new daum.Postcode(
@@ -267,13 +171,64 @@ h4 {
 	for (int i = 0; i < memPhoneNum.length; i++) {
 	}
 	%>
+	
+	
 
+	<script>
+	//유효성검사 후 주문결제진행
+	//PG사 연동(결제시스템 IMPORT)
+	function iamport() {
+		var IMP = window.IMP;
+		var form = document.CheckOrder;
+		if (form.memSpName.value == "") {
+			alert("주문자정보의 이름을 입력하지 않았습니다.")
+			form.user_name.focus();
+			return false;
+		}
+		
+		//가맹점 식별코드
+		IMP.init('imp44341689');
+		IMP.request_pay({
+			pg : 'inicis',
+			pay_method : 'card',
+			merchant_uid : 'merchant_' + new Date().getTime(),
+			name : '(주)SIMPLE', //결제창에서 보여질 이름
+			amount : ${totalPrice}, //실제 결제되는 가격
+			buyer_email : '<%=memEmail[0]%>@<%=memEmail[1]%>',
+			buyer_name : '${member.memName}',
+			buyer_tel : '<%=memPhoneNum[0]%>-<%=memPhoneNum[1]%>-<%=memPhoneNum[2]%>',
+			buyer_addr : '<%=memAdr[1]%> <%=memAdr[2]%>	',
+			buyer_postcode : '<%=memAdr[0]%>'
+		}, function(rsp) {
+			console.log(rsp);
+			if (rsp.success) {
+				var msg = '결제가 완료되었습니다.';
+				msg += '고유ID : ' + rsp.imp_uid;
+				msg += '상점 거래ID : ' + rsp.merchant_uid;
+				msg += '결제 금액 : ' + rsp.paid_amount;
+				msg += '카드 승인번호 : ' + rsp.apply_num;
+				var param = $("form[name=CheckOrder]").serialize();
+				$.ajax({
+					url : "addorderlist.do",
+					type : "POST",	
+					data : param
+				}).done(function(data){		
+					location.replace("${contextPath}/memberOrderResult.do?Price=${totalPrice}&point=${totalPrice}/10&memPaymentMethod=${pay_method}&memOrderNum="0");
+				})
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+			}
+			alert(msg);
+		});
+	}
+</script>
 	<!-- 타이틀 -->
 
 	<section class="ftco-section" style="padding-top: 100px;">
 
 		<div class="container">
-			<form name="CheckOrder" action="${contextPath}/addorderlist.do"
+			<form name="CheckOrder"  action="${contextPath}/addorderlist.do"
 				method="post">
 				<input type="hidden" name="totalPrice" value="${totalPrice}" />
 				<!-- 타이틀 끝 -->
@@ -334,14 +289,14 @@ h4 {
 								<th scope="col" width="150">가격</th>
 							</tr>
 						</thead>
-						
+
 						<c:forEach items="${orderlist}" var="orderlist" varStatus="status">
 							<tbody>
 								<tr class="tr1"
 									style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
 									<th scope="col" style="vertical-align: middle;"><img
-										src="${contextPath}/download_product.do?productNum=${orderlist.productNum}&productImage=${orderlist.productImage}" width=80
-										height=80></th>
+										src="${contextPath}/download_product.do?productNum=${orderlist.productNum}&productImage=${orderlist.productImage}"
+										width=80 height=80></th>
 									<th scope="col" style="vertical-align: middle;">${orderlist.productName}</th>
 									<th scope="col"
 										style="text-align: left; vertical-align: middle;">${orderlist.option1name}
@@ -559,11 +514,11 @@ h4 {
 				<br> <br>
 
 				<div style="text-align: center">
-					<button type="submit" class="btn btn-secondary"
-						onclick="Check_Order()"
-						style="padding-left: 10px; margin-left: 40px; background-color: #7e9c8c; color: white; border: none; border-radius: 2px; width: 130px; height: 45px;">결제하기</button>
+					<input type="button" class="btn btn-secondary" value="결제하기"
+						onclick="iamport();"
+						style="padding-left: 10px; margin-left: 40px; background-color: #7e9c8c; color: white; border: none; border-radius: 2px; width: 130px; height: 45px;">
 					&nbsp;&nbsp;
-					<button type="button" class="btn btn-secondary"
+					<button type="submit" class="btn btn-secondary"
 						onclick="location.href='/cart'"
 						style="padding-left: 10px; background-color: white; color: #7e9c8c; border: 1px solid #7e9c8c; border-radius: 2px; width: 130px; height: 45px;">취소하기</button>
 				</div>

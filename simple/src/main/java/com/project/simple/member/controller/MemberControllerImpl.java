@@ -56,7 +56,7 @@ public class MemberControllerImpl implements MemberController {
 	private MemberService memberService;
 	@Autowired
 	private MemberVO memberVO;
-	@Inject
+	@Autowired
 	BCryptPasswordEncoder pwdEncoder;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -617,9 +617,12 @@ public class MemberControllerImpl implements MemberController {
 		HttpSession session = request.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("memberPwd");
 		memberVO.setmemPwd(memPwd);
+		String pwd = memberVO.getmemPwd();
+		String memPwd1 = pwdEncoder.encode(pwd);
+		memberVO.setmemPwd(memPwd1);
 
 		ModelAndView mav = new ModelAndView();
-		System.out.println(memPwd);
+		System.out.println(memPwd1);
 		int result = 0;
 		result = memberService.newPassWord(memberVO);
 		System.out.println(result);

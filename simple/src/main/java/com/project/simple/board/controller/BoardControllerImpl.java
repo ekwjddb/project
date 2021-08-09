@@ -3,6 +3,7 @@ package com.project.simple.board.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +53,9 @@ public class BoardControllerImpl implements BoardController {
 
 	@Autowired
 	private MemberVO memberVO;
+	
+	@Autowired
+	BCryptPasswordEncoder pwdEncoder;
 
 	// 공지사항 리스트
 	@Override
@@ -448,6 +453,8 @@ public class BoardControllerImpl implements BoardController {
 			HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
 		String asCenterPwdConfirm = request.getParameter("asCenterPwdConfirm");
 		ModelAndView mav = new ModelAndView();
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		articleVO = boardService.viewAsCenter(asCenterNum);
 		String asCenterPwd = articleVO.getAsCenterPwd();
 		HttpSession session1 = request.getSession();
@@ -459,7 +466,8 @@ public class BoardControllerImpl implements BoardController {
 		}
 
 		else {
-			if (asCenterPwdConfirm.equals(asCenterPwd)) {
+			boolean pwdMatch = pwdEncoder.matches( asCenterPwdConfirm, asCenterPwd);
+			if (pwdMatch == true) {
 				String viewName = (String) request.getAttribute("viewName");
 				mav.setViewName(viewName);
 				mav.addObject("asCenter", articleVO);
@@ -467,7 +475,11 @@ public class BoardControllerImpl implements BoardController {
 				session.setAttribute("asCenterPwdConfirm", asCenterPwdConfirm);
 			} else {
 				redirectAttributes.addAttribute("asCenterNum", asCenterNum);
-				mav.setViewName("redirect:/board/pwdConfirm.do");
+				out.println("<script>");
+				out.println("alert('비밀번호가 일치하지 않습니다.');");
+				out.println("history.go(-1);");
+				out.println("</script>");
+				out.close();	
 			}
 
 			return mav;
@@ -510,7 +522,7 @@ public class BoardControllerImpl implements BoardController {
 		return mav;
 	}
 	
-	// 1:1 문의 글쓰기
+	// a/s센터 글쓰기
 	@Override
 	@RequestMapping(value = "/board/addNewAsCenter.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -531,8 +543,11 @@ public class BoardControllerImpl implements BoardController {
 		HttpSession session = multipartRequest.getSession();
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		String memId = memberVO.getmemId();
+		String asCenterPwd = multipartRequest.getParameter("asCenterPwd");
+		String asCenterPwd1 = pwdEncoder.encode(asCenterPwd);
 		asCenterMap.put("asCenterNum", 0);
 		asCenterMap.put("memId", memId);
+		asCenterMap.put("asCenterPwd", asCenterPwd1);
 		asCenterMap.put("asCenterFile", asCenterFile);
 
 		String message;
@@ -623,6 +638,10 @@ public class BoardControllerImpl implements BoardController {
 
 		String asCenterFile = uploadAsCenter(multipartRequest);
 		asCenterMap.put("asCenterFile", asCenterFile);
+		
+		String asCenterPwd = multipartRequest.getParameter("asCenterPwd");
+		String asCenterPwd1 = pwdEncoder.encode(asCenterPwd);
+		asCenterMap.put("asCenterPwd", asCenterPwd1);
 
 		String asCenterNum = (String) asCenterMap.get("asCenterNum");
 		asCenterMap.put("asCenterNum", asCenterNum);

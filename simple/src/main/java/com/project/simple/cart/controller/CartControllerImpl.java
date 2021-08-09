@@ -34,7 +34,7 @@ public class CartControllerImpl implements CartController {
 	private MemberVO memberVO;
 
 	// 장바구니이동(회원/비회원)
-	@RequestMapping(value = "/cartall.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/cartall.do", method = RequestMethod.POST)
 	private ModelAndView cartall(@ModelAttribute("cartVO") CartVO cartVO, HttpServletRequest request,
 			HttpServletResponse response, RedirectAttributes redirect) throws Exception {
 		ModelAndView mav = new ModelAndView();

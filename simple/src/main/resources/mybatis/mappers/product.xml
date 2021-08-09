@@ -275,8 +275,8 @@
 		resultMap="productQuestionResult">
 	<![CDATA[
 			select productQuestionNum, answerWhether, productNum, p.memId, productQuestionTitle, productQuestionContent, productQuestionDate, productAnswerContent, m.memName
-			from simple.productQuestion as p left join simple.member as m on p.memId=m.memId where productNum=#{productNum} order by productQuestionNum desc
-			limit #{pageStart}, #{perPageNum};
+			from simple.productQuestion as p left join member as m on p.memId=m.memId where productNum=#{productNum} order by productQuestionNum desc
+			limit #{pageStart2}, #{perPageNum2};
 			
 	]]>
 	</select>
@@ -284,7 +284,7 @@
 		parameterType="int">
 	<![CDATA[
 			
-			select count(*)  from simple.productQuestion where memId=#{memId};
+			select count(*)  from simple.productQuestion where productNum=#{productNum};
 			
 	]]>
 	</select>
@@ -372,10 +372,26 @@
 
 	<insert id="insertNewQuestion" parameterType="productVO">
 		<![CDATA[
-			insert into simple.productQuestion(productNum, memId, productQuestionTitle, productQuestionContent)
+			insert into productQuestion(productNum, memId, productQuestionTitle, productQuestionContent)
 			values(#{productNum},#{memId}, #{productQuestionTitle}, #{productQuestionContent});
 		]]>
 
 	</insert>
+
+	<update id="deleteQuestion" parameterType="int">
+
+		delete from
+		simple.productQuestion
+		where productQuestionNum=#{productQuestionNum};
+
+	</update>
+
+	<update id="updateQuestion" parameterType="productVO">
+		update simple.productQuestion
+		set productQuestionTitle = #{productQuestionTitle},
+		productQuestionContent =
+		#{productQuestionContent}
+		where productQuestionNum=#{productQuestionNum}
+	</update>
 
 </mapper>

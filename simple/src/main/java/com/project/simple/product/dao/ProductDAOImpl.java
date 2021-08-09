@@ -135,6 +135,15 @@ public class ProductDAOImpl implements ProductDAO{
 
 	}
 	
+	@Override
+	public void deleteQuestion(int productQuestionNum) throws DataAccessException {
+		sqlSession.delete("mapper.product.deleteQuestion", productQuestionNum);
+	}
+	
+	@Override
+	public void updateQuestion(ProductVO question) throws DataAccessException {
+		sqlSession.update("mapper.product.updateQuestion", question);
+	}
 
 
 }
