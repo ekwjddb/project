@@ -22,5 +22,6 @@ public interface OrderDAO {
 	public OrderVO selectcartlist(String memCartId) throws DataAccessException;
 	public List<OrderVO> selectmemOrderList(int memOrderNum) throws DataAccessException;
 	public MemberVO selectmemberOrderId(int memOrderNum) throws DataAccessException;
+	public OrderVO selectmemberOrderInfo(int memOrderNum) throws DataAccessException;
 
 }

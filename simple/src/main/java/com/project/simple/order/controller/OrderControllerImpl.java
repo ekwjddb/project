@@ -376,15 +376,19 @@ public class OrderControllerImpl implements OrderController {
 				HttpServletResponse response) throws Exception {
 			String viewName = (String) request.getAttribute("viewName");
 			HttpSession session = request.getSession();
-
+            
 			List<OrderVO> OrderList = orderService.memOrderNumList(memOrderNum);
+			OrderVO orderVO = orderService.memOrderInfo(memOrderNum);
 			MemberVO memberVO = orderService.memOrderId(memOrderNum);
+			
 			session.setAttribute("member", memberVO);
+			session.setAttribute("order", orderVO);
+			session.setAttribute("OrderList", OrderList);
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName(viewName);
 			mav.addObject("OrderList", OrderList);
-			mav.addObject("memberVO", memberVO);
-
+			mav.addObject("member", memberVO);
+			mav.addObject("order", orderVO);
 			return mav;
 		}
 

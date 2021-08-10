@@ -98,6 +98,17 @@
 
 	]]>
 	</select>
+	  <select id="selectmemberOrderInfo" resultType="orderVO" parameterType="int"> 
+	<![CDATA[
+			
+
+		select distinct memSpName, memSpAdr, memSpPhoneNum1, memSpPhoneNum2, memOrderMsg, memDepositorName, memPaymentMethod,memOrderDate
+		from simple.memberOrder 
+		where memOrderNum = #{memOrderNum} order by memOrderSeqNum desc;
+			
+
+	]]>
+	</select>
 
 	<select id="orderSearchList" resultMap="orderResult">
 			select *

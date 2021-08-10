@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 import com.project.simple.admin.vo.AdminVO;
 import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.member.vo.MemberVO;
+import com.project.simple.mypage.vo.MypageVO;
 import com.project.simple.page.Criteria;
+import com.project.simple.product.vo.ProductVO;
 
 @Repository("adminDAO")
 public class AdminDAOImpl implements AdminDAO {
@@ -76,6 +78,57 @@ public class AdminDAOImpl implements AdminDAO {
 	public void deleteNotice(int noticeNum) throws DataAccessException {
 		sqlSession.delete("mapper.admin.deleteNotice", noticeNum);
 	}
+	
+	//자주묻는 질문 글쓰기
+	@Override
+	public void insertNewQuestion(ArticleVO question) throws DataAccessException {
+		sqlSession.insert("mapper.admin.insertNewQuestion", question);
+
+	}
+	
+	// 자주묻는 질문 수정하기폼
+	@Override
+	public ArticleVO selectQuestion(int questionNum) throws DataAccessException {
+		return sqlSession.selectOne("mapper.admin.selectQuestion", questionNum);
+	}
+	
+	//자주묻는 질문 수정하기
+	@Override
+	public void updateQuestion(ArticleVO question) throws DataAccessException {
+		sqlSession.update("mapper.admin.updateQuestion", question);
+	}
+	
+	//자주묻는 질문 삭제하기
+	@Override
+	public void deleteQuestion(int questionNum) throws DataAccessException {
+		sqlSession.delete("mapper.admin.deleteQuestion",questionNum);
+	}
+	
+	//1:1문의 답변 등록 폼
+	@Override
+	public ArticleVO selectInquiryAnswer(int inquiryNum) throws DataAccessException {
+		return sqlSession.selectOne("mapper.admin.selectInquiryAnswer", inquiryNum);
+	}
+	
+	//1:1문의 답변 등록
+	@Override
+	public void insertNewInquiryAnswer(ArticleVO inquiry) throws DataAccessException {
+		sqlSession.update("mapper.admin.insertNewInquiryAnswer", inquiry);
+
+	}
+	
+	//1:1문의 답변 삭제하기
+	@Override
+	public void deleteInquiryAnswer(int inquiryNum) throws DataAccessException {
+		sqlSession.delete("mapper.admin.deleteInquiryAnswer", inquiryNum);
+	}
+	
+	//asCenter 접수완료
+	@Override
+	public void updateAsCenterConfirm(int asCenterNum) throws DataAccessException {
+		sqlSession.update("mapper.admin.updateAsCenterConfirm", asCenterNum);
+	}
+
 
 	@Override
 	public int updateAdminMember(MemberVO modmember) throws DataAccessException {

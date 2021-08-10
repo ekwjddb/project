@@ -45,6 +45,13 @@
 		<result property="noticeHit" column="noticeHit" />
 	</resultMap>
 
+	<!-- question 게시판 -->
+	<resultMap id="questionResult" type="articleVO">
+		<result property="questionNum" column="questionNum" />
+		<result property="questionTitle" column="questionTitle" />
+		<result property="questionContent" column="questionContent" />
+	</resultMap>
+
 	<!--로그인창에서 입력한 id와 비밀번호로 회원정보를 조회하는 sql문 -->
 	<select id="adminloginById" resultType="adminVO"
 		parameterType="adminVO">
@@ -127,7 +134,7 @@
 		where noticeNum=#{noticeNum}
 	</update>
 
-	<update id="deleteNotice" parameterType="java.util.Map">
+	<update id="deleteNotice" parameterType="int">
 
 		delete from
 		simple.notice
@@ -135,7 +142,81 @@
 
 	</update>
 
-    <!-- 회원정보수정 -->
+	<!-- 자주묻는 질문 게시판 -->
+	<insert id="insertNewQuestion" parameterType="ArticleVO">
+		<![CDATA[
+			insert into question(questionNum, questionTitle, questionContent)
+			values(#{questionNum},#{questionTitle}, #{questionContent});
+		]]>
+
+	</insert>
+
+	<select id="selectQuestion" resultType="articleVO"
+		parameterType="int"> 
+	<![CDATA[
+			
+			select * from question
+			where questionNum = #{questionNum};
+			
+
+	]]>
+	</select>
+
+	<update id="updateQuestion" parameterType="articleVO">
+		update
+		simple.question
+		set questionTitle =
+		#{questionTitle},
+		questionContent =
+		#{questionContent}
+		where
+		questionNum=#{questionNum}
+	</update>
+
+	<update id="deleteQuestion" parameterType="int">
+
+		delete from
+		simple.question
+		where questionNum=#{questionNum};
+
+	</update>
+
+	<!-- 1:1문의 -->
+	<select id="selectInquiryAnswer" resultType="articleVO"
+		parameterType="int"> 
+	<![CDATA[
+			
+			select * from inquiry
+			where inquiryNum = #{inquiryNum};
+			
+
+	]]>
+	</select>
+	<insert id="insertNewInquiryAnswer" parameterType="ArticleVO">
+		<![CDATA[
+			update simple.inquiry set inquiryAnswer=#{inquiryAnswer}
+			where inquiryNum=#{inquiryNum};
+		]]>
+
+	</insert>
+
+	<update id="deleteInquiryAnswer" parameterType="int">
+
+		update
+		simple.inquiry set inquiryAnswer=null
+		where inquiryNum=#{inquiryNum};
+
+	</update>
+	<update id="updateAsCenterConfirm" parameterType="String">
+		update
+		simple.asCenter
+		set asCenterStatus = '접수완료' where
+		asCenterNum
+		=
+		#{asCenterNum};
+	</update>
+
+	<!-- 회원정보수정 -->
 	<update id="updateAdminMember" parameterType="memberVO">
 	<![CDATA[ 
 		update simple.member

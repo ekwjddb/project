@@ -95,5 +95,10 @@ public class OrderDAOImpl implements OrderDAO {
 		return sqlSession.selectOne("mapper.order.selectmemberOrderId",memOrderNum);
 		
 	}
+
+	@Override
+	public OrderVO selectmemberOrderInfo(int memOrderNum) throws DataAccessException {
+		return sqlSession.selectOne("mapper.order.selectmemberOrderInfo",memOrderNum);
+	}
 }
 

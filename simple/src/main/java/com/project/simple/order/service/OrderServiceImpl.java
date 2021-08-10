@@ -79,9 +79,14 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public MemberVO memOrderId(int memOrderNum) throws Exception {
-		System.out.println(memOrderNum);
 		MemberVO memberVO = orderDAO.selectmemberOrderId(memOrderNum);
 		return memberVO;
+	}
+
+	@Override
+	public OrderVO memOrderInfo(int memOrderNum) throws Exception {
+		OrderVO orderVO = orderDAO.selectmemberOrderInfo(memOrderNum);
+		return orderVO;
 	}
 
 }

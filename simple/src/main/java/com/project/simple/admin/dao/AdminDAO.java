@@ -10,6 +10,7 @@ import com.project.simple.admin.vo.AdminVO;
 import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.member.vo.MemberVO;
 import com.project.simple.page.Criteria;
+import com.project.simple.product.vo.ProductVO;
 
 
 public interface AdminDAO {
@@ -25,10 +26,21 @@ public interface AdminDAO {
 	public int insertNewNotice(Map noticeMap) throws DataAccessException;
 	public void updateNotice(Map noticeMap) throws DataAccessException;
 	public void deleteNotice(int noticeNum) throws DataAccessException;
-
+	
+	public void insertNewQuestion(ArticleVO question) throws DataAccessException ;
+	public ArticleVO selectQuestion(int questionNum) throws DataAccessException;
+	public void updateQuestion(ArticleVO question) throws DataAccessException ;
+	public void deleteQuestion(int questionNum) throws DataAccessException;
+	
+	public ArticleVO selectInquiryAnswer(int inquiryNum) throws DataAccessException ;
+	public void insertNewInquiryAnswer(ArticleVO inquiry) throws DataAccessException;
+	public void deleteInquiryAnswer(int inquiryNum) throws DataAccessException ;
+	public void updateAsCenterConfirm(int asCenterNum) throws DataAccessException;
+	
 	public int updateAdminMember(MemberVO modmember) throws DataAccessException;
 
 	public void deleteSelectRemoveMember(String memId) throws DataAccessException;
+	
 
 
 }

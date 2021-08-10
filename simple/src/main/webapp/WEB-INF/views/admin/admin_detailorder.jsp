@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@ page import="com.project.simple.member.vo.MemberVO"%>
+<%@ page import="com.project.simple.order.vo.OrderVO"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +30,7 @@ h4 {
 	
 	<%
 	MemberVO member = (MemberVO) session.getAttribute("member");
+	
 	String FullmemPhoneNum = member.getmemPhoneNum();
 	String FullmemAdr = member.getmemAdr();
 
@@ -37,11 +39,33 @@ h4 {
 
 	String[] memAdr = FullmemAdr.split(a1);
 	String[] memPhoneNum = FullmemPhoneNum.split(p1);
-
+    
 	for (int i = 0; i < memAdr.length; i++) {
 	}
 	for (int i = 0; i < memPhoneNum.length; i++) {
 	}
+	%>
+	<% 
+	OrderVO order = (OrderVO) session.getAttribute("order");
+	
+	String FullmemSpPhoneNum = order.getMemSpPhoneNum1();
+	String FullmemSpPhoneNum2 = order.getMemSpPhoneNum2();
+	String FullmemSpAdr = order.getMemSpAdr();
+	
+	String q1 = "-";
+	String w1 = "-";
+	
+	String[] memSpPhoneNum = FullmemSpPhoneNum.split(q1); 
+	String[] memSpPhoneNum2 = FullmemSpPhoneNum2.split(q1); 
+	String[] memSpAdr = FullmemSpAdr.split(w1); 
+	
+	for (int i = 0; i < memSpPhoneNum.length; i++) {
+	}
+	for (int i = 0; i < memSpPhoneNum2.length; i++) {
+	}
+	for (int i = 0; i < memSpAdr.length; i++) {
+	}
+	
 	%>
 
 	<!-- 타이틀 -->
@@ -81,7 +105,7 @@ h4 {
 							: ${item.option1value}<br>${item.option2name} :
 							${item.option2value}</th>
 							<th scope="col" style="vertical-align: middle;">${item.productCnt}개</th>
-							<th scope="col" style="vertical-align: middle;">${item.deliverycharge}</th>
+							<th scope="col" style="vertical-align: middle;">무료배송</th>
 							<th scope="col" style="vertical-align: middle;">${item.productPrice}원</th>
 						</tr>
 						</tbody>
@@ -99,7 +123,7 @@ h4 {
 			<div style="font-size: 25px; font-weight: bold; margin-top: 70px;">
 					<a style="color: #7e9c8c; margin-top: 40px;">주문자정보</a>
 			</div>
-			<a>주문일자: ${OrderList[0].memOrderDate }</a>
+			<a>주문일자: ${order.memOrderDate }</a>
 			<div class="order_list">
 				<table class="table">
 				
@@ -171,66 +195,95 @@ h4 {
 							<th scope="col"><a
 									style="color: red; padding-right: 5px; write-space: nowrap;">*</a>이름</th>
 							<th scope="col"><input type="text" name="memSpName"
-									value="${OrderList[0].memSpName }"
+									value="${order.memSpName }" disabled
 									style="font-size: 14px; width: 326px; border: 1px solid #dcdcdc; height: 36px;"></th>
 						</tr>
 						<tr>
-							<th scope="col" style="padding-left: 40px"class="table-dark">주소</th>
-							<th scope="col">${OrderList[0].memSpAdr }</th>
-						</tr>
-						<tr>
-							<th scope="col" style="padding-left: 40px"class="table-dark">연락처1</th>
-							<th scope="col">${OrderList[0].memSpPhoneNum1 }</th>
-						</tr>
-						<tr>
-							<th scope="col" style="padding-left: 40px"class="table-dark">연락처2</th>
-							<th scope="col">${OrderList[0].memSpPhoneNum2 }</th>
-						</tr>
-						<tr>
-						<th scope="col" style="padding-left: 40px; padding-bottom: 50px;"class="table-dark"><br>주문메세지<br>(100자내외)</th>
-						<th scope="col"><textarea name="textarea" rows="4" cols="40" readonly>${OrderList[0].memOrderMsg }</textarea></th>
-						</tr>
+						<th style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);"><a
+									style="color: red; padding-right: 5px; write-space: nowrap;">*</a>주소</th>
+						    <th scope="col">
+							<input type="text" name="memSpAdr"
+									value="<%=memSpAdr[0]%>" disabled id="sample6_postcode" disabled
+									style="font-size: 14px; border: 1px solid #dcdcdc; width: 211px; height: 36px;">
+									&nbsp;&nbsp;&nbsp;
+									<p>
+										<br> <input type="text" name="memSpAdr1"
+											value="<%=memSpAdr[1]%>" disabled id="sample6_address" readonly
+											style="font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 36px;">
+
+									</p>
+									<p>
+										<input type="text" name="memSpAdr2" id="sample6_address2"
+											value="<%=memSpAdr[2]%>" readonly disabled
+											style="font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 36px;">
+
+
+									</p>
+							</th>
+						<tr style="border-bottom: 1px solid #eeeeee;">
+								<th scope="col"><a
+									style="color: red; padding-right: 5px; write-space: nowrap;">*</a>연락처1</th>
+								<th scope="col"><select name="memSpPhoneNum1_0" disabled
+									style="width: 80px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;">
+										<option value="<%=memSpPhoneNum[0]%>"><%=memSpPhoneNum[0]%></option>
+										<option value="011">011</option>
+										<option value="016">016</option>
+										<option value="017">017</option>
+										<option value="019">019</option>
+										<option value="010">010</option>
+								</select> - <input disabled type="text" name="memSpPhoneNum1_1" value="<%=memSpPhoneNum[1]%>"
+									style="width: 109px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;">
+									- <input disabled type="text" name="memSpPhoneNum1_2" value="<%=memSpPhoneNum[2]%>"
+									style="width: 109px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;"></th>
+							</tr>
+			
+		
+				                <tr style="border-bottom: 1px solid #eeeeee;">
+								<th scope="col" style="padding-left: 23px;">연락처2</th>
+								<th scope="col"><select name="memSpPhoneNum2_0" disabled
+									style="width: 80px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;">
+										<option value="<%=memSpPhoneNum2[0]%>"><%=memSpPhoneNum2[0]%></option>
+										<option value="011">011</option>
+										<option value="016">016</option>
+										<option value="017">017</option>
+										<option value="019">019</option>
+										<option value="010">010</option>
+								</select> - <input disabled type="text" name="memSpPhoneNum2_1" value="<%=memSpPhoneNum2[1]%>"
+									style="width: 109px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;">
+									- <input disabled type="text" name="memSpPhoneNum2_2" value="<%=memSpPhoneNum2[2]%>"
+									style="width: 109px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;"></th>
+							   </tr>
+		
+							<tr style="border-bottom: 1px solid #eeeeee;">
+								<th scope="col"
+									style="padding-bottom: 50px; padding-left: 23px;"><br>주문메세지<br>(100자내외)</th>
+								<th scope="col"><input type="text" name="memOrderMsg" disabled value="${order.memOrderMsg}"
+									style="width: 327px; height: 175px; border: 1px solid #dcdcdc;"></th>
+							</tr>
+							<tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
+								<th scope="col" style="padding-left: 23px;">무통장 입금자명</th>
+								<th scope="col"><input name="memDepositorName" type="text" disabled value="${order.memDepositorName}"
+									value=""
+									style="font-size: 14px; border: 1px solid #dcdcdc; height: 36px; width: 326px;"></th>
+							</tr>
 					
 					</tbody>
 				</table>
 			</div>
 			
-			<h4>배송정보</h4>
-			<div class="order_list">
-				<table class="table">
-					<colgroup>
-						<col width="20%" />
-					</colgroup>
-					<tbody>
-						<tr>
-							<th scope="col" style="padding-left: 40px"class="table-dark">배송상태</th>
-							<th scope="col"></th>
-						</tr>
 
-					</tbody>
-				</table>
-			</div>
-
-			<h4>결제정보</h4>
-			<div class="order_list">
-				<table class="table">
-					<colgroup>
-						<col width="20%" />
-					</colgroup>
-					<tbody>
-			
-					</tbody>
-				</table>
-			</div>
-		
 			<br> <br>
 
-				<div class="container">
-					<div id="main-back" style="text-align: center;">
-						<button onclick="location='${contextPath}/main.do'"
-							style="height: 50px; width: 150px; font-size: 17px; background-color: #212529; color: white; border-radius: 2px;">확인</button>
-					</div>
+				<div style="text-align: center">
+					<input type="button" class="btn btn-secondary" value="수정하기"
+						onclick="iamport();"
+						style="padding-left: 10px; margin-left: 40px; background-color: #7e9c8c; color: white; border: none; border-radius: 2px; width: 130px; height: 45px;">
+					&nbsp;&nbsp;
+					<button type="submit" class="btn btn-secondary"
+						onclick="location.href='${contextPath}/admin_listorder.do'"
+						style="padding-left: 10px; background-color: white; color: #7e9c8c; border: 1px solid #7e9c8c; border-radius: 2px; width: 130px; height: 45px;">뒤로가기</button>
 				</div>
+				<br> <br>
 				</div>
 			</section>
 		

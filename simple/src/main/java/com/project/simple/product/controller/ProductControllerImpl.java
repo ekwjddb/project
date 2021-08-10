@@ -770,7 +770,7 @@ return mav;
 	@Override
 	@RequestMapping(value = "/addNewQuestion.do", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity addNewRetrun(@ModelAttribute("question") ProductVO question, HttpServletRequest request, HttpServletResponse response)
+	public ResponseEntity addNewQuestion(@ModelAttribute("question") ProductVO question, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
 		request.setCharacterEncoding("utf-8");

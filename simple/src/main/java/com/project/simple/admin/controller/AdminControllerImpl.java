@@ -36,6 +36,7 @@ import com.project.simple.board.vo.ArticleVO;
 import com.project.simple.member.vo.MemberVO;
 import com.project.simple.page.Criteria;
 import com.project.simple.page.PageMaker;
+import com.project.simple.product.vo.ProductVO;
 import com.project.simple.member.service.MemberService;
 @Controller("adminController")
 public class AdminControllerImpl implements AdminController {
@@ -110,7 +111,7 @@ public class AdminControllerImpl implements AdminController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/admin/noticeForm.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/*Form.do", method = RequestMethod.GET)
 	private ModelAndView form(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String viewName = (String) request.getAttribute("viewName");
@@ -120,7 +121,7 @@ public class AdminControllerImpl implements AdminController {
 	}
 	
 	//공지사항 글쓰기
-	// 1:1 문의 글쓰기
+
 	@Override
 	@RequestMapping(value = "/admin/addNewNotice.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -204,7 +205,7 @@ public class AdminControllerImpl implements AdminController {
 	
 	//공지사항 수정하기
 	@RequestMapping(value = "/admin/modNotice.do", method = RequestMethod.POST)
-	public ModelAndView inquiryForm(@RequestParam("noticeNum") int noticeNum,
+	public ModelAndView noticeForm(@RequestParam("noticeNum") int noticeNum,
 			MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
 
 		String viewName = (String) multipartRequest.getAttribute("viewName");
@@ -312,6 +313,283 @@ public class AdminControllerImpl implements AdminController {
 		return resEnt;
 
 	}
+	
+	//자주묻는 질문 등록
+	@Override
+	@RequestMapping(value = "/admin/addNewQuestion.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity addNewQuestion(@ModelAttribute("question") ArticleVO question, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		request.setCharacterEncoding("utf-8");
+
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			adminService.addNewQuestion(question);
+
+			message = "<script>";
+			message += " alert('글 등록을 완료하였습니다.');";
+			message += "  location.href='" + request.getContextPath() + "/board/listQuestion.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해주세요');";
+			message += "  location.href='" + request.getContextPath() + "/board/listQuestion.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
+	
+	//자주묻는 질문 수정하기 폼
+	@RequestMapping(value = "/admin/modQuestion.do", method = RequestMethod.GET)
+	public ModelAndView questionForm(@RequestParam("questionNum") int questionNum,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		String viewName = (String) request.getAttribute("viewName");
+		articleVO = adminService.questionForm(questionNum);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		mav.addObject("questionNum", articleVO);
+
+		return mav;
+	}
+	
+	//자주묻는 질문 수정하기
+	@RequestMapping(value = "/admin/modNewQuestion.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity modNewQuestion(@ModelAttribute("question") ArticleVO question, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+	
+		request.setCharacterEncoding("utf-8");
+
+
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			adminService.modQuestion(question);
+
+			message = "<script>";
+			message += " alert('글을 수정했습니다.');";
+			message += "  location.href='" + request.getContextPath() + "/board/listQuestion.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해주세요');";
+			message += "  location.href='" + request.getContextPath() + "/board/listQuestion.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
+	
+	//자주묻는질문 삭제하기
+	@Override
+	@RequestMapping(value = "/admin/removeQuestion.do", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity removeQuestion(@RequestParam("questionNum") int questionNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		response.setContentType("text/html; charset-utf-8");
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			adminService.removeQuestion(questionNum);
+
+			message = "<script>";
+			message += " location.href='" + request.getContextPath() +"/board/listQuestion.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 수정해주세요);";
+			message += " location.href='" + request.getContextPath() + "/board/listQuestion.do';";
+					
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+
+	}
+	
+
+	
+	//자주묻는 질문 등록
+	@Override
+	@RequestMapping(value = "/admin/addNewInquiryAnswer.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity addNewInquiryAnswer(@ModelAttribute("inquiry") ArticleVO inquiry, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		request.setCharacterEncoding("utf-8");
+
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			adminService.addNewInquiryAnswer(inquiry);
+
+			message = "<script>";
+			message += " alert('글 등록을 완료하였습니다.');";
+			message += "  location.href='" + request.getContextPath() + "/admin/listAllInquiry.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해주세요');";
+			message += "  location.href='" + request.getContextPath() + "/admin/listAllInquiry.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
+	
+	//1:1문의 답변 폼
+	@RequestMapping(value = "/admin/inquiryAnswerForm.do", method = RequestMethod.POST)
+	public ModelAndView inquiryAnswerForm(@RequestParam("inquiryNum") int inquiryNum,
+			MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception {
+
+		String viewName = (String) multipartRequest.getAttribute("viewName");
+		articleVO = adminService.inquiryAnswerForm(inquiryNum);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		mav.addObject("inquiry", articleVO);
+
+		return mav;
+	}
+	
+
+	//1:1문의 답변 상세보기
+	@RequestMapping(value = "/admin/viewInquiryAnswer.do", method = RequestMethod.GET)
+	public ModelAndView viewInquiryAnswer(@RequestParam("inquiryNum") int inquiryNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String viewName = (String) request.getAttribute("viewName");
+		articleVO = adminService.viewInquiryAnswer(inquiryNum);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(viewName);
+		mav.addObject("inquiry", articleVO);
+		return mav;
+	}
+	
+	//1:1문의수정하기
+	@Override
+	@RequestMapping(value = "/admin/modNewInquiryAnswer.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity modNewInquiryAnswer(@ModelAttribute("inquiry") ArticleVO inquiry, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+
+		request.setCharacterEncoding("utf-8");
+
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		int inquiryNum = inquiry.getInquiryNum();
+		try {
+			adminService.addNewInquiryAnswer(inquiry);
+
+			message = "<script>";
+			message += " alert('글 수정을 완료하였습니다.');";
+			message += "  location.href='" + request.getContextPath() + "/admin/viewInquiryAnswer.do?inquiryNum=" + inquiryNum + "';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해주세요');";
+			message += "  location.href='" + request.getContextPath() + "/admin/viewInquiryAnswer.do?inquiryNum=" + inquiryNum + "';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
+	
+	//공지사항 삭제하기
+	@Override
+	@RequestMapping(value = "/admin/removeInquiryAnswer.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity removeInquiryAnswer(@RequestParam("inquiryNum") int inquiryNum, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		response.setContentType("text/html; charset-utf-8");
+		String message;
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+			adminService.removeInquiryAnswer(inquiryNum);
+
+
+			message = "<script>";
+			message += " alert('글 삭제를 완료하였습니다.');";
+			message += " location.href='" + request.getContextPath() +  "/admin/listAllInquiry.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 수정해주세요);";
+			message += " location.href='" + request.getContextPath() +  "/admin/listAllInquiry.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+
+	}
+	
+	// 접수 등록 확정
+	@RequestMapping(value = "/admin/asCenterConfirm.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ResponseEntity asCenterConfirm(@RequestParam("asCenterNum") int asCenterNum,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ResponseEntity resEnt = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		String message;
+
+		try {
+			adminService.asCenterConfirm(asCenterNum);
+			
+			message = "<script>";
+			message += " alert('접수를 완료하였습니다.');";
+			message += " location.href='" + request.getContextPath() + "/board/viewAsCenter.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+		} catch (Exception e) {
+			message = "<script>";
+			message += " alert('오류가 발생했습니다. 다시 시도해주세요');";
+			message += "  location.href='" + request.getContextPath() + "/mypage_04.do';";
+			message += " </script>";
+			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
+			e.printStackTrace();
+		}
+		return resEnt;
+	}
+	
 	// 회원상세보기
 	@RequestMapping(value = "/admin/viewMember.do",  method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView viewMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -347,6 +625,8 @@ public class AdminControllerImpl implements AdminController {
 		}
 	
 	}
+	
+
 	//관리자 회원 삭제
 	@RequestMapping(value = "/admin_removeMember.do",method = { RequestMethod.GET, RequestMethod.POST })
 	private ModelAndView admin_removeMember(@RequestParam("memId") String memId, HttpServletRequest request, HttpServletResponse response)  throws Exception{
@@ -376,6 +656,10 @@ public class AdminControllerImpl implements AdminController {
 		mav.setViewName("redirect:/admin_listmember.do");
 		return mav;
 	}
+	
+
+	
+	
 
 
 }

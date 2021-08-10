@@ -21,6 +21,7 @@ public interface OrderService {
 	public OrderVO selectcartlist(String memCartId) throws Exception;
 	public List<OrderVO> memOrderNumList(int memOrderNum) throws Exception;
 	public MemberVO memOrderId(int memOrderNum)throws Exception;
+	public OrderVO memOrderInfo(int memOrderNum)throws Exception;
 
 	
 	
