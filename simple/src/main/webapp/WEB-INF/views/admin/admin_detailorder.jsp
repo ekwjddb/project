@@ -94,7 +94,7 @@ h4 {
 							<th scope="col"><a
 									style="color: red; padding-right: 5px; write-space: nowrap;">*</a>이름</th>
 							<th scope="col"><input type="text" name="memName"
-									value="${OrderList[0].memName }" readonly
+									value="" readonly
 									style="font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 36px;"></th>
 						</tr>
 						<tr style="border-bottom: 1px solid #eeeeee;">

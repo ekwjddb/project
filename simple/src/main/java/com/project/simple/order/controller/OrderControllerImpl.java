@@ -38,6 +38,8 @@ public class OrderControllerImpl implements OrderController {
 	private OrderService orderService;
 	@Autowired
 	private OrderVO orderVO;
+	@Autowired
+	private MemberVO memberVO;
 
 	// 장바구니에서 주문페이지 이동(회원/비회원)
 	@RequestMapping(value = "/order.do", method = RequestMethod.POST)
@@ -353,7 +355,7 @@ public class OrderControllerImpl implements OrderController {
 			throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
 		List<OrderVO> ordersList = orderService.listOrders(cri);
-		System.out.println(ordersList);
+		//System.out.println(ordersList);
 		int orderCount = orderService.orderCount();
 		ModelAndView mav = new ModelAndView(viewName);
 		PageMaker pageMaker = new PageMaker();
@@ -374,11 +376,13 @@ public class OrderControllerImpl implements OrderController {
 				HttpServletResponse response) throws Exception {
 			String viewName = (String) request.getAttribute("viewName");
 			HttpSession session = request.getSession();
+
 			List<OrderVO> OrderList = orderService.memOrderNumList(memOrderNum);
-			session.setAttribute("OrderList", OrderList);
+			MemberVO memberVO = orderService.memOrderId(memOrderNum);
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName(viewName);
 			mav.addObject("OrderList", OrderList);
+			mav.addObject("memberVO", memberVO);
 
 			return mav;
 		}

@@ -38,6 +38,16 @@
 		<result property="CurrentStatus" column="CurrenStatus" />
 		<result property="memOrderSeqNum" column="memOrderSeqNum" />
 	</resultMap>
+	<resultMap id="memResult" type="memberVO">
+		<result property="memId" column="memId" />
+		<result property="memName" column="memName" />
+		<result property="memPwd" column="memPwd" />
+		<result property="memEmail" column="memEmail" />
+		<result property="memPhoneNum" column="memPhoneNum" />
+		<result property="memAdr" column="memAdr" />
+		<result property="logintype" column="logintype" />
+		<result property="memRegdate" column="memRegdate" />
+	</resultMap>
 	
 	
 
@@ -77,7 +87,17 @@
 	]]>
 	</select>
 
+    <select id="selectmemberOrderId" resultType="memberVO" parameterType="int"> 
+	<![CDATA[
+			
 
+		select distinct m.memId, memName, memAdr, memPhoneNum
+		from simple.memberOrder as o left join simple.member as m on o.memId = m.memId
+		where memOrderNum = #{memOrderNum} order by memOrderSeqNum desc;
+			
+
+	]]>
+	</select>
 
 	<select id="orderSearchList" resultMap="orderResult">
 			select *

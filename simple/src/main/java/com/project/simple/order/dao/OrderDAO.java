@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
+import com.project.simple.member.vo.MemberVO;
 import com.project.simple.order.vo.OrderVO;
 import com.project.simple.page.Criteria;
 
@@ -20,5 +21,6 @@ public interface OrderDAO {
 	public void removeGoodsFromCart(List<OrderVO> myOrderList)throws DataAccessException;
 	public OrderVO selectcartlist(String memCartId) throws DataAccessException;
 	public List<OrderVO> selectmemOrderList(int memOrderNum) throws DataAccessException;
+	public MemberVO selectmemberOrderId(int memOrderNum) throws DataAccessException;
 
 }

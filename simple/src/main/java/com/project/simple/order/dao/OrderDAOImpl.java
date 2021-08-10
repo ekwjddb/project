@@ -88,5 +88,12 @@ public class OrderDAOImpl implements OrderDAO {
 	public List<OrderVO> selectmemOrderList(int memOrderNum) throws DataAccessException {
 		return sqlSession.selectList("mapper.order.selectmemOrderList", memOrderNum);
 	}
+
+	@Override
+	public MemberVO selectmemberOrderId(int memOrderNum) throws DataAccessException {
+	
+		return sqlSession.selectOne("mapper.order.selectmemberOrderId",memOrderNum);
+		
+	}
 }
 
