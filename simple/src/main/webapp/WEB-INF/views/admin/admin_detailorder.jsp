@@ -2,6 +2,7 @@
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ page import="com.project.simple.member.vo.MemberVO"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +27,22 @@ h4 {
 <title>관리자 회원 주문 상세창</title>
 <body>
 	
+	<%
+	MemberVO member = (MemberVO) session.getAttribute("member");
+	String FullmemPhoneNum = member.getmemPhoneNum();
+	String FullmemAdr = member.getmemAdr();
+
+	String a1 = "-";
+	String p1 = "-";
+
+	String[] memAdr = FullmemAdr.split(a1);
+	String[] memPhoneNum = FullmemPhoneNum.split(p1);
+
+	for (int i = 0; i < memAdr.length; i++) {
+	}
+	for (int i = 0; i < memPhoneNum.length; i++) {
+	}
+	%>
 
 	<!-- 타이틀 -->
 	<section class="ftco-section" style="padding-top: 100px;">
@@ -94,48 +111,49 @@ h4 {
 							<th scope="col"><a
 									style="color: red; padding-right: 5px; write-space: nowrap;">*</a>이름</th>
 							<th scope="col"><input type="text" name="memName"
-									value="" readonly
+									value="${member.memName}" disabled
 									style="font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 36px;"></th>
 						</tr>
 						<tr style="border-bottom: 1px solid #eeeeee;">
 							<th scope="col"><a
 									style="color: red; padding-right: 5px; write-space: nowrap;">*</a>주소</th>
 							<th scope="col"><input type="text" name="memAdr"
-									value="" disabled id="sample6_postcode" readonly
+									value="<%=memAdr[0]%>" disabled id="sample6_postcode" disabled
 									style="font-size: 14px; border: 1px solid #dcdcdc; width: 211px; height: 36px;">
 									&nbsp;&nbsp;&nbsp;
 									<p>
 										<br> <input type="text" name="memAdr1"
-											value="" disabled id="sample6_address" readonly
+											value="<%=memAdr[1]%>" disabled id="sample6_address" readonly
 											style="font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 36px;">
 
 									</p>
 									<p>
 										<input type="text" name="memAdr2" id="sample6_address2"
-											value="" readonly disabled
+											value="<%=memAdr[2]%>" readonly disabled
 											style="font-size: 14px; border: 1px solid #dcdcdc; width: 326px; height: 36px;">
 
 
-									</p></th>
+									</p>
+							</th>
 						</tr>
 						<tr style="border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
-							<th scope="col" ><a
+								<th scope="col"><a
 									style="color: red; padding-right: 5px; write-space: nowrap;">*</a>연락처</th>
-							<th scope="col"><select name="memPhoneNum" disabled
+								<th scope="col"><select name="memPhoneNum" disabled
 									style="width: 80px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;">
-										<option value=""></option>
+										<option value="<%=memPhoneNum[0]%>"><%=memPhoneNum[0]%></option>
 										<option value="011">011</option>
 										<option value="016">016</option>
 										<option value="017">017</option>
 										<option value="019">019</option>
 										<option value="010">010</option>
 								</select> - <input type="text" name="memPhoneNum1"
-									value="" readonly disabled
+									value="<%=memPhoneNum[1]%>" readonly disabled
 									style="width: 109px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;">
 									- <input type="text" name="memPhoneNum2"
-									value="" readonly disabled
+									value="<%=memPhoneNum[2]%>" readonly disabled
 									style="width: 109px; font-size: 14px; border: 1px solid #dcdcdc; height: 36px;"></th>
-						</tr>
+							</tr>
 					</tbody>
 				</table>
 			</div>
@@ -149,9 +167,12 @@ h4 {
 						<col width="20%" />
 					</colgroup>
 					<tbody>
-						<tr>
-							<th scope="col" style="padding-left: 40px" class="table-dark">이름</th>
-							<th scope="col">${OrderList[0].memSpName }</th>
+						<tr style="border-bottom: 1px solid #eeeeee; border-top: 1px solid rgba(0, 0, 0, 0.1);">
+							<th scope="col"><a
+									style="color: red; padding-right: 5px; write-space: nowrap;">*</a>이름</th>
+							<th scope="col"><input type="text" name="memSpName"
+									value="${OrderList[0].memSpName }"
+									style="font-size: 14px; width: 326px; border: 1px solid #dcdcdc; height: 36px;"></th>
 						</tr>
 						<tr>
 							<th scope="col" style="padding-left: 40px"class="table-dark">주소</th>

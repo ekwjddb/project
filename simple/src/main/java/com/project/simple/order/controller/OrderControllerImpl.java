@@ -379,6 +379,7 @@ public class OrderControllerImpl implements OrderController {
 
 			List<OrderVO> OrderList = orderService.memOrderNumList(memOrderNum);
 			MemberVO memberVO = orderService.memOrderId(memOrderNum);
+			session.setAttribute("member", memberVO);
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName(viewName);
 			mav.addObject("OrderList", OrderList);
