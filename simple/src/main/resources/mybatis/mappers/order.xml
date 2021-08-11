@@ -102,7 +102,7 @@
 	<![CDATA[
 			
 
-		select distinct memSpName, memSpAdr, memSpPhoneNum1, memSpPhoneNum2, memOrderMsg, memDepositorName, memPaymentMethod,memOrderDate
+		select distinct memOrderNum,memSpName, memSpAdr, memSpPhoneNum1, memSpPhoneNum2, memOrderMsg, memDepositorName, memPaymentMethod,memOrderDate
 		from simple.memberOrder 
 		where memOrderNum = #{memOrderNum} order by memOrderSeqNum desc;
 			

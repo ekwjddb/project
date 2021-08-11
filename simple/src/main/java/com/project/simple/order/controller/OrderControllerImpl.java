@@ -391,6 +391,20 @@ public class OrderControllerImpl implements OrderController {
 			mav.addObject("order", orderVO);
 			return mav;
 		}
+		
+		//관리자 주문내역 수정화면
+		@RequestMapping(value = "/admin_listorder/admin_ModVeiwMemorder.do", method = RequestMethod.GET)
+		public ModelAndView admin_ModVeiwMemorder(@RequestParam("memOrderNum") int memOrderNum, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			String viewName = (String) request.getAttribute("viewName");
+			HttpSession session = request.getSession();
+            
+	
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName(viewName);
+		
+			return mav;
+		}
 
 	@Override
 	@RequestMapping(value = "/admin_listorder/orderSearch.do", method = { RequestMethod.GET, RequestMethod.POST })
